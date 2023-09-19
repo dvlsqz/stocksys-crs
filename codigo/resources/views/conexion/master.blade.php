@@ -29,9 +29,9 @@
         
 
         <div class="col12">
-            @include('admin.loader')
+            @include('conexion.loader')
 
-            @include('admin.toastr')
+            @include('conexion.toastr')
 
             @section('content')
             @show
