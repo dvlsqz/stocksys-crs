@@ -2,8 +2,8 @@
 @section('title','Permisos de Usuario')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/usuarios') }}"><i class="fas fa-user-lock"></i> Usuarios</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/usuario/'.$usuario->id.'/permisos') }}"><i class="fas fa-user-lock"></i> Permisos de Usuario: {{ $usuario->usuario}}</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/usuarios') }}"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/usuario/'.$usuario->id.'/permisos') }}"><i class="fa-solid fa-users"></i> Permisos de Usuario: {{ $usuario->usuario}}</a></li>
 @endsection
 
 @section('content')

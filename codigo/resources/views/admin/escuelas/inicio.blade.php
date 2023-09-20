@@ -1,8 +1,8 @@
 @extends('admin.plantilla.master')
-@section('title','Instituciones')
+@section('title','Escuelas')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/instituciones') }}"><i class="fa-solid fa-users"></i> Instituciones</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/escuelas') }}"><i class="fa-solid fa-school"></i> Escuelas</a></li>
 @endsection
 
 @section('content')
@@ -12,10 +12,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title"><strong>Listado de Instituciones</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-school"></i> Listado de Escuelas</strong></h2>
                     <ul>                       
                         <li>
-                            <a href="{{ url('/admin/institucion/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
+                            <a href="{{ url('/admin/escuela/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
                         </li>
                     </ul>
                 </div>
@@ -30,17 +30,17 @@
                                 <td><strong> ESTADO </strong></td>
                         </thead>
                         <tbody>
-                            @foreach($instituciones as $i)
+                            @foreach($escuelas as $e)
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/institucion/'.$i->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/institucion" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            <a href="{{ url('/admin/escuela/'.$e->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-action="eliminar" data-path="admin/escuela" data-object="{{ $e->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
-                                    <td>{{$i->nombre}}</td>
-                                    <td>{{$i->id_ubicacion}}</td>
-                                    <td>{{$i->estado}}</td>
+                                    <td>{{$e->nombre}}</td>
+                                    <td>{{$e->id_ubicacion}}</td>
+                                    <td>{{$e->estado}}</td>
                                 </tr>
                             @endforeach
                         </tbody>

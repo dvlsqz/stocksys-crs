@@ -1,18 +1,18 @@
 <div class="row">
 
     <div class="col-md-6">
-        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nombre: </strong></label>
+        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Codigo: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('nombre', $institucion->nombre, ['class'=>'form-control']) !!}
+            {!! Form::text('codigo', $escuela->nombre, ['class'=>'form-control']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
-        <label for="unit_id" ><strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nivel / Tipo:</strong></label>
+        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nombre: </strong></label>
         <div class="input-group">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-            {!! Form::select('nivel', obtenerTiposInstitucion('list', null), $institucion->nivel,['class'=>'form-select']) !!}
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+            {!! Form::text('nombre', $escuela->nombre, ['class'=>'form-control']) !!}
         </div>
     </div>
 
@@ -20,7 +20,7 @@
         <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Dirección: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('direccion', $institucion->direccion, ['class'=>'form-control']) !!}
+            {!! Form::text('direccion', $escuela->direccion, ['class'=>'form-control']) !!}
         </div>
     </div>  
     
@@ -30,7 +30,7 @@
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
             <select name="id_ubicacion" id="pidubicacion" style="width: 95%" >
                 @foreach($ubicaciones as $u)
-                    @if ($institucion->id_ubicacion == $u->id )                                        
+                    @if ($escuela->id_ubicacion == $u->id )                                        
                         <option value="{{ $u->id }}" selected>{{ $u->nombre }}</option>
                     @else
                         <option value="{{ $u->id }}" >{{ $u->nombre }}</option>
@@ -43,27 +43,51 @@
 
 <div class="row mtop16">
 
-    <div class="col-md-4">
-        <label for="name"> <strong> Encargado: </strong></label>
+    <div class="col-md-6">
+        <label for="name"> <strong> Director: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('encargado', $institucion->encargado, ['class'=>'form-control']) !!}
+            {!! Form::text('director', $escuela->director, ['class'=>'form-control']) !!}
         </div>
     </div>
 
-    <div class="col-md-4">
-        <label for="name"> <strong>Contacto: </strong></label>
+    <div class="col-md-6">
+        <label for="name"> <strong>Contacto #1: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('contacto', $institucion->contacto, ['class'=>'form-control']) !!}
+            {!! Form::text('contacto_no1', $escuela->contacto_no1, ['class'=>'form-control']) !!}
         </div>
     </div>
 
-    <div class="col-md-4">
-        <label for="name"> <strong>Correo: </strong></label>
+    <div class="col-md-6 mtop16">
+        <label for="name"> <strong>Contacto #2: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('correo', $institucion->correo, ['class'=>'form-control']) !!}
+            {!! Form::text('contacto_no2', $escuela->contacto_no2, ['class'=>'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6 mtop16">
+        <label for="name"> <strong>No. Beneficiarios: </strong></label>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+            {!! Form::text('no_beneficiarios', $escuela->no_beneficiarios, ['class'=>'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6 mtop16">
+        <label for="name"> <strong>No. Lideres: </strong></label>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+            {!! Form::text('no_lideres', $escuela->no_lideres, ['class'=>'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6 mtop16">
+        <label for="name"> <strong>No. Voluntarios: </strong></label>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+            {!! Form::text('no_voluntarios', $escuela->no_voluntarios, ['class'=>'form-control']) !!}
         </div>
     </div>
 </div>
@@ -74,7 +98,7 @@
         <label for="name"> <strong> Observaciones: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::textarea('observaciones', $institucion->observaciones, ['class'=>'form-control']) !!}
+            {!! Form::textarea('observaciones', $escuela->observaciones, ['class'=>'form-control']) !!}
         </div>
     </div>
 

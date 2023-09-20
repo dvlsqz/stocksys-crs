@@ -1,9 +1,9 @@
 @extends('admin.plantilla.master')
-@section('title','Registar Institución')
+@section('title','Registar Escuela')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/instituciones') }}"><i class="fas fa-user-lock"></i> Instituciones</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/institucion/registrar') }}"><i class="fas fa-user-lock"></i> Registrar Institucion</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/escuelas') }}"><i class="fas fa-user-lock"></i> Escuelas</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/escuela/registrar') }}"><i class="fas fa-user-lock"></i> Registrar Escuela</a></li>
 @endsection
 
 @section('content')
@@ -14,17 +14,17 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Institución</strong></h2>
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Escuela</strong></h2>
                     
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/institucion/registrar', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/admin/escuela/registrar', 'files' => true]) !!}
 
-                        @include('admin.instituciones.formulario')
+                        @include('admin.escuelas.formulario')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
-                        <a href="{{ url('/admin/instituciones') }}" class="btn btn-secondary mtop16">Regresar</a>
+                        <a href="{{ url('/admin/escuelas') }}" class="btn btn-secondary mtop16">Regresar</a>
 
                     {!! Form::close() !!}
                 </div>

@@ -26,7 +26,10 @@ hr{
 .footer {
     background: #005092;
     color: white;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.10) !important
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.10) !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }    
 
 .footer a {

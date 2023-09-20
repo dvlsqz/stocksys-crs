@@ -2,8 +2,8 @@
 @section('title','Editar Ubicación')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fas fa-user-lock"></i> Ubicaciones</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicacion/'.$ubicacion->id.'/editar') }}"><i class="fas fa-user-lock"></i> Editar Ubicación</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fa-solid fa-earth-americas"></i> Ubicaciones</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicacion/'.$ubicacion->id.'/editar') }}"><i class="fa-solid fa-earth-americas"></i> Editar Ubicación</a></li>
 @endsection
 
 @section('content')

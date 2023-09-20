@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg ">
-  <div class="container-fluid">
-
-    <a class="navbar-brand" href="#">StockSys</a>
+  <div class="container-fluid">    
+    <a class="navbar-brand" href="{{url('/admin')}}"><img src="{{url('/static/imagenes/crs_1.png')}}" alt="" width="24px" height="24px" style="margin-top: -4px;">  StockSys</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,7 +29,7 @@
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link"><i class="fa-solid fa-school"></i> Escuelas</a>
+          <a href="{{url('/admin/escuelas')}}" class="nav-link"><i class="fa-solid fa-school"></i> Escuelas</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
@@ -43,6 +42,10 @@
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Alimentos</a>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link"><i class="fa-solid fa-file-invoice"></i> Solicitudes de Despacho</a>
         </li>
 
         <li class="nav-item dropdown">

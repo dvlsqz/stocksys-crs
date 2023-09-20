@@ -2,9 +2,9 @@
 @section('title','Ubicaciones')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fas fa-user-lock"></i> Ubicaciones</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fas fa-user-lock"></i> Nivel 1</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fas fa-user-lock"></i> Nivel 2</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fa-solid fa-earth-americas"></i> Ubicaciones</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fa-solid fa-earth-americas"></i> Nivel 1</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/ubicaciones') }}"><i class="fa-solid fa-earth-americas"></i> Nivel 2</a></li>
 @endsection
 
 @section('content')

@@ -2,8 +2,8 @@
 @section('title','Registar Institución')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/usuarios') }}"><i class="fas fa-user-lock"></i> Usuarios</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/usuario/registrar') }}"><i class="fas fa-user-lock"></i> Registrar Usuario</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/usuarios') }}"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/usuario/registrar') }}"><i class="fa-solid fa-users"></i> Registrar Usuario</a></li>
 @endsection
 
 @section('content')

@@ -12,7 +12,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title"><strong>Listado de Usuarios</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-users"></i> Listado de Usuarios</strong></h2>
                     <ul>                       
                         <li>
                             <a href="{{ url('/admin/usuario/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar Usuario</a>
