@@ -28,7 +28,7 @@ class EscuelaController extends Controller
 
     public function getEscuelaRegistrar(){
         $escuela = new Escuela;
-        $ubicaciones = Ubicacion::where('nivel', 3)->get();
+        $ubicaciones = Ubicacion::where('nivel', 3)->pluck('nombre', 'id');
 
         $datos = [
             'escuela' => $escuela,
@@ -80,5 +80,17 @@ class EscuelaController extends Controller
                     ->with('typealert', 'success');
     		endif;
         endif;
+    }
+
+    public function getEscuelaEditar($id){
+        $escuela = Escuela::findOrFail($id);
+        $ubicaciones = Ubicacion::where('nivel', 3)->pluck('nombre', 'id');
+
+        $datos = [
+            'escuela' => $escuela,
+            'ubicaciones' => $ubicaciones
+        ];
+
+        return view('admin.escuelas.editar',$datos);
     }
 }

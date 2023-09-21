@@ -80,7 +80,7 @@
         <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Institución: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::select('id_institucion', $instituciones, $usuario->id_institucion ,['class'=>'form-select', 'id' => 'studies', 'style' => 'width: 88%']) !!}
+            {!! Form::select('id_institucion', $instituciones, $usuario->id_institucion ,['class'=>'form-select', 'id' => 'id_institucion', 'style' => 'width: 95%']) !!}
         </div>
     </div>
     
@@ -124,7 +124,7 @@
             <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Rol de Usuario: </strong></label>
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                {!! Form::select('rol', obtenerRoles('list', null), $usuario->rol ,['class'=>'form-select', 'id' => 'rol', 'style' => 'width: 88%']) !!}
+                {!! Form::select('rol', obtenerRoles('list', null), $usuario->rol ,['class'=>'form-select', 'id' => 'rol', 'style' => 'width: 95%']) !!}
             </div>
         </div>
 

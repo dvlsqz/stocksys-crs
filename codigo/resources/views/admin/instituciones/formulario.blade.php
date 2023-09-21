@@ -28,15 +28,7 @@
         <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Ubicación: </strong></label>
         <div class="input-group">           
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            <select name="id_ubicacion" id="pidubicacion" style="width: 95%" >
-                @foreach($ubicaciones as $u)
-                    @if ($institucion->id_ubicacion == $u->id )                                        
-                        <option value="{{ $u->id }}" selected>{{ $u->nombre }}</option>
-                    @else
-                        <option value="{{ $u->id }}" >{{ $u->nombre }}</option>
-                    @endif                                        
-                @endforeach
-            </select>
+            {!! Form::select('id_ubicacion', $ubicaciones, $institucion->id_ubicacion,['class'=>'form-select', 'id' => 'id_ubicacion', 'style' => 'width: 95%']) !!}     
         </div>
     </div>
 </div>

@@ -52,6 +52,21 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });     
 
+    $("#id_ubicacion").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+
+    $("#id_institucion").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+
+    $("#rol").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+
 
 
 });
