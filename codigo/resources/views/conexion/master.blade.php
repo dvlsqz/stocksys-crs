@@ -17,6 +17,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{url('/static/css/conexion.css?v='.time() )}}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    
+    <link rel="shortcut icon" href="{{ url('/static/imagenes/crs_1.ico') }}" type="image/x-icon">
 
 
    
