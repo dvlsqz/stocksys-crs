@@ -110,15 +110,26 @@
                 ]
             ],
             'escuelas' => [
-                    'icon' => '<i class="fas fa-tags"></i>',
-                    'title' => 'Modulo Escuelas',
-                    'keys' => [
-                        'escuelas' => 'Puede ver el listado de escuelas.',
-                        'escuela_registrar' => 'Puede agregar nuevas escuelas.',
-                        'escuela_editar' => 'Puede editar escuelas.',
-                        'escuela_eliminar' => 'Puede eliminar escuelas.'                           
-                    ]
+                'icon' => '<i class="fas fa-tags"></i>',
+                'title' => 'Modulo Escuelas',
+                'keys' => [
+                    'escuelas' => 'Puede ver el listado de escuelas.',
+                    'escuela_registrar' => 'Puede agregar nuevas escuelas.',
+                    'escuela_editar' => 'Puede editar escuelas.',
+                    'escuela_eliminar' => 'Puede eliminar escuelas.'                           
                 ]
+            ],
+            'rutas' => [
+                'icon' => '<i class="fa-solid fa-route"></i>',
+                'title' => 'Modulo Rutas',
+                'keys' => [
+                    'rutas' => 'Puede ver el listado de rutas.',
+                    'ruta_registrar' => 'Puede agregar nuevas rutas.',
+                    'ruta_editar' => 'Puede editar rutas.',
+                    'ruta_eliminar' => 'Puede eliminar rutas.'                           
+                ]
+            ]
+            
     
 
         ];

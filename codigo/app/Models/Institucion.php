@@ -17,4 +17,5 @@ class Institucion extends Model
     public function ubicacion(){
         return $this->hasOne(Ubicacion::class,'id','id_ubicacion');
     }
+
 }

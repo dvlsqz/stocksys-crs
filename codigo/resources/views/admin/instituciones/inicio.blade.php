@@ -39,7 +39,10 @@
                                         </div>
                                     </td>
                                     <td>{{$i->nombre}}</td>
-                                    <td>{{$i->id_ubicacion}}</td>
+                                    <td>
+                                        {{$i->direccion}}<br>
+                                        {{$i->ubicacion->nombre.' / '.$i->ubicacion->ubicacion_superior->nombre.' / '.$i->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}
+                                    </td>
                                     <td>{{$i->estado}}</td>
                                 </tr>
                             @endforeach

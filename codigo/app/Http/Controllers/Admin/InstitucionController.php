@@ -17,7 +17,7 @@ class InstitucionController extends Controller
     }
 
     public function getInicio(){
-        $instituciones = Institucion::all();
+        $instituciones = Institucion::with(['ubicacion'])->get();
 
         $datos = [
             'instituciones' => $instituciones
@@ -28,7 +28,7 @@ class InstitucionController extends Controller
 
     public function getInstitucionRegistrar(){
         $institucion = new Institucion;
-        $ubicaciones = Ubicacion::where('nivel', 3)->pluck('nombre', 'id');
+        $ubicaciones = Ubicacion::with('ubicacion_superior')->where('nivel', 3)->get();
 
         $datos = [
             'institucion' => $institucion,
@@ -78,7 +78,7 @@ class InstitucionController extends Controller
 
     public function getInstitucionEditar($id){
         $institucion = Institucion::findOrFail($id);
-        $ubicaciones = Ubicacion::where('nivel', 3)->pluck('nombre', 'id');
+        $ubicaciones = Ubicacion::with('ubicacion_superior')->where('nivel', 3)->get();
 
         $datos = [
             'institucion' => $institucion,

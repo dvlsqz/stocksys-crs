@@ -1,3 +1,4 @@
+<h5><strong>Información de la Escuela</strong></h5>
 <div class="row">
 
     <div class="col-md-6">
@@ -28,7 +29,12 @@
         <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Ubicación: </strong></label>
         <div class="input-group">           
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::select('id_ubicacion', $ubicaciones, $escuela->id_ubicacion,['class'=>'form-select', 'id' => 'id_ubicacion', 'style' => 'width: 95%']) !!}            
+            <select name="id_ubicacion" id="id_ubicacion" style="width: 95%" >
+                @foreach($ubicaciones as $u)
+                    <option value=""></option>
+                    <option value="{{ $u->id }}">{{ $u->nombre.' / '.$u->ubicacion_superior->nombre.' / '.$u->ubicacion_superior->ubicacion_superior->nombre }}</option>
+                @endforeach
+            </select>            
         </div>
     </div>
 </div>
@@ -59,11 +65,35 @@
         </div>
     </div>
 
-    <div class="col-md-6 mtop16">
-        <label for="name"> <strong>No. Beneficiarios: </strong></label>
+    <div class="col-md-12 mtop16">
+        <label for="name"> <strong> Observaciones: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('no_beneficiarios', $escuela->no_beneficiarios, ['class'=>'form-control']) !!}
+            {!! Form::textarea('observaciones', $escuela->observaciones, ['class'=>'form-control','rows'=>'2']) !!}
+        </div>
+    </div>
+
+    
+</div>
+
+<hr />
+<h5><strong>Información de Beneficiarios</strong></h5>
+
+<div class="row mtop16">
+
+    <div class="col-md-6 ">
+        <label for="name"> <strong>No. Niños y Niñas de Pre Primaria a Tercero Primaria: </strong></label>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+            {!! Form::number('no_preprimaria_tercero', $escuela->no_preprimaria_tercero, ['class'=>'form-control', 'min'=>'1']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6 ">
+        <label for="name"> <strong>No. Niños y Niñas de Cuarto Primaria a Sexto Primaria: </strong></label>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+            {!! Form::number('no_cuarto_sexto', $escuela->no_cuarto_sexto, ['class'=>'form-control', 'min'=>'1']) !!}
         </div>
     </div>
 
@@ -71,7 +101,7 @@
         <label for="name"> <strong>No. Lideres: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('no_lideres', $escuela->no_lideres, ['class'=>'form-control']) !!}
+            {!! Form::number('no_lideres', $escuela->no_lideres, ['class'=>'form-control', 'min'=>'1']) !!}
         </div>
     </div>
 
@@ -79,18 +109,7 @@
         <label for="name"> <strong>No. Voluntarios: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::text('no_voluntarios', $escuela->no_voluntarios, ['class'=>'form-control']) !!}
-        </div>
-    </div>
-</div>
-
-<div class="row mtop16">
-
-    <div class="col-md-12">
-        <label for="name"> <strong> Observaciones: </strong></label>
-        <div class="input-group">
-            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-            {!! Form::textarea('observaciones', $escuela->observaciones, ['class'=>'form-control','rows'=>'2']) !!}
+            {!! Form::number('no_voluntarios', $escuela->no_voluntarios, ['class'=>'form-control', 'min'=>'1']) !!}
         </div>
     </div>
 

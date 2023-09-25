@@ -33,7 +33,7 @@
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link"><i class="fa-solid fa-route"></i> Rutas</a>
+          <a href="{{url('/admin/rutas')}}" class="nav-link"><i class="fa-solid fa-route"></i> Rutas</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">

@@ -44,7 +44,10 @@
                                             <a href="#" data-action="eliminar" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
-                                    <td>{{$u->nombres.' '.$u->apellidos}}</td>
+                                    <td>
+                                        {{$u->nombres.' '.$u->apellidos}} <br>
+                                        Institución: {{$u->institucion->nombre}}
+                                    </td>
                                     <td>{{$u->usuario}}</td>
                                     <td>{{$u->rol}}</td>
                                     <td>{{$u->estado}}</td>

@@ -11,4 +11,8 @@ class Usuario extends Model
 
     protected $table = 'users';
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function institucion(){
+        return $this->hasOne(institucion::class,'id','id_institucion');
+    }
 }

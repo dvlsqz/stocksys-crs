@@ -19,6 +19,28 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT ubicaciones ON');
+        DB::table('ubicaciones')->insert(array(
+            'id'=>'1',
+            'nombre'=>'Guatemala',
+            'nivel'=>'1',
+            'id_principal'=>NULL           
+        ));
+
+        DB::table('ubicaciones')->insert(array(
+            'id'=>'2',
+            'nombre'=>'Quetzaltenango',
+            'nivel'=>'2',
+            'id_principal'=>'1'          
+        ));
+
+        DB::table('ubicaciones')->insert(array(
+            'id'=>'3',
+            'nombre'=>'Quetzaltenango',
+            'nivel'=>'3',
+            'id_principal'=>'2'           
+        ));
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT ubicaciones OFF');
     }
 
     /**

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UbicacionController;
 use App\Http\Controllers\Admin\InstitucionController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\EscuelaController;
+use App\Http\Controllers\Admin\RutaController;
 
 Route::prefix('/admin')->group(function(){
     Route::get('/', [PanelPrincipalController::class, 'getInicio'])->name('panel_principal');
@@ -16,9 +17,9 @@ Route::prefix('/admin')->group(function(){
     Route::post('/ubicacion/{id}/editar', [UbicacionController::class, 'postUbicacionEditar'])->name('ubicacion_editar');
     Route::get('/ubicacion/{id}/eliminar', [UbicacionController::class, 'getUbicacionEliminar'])->name('ubicacion_eliminar');
     Route::get('/ubicacion/{id}/listado/n1', [UbicacionController::class, 'getUbicacionListadoN1'])->name('ubicacion_n1');
-    Route::post('/ubicacion/n1/registrar', [UbicacionController::class, 'postUbicacionN1Registrar'])->name('ubicacion__n1_registrar');
+    Route::post('/ubicacion/n1/registrar', [UbicacionController::class, 'postUbicacionN1Registrar'])->name('ubicacion_registrar_n1');
     Route::get('/ubicacion/{id}/listado/n2', [UbicacionController::class, 'getUbicacionListadoN2'])->name('ubicacion_n2');
-    Route::post('/ubicacion/n2/registrar', [UbicacionController::class, 'postUbicacionN2Registrar'])->name('ubicacion_n2_registrar');
+    Route::post('/ubicacion/n2/registrar', [UbicacionController::class, 'postUbicacionN2Registrar'])->name('ubicacion_registrar_n2');
 
     //Modulo de instituciones
     Route::get('/instituciones', [InstitucionController::class, 'getInicio'])->name('instituciones');
@@ -48,4 +49,9 @@ Route::prefix('/admin')->group(function(){
     Route::get('/escuela/{id}/editar', [EscuelaController::class, 'getEscuelaEditar'])->name('escuela_editar');  
     Route::post('/escuela/{id}/editar', [EscuelaController::class, 'postEscuelaEditar'])->name('escuela_editar');
     Route::get('/escuela/{id}/eliminar', [EscuelaController::class, 'getEscuelaEliminar'])->name('escuela_eliminar');
+
+    //Modulo de rutas
+    Route::get('/rutas', [RutaController::class, 'getInicio'])->name('rutas');
+    Route::get('/ruta/registrar', [RutaController::class, 'getRutaRegistrar'])->name('ruta_registrar');  
+    Route::post('/ruta/registrar', [RutaController::class, 'postRutaRegistrar'])->name('ruta_registrar');
 });
