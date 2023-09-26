@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('correlativo');
             $table->integer('id_ubicacion');
             $table->time('hora_salida', $precision = 0)->nullable();
-            $table->string('observaciones', 500)->nullable();
+            $table->string('observaciones', 500)->nullable(); 
             $table->integer('estado');
             $table->timestamps();
             $table->softDeletes();

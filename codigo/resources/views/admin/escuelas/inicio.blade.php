@@ -2,7 +2,7 @@
 @section('title','Escuelas')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/escuelas') }}"><i class="fa-solid fa-route"></i> Escuelas</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/escuelas') }}"><i class="fa-solid fa-school"></i> Escuelas</a></li>
 @endsection
 
 @section('content')

@@ -54,4 +54,5 @@ Route::prefix('/admin')->group(function(){
     Route::get('/rutas', [RutaController::class, 'getInicio'])->name('rutas');
     Route::get('/ruta/registrar', [RutaController::class, 'getRutaRegistrar'])->name('ruta_registrar');  
     Route::post('/ruta/registrar', [RutaController::class, 'postRutaRegistrar'])->name('ruta_registrar');
+    Route::get('/ruta/{id}/asignar_escuelas', [RutaController::class, 'getRutaAsignarEscuelas'])->name('ruta_asignar_escuelas');
 });

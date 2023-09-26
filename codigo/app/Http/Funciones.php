@@ -125,7 +125,7 @@
                 'keys' => [
                     'rutas' => 'Puede ver el listado de rutas.',
                     'ruta_registrar' => 'Puede agregar nuevas rutas.',
-                    'ruta_editar' => 'Puede editar rutas.',
+                    'ruta_asignar_escuelas' => 'Puede asignar escuelas a las rutas.',
                     'ruta_eliminar' => 'Puede eliminar rutas.'                           
                 ]
             ]

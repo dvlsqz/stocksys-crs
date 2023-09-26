@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Ruta, App\Models\Ubicacion, App\Models\Bitacora;
+use App\Models\Ruta, App\Models\Ubicacion,App\Models\Escuela, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class RutaController extends Controller
@@ -18,24 +18,16 @@ class RutaController extends Controller
 
     public function getInicio(){
         $rutas = Ruta::with(['ubicacion'])->get();
-
-        $datos = [
-            'rutas' => $rutas
-        ];
-
-        return view('admin.rutas.inicio',$datos);
-    }
-
-    public function getRutaRegistrar(){
         $ruta = new Ruta;
         $ubicaciones = Ubicacion::with('ubicacion_superior')->where('nivel', 3)->get();
 
         $datos = [
+            'rutas' => $rutas,
             'ruta' => $ruta,
             'ubicaciones' => $ubicaciones
         ];
 
-        return view('admin.rutas.registrar',$datos);
+        return view('admin.rutas.inicio',$datos);
     }
 
     public function postRutaRegistrar(Request $request){
@@ -52,17 +44,34 @@ class RutaController extends Controller
         else: 
             $correlativo = Ruta::where('id_ubicacion', $request->input('id_ubicacion'))->count();
 
-            return $correlativo+1;
+            //return $correlativo+1;
 
             $r = new Ruta;
-            
+            $r->correlativo = $correlativo+1;
+            $r->id_ubicacion = $request->input('id_ubicacion');
+            $r->hora_salida = $request->input('hora_salida');
+            $r->observaciones = e($request->input('observaciones'));
+            $r->estado = '0';
 
 
-            if($e->save()):
+            if($r->save()):
 
                 return redirect('/admin/rutas')->with('messages', '¡Ruta creada y guardada con exito!.')
                     ->with('typealert', 'success');
     		endif;
         endif;
+    }
+
+    public function getRutaAsignarEscuelas($id){
+        $ruta = Ruta::findOrFail($id);
+        $escuelas = Escuela::where('id_ubicacion', $ruta->id_ubicacion)->get();
+
+
+        $datos = [
+            'ruta' => $ruta,
+            'escuelas' => $escuelas
+        ];
+
+        return view('admin.rutas.asignar_escuelas',$datos);
     }
 }

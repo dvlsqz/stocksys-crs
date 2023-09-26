@@ -9,15 +9,29 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-4">
+            <div class="card ">
+
+                <div class="card-header">
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Ruta</strong></h2>
+                </div>
+
+                <div class="card-body">
+                    {!! Form::open(['url' => '/admin/ruta/registrar', 'files' => true]) !!}
+                        @include('admin.rutas.formulario')
+
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                    {!! Form::close() !!}
+                </div>
+
+            </div>
+            
+        </div>
+
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong><i class="fa-solid fa-route"></i> Listado de Rutas</strong></h2>
-                    <ul>                       
-                        <li>
-                            <a href="{{ url('/admin/ruta/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
-                        </li>
-                    </ul>
                 </div>
 
                 <div class="card-body">
@@ -25,8 +39,7 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
-                                <td><strong> NOMBRE </strong></td>
-                                <td><strong> UBICACIÓN </strong></td>
+                                <td><strong> RUTA </strong></td>
                                 <td><strong> ESTADO </strong></td>
                         </thead>
                         <tbody>
@@ -34,24 +47,23 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/ruta/'.$r->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ url('/admin/ruta/'.$r->id.'/asignar_escuelas') }}"  title="Escuelas"><i class="fa-solid fa-school"></i></a>
                                             <a href="#" data-action="eliminar" data-path="admin/ruta" data-object="{{ $r->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
-                                    <td>{{$r->nombre}}</td>
-                                    <td>{{$r->id_ubicacion}}</td>
+                                    <td>
+                                        Ruta {{$r->correlativo}}. <br>
+                                        {{$r->ubicacion->nombre.' / '.$r->ubicacion->ubicacion_superior->nombre.' / '.$r->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}
+                                    </td>
                                     <td>{{$r->estado}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-
-                <div class="card-footer clearfix">
-                    
-                </div>
             </div>
         </div>
+
     </div>
 </div>
 
