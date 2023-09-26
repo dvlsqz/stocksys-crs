@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Ubicacion;
+use App\Models\Ubicacion, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class UbicacionController extends Controller
@@ -43,6 +43,10 @@ class UbicacionController extends Controller
             $u->nivel = $request->input('nivel');
 
             if($u->save()):
+                $b = new Bitacora;
+                $b->accion = "Creación de ubicación ".$u->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return back()->with('messages', '¡Ubicación creada y guardada con exito!.')
                     ->with('typealert', 'success');

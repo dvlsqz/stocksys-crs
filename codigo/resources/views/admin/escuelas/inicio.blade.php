@@ -25,7 +25,7 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
-                                <td><strong> NOMBRE </strong></td>
+                                <td><strong> CODIGO / NOMBRE </strong></td>
                                 <td><strong> UBICACIÓN </strong></td>
                                 <td><strong> ESTADO </strong></td>
                         </thead>
@@ -38,7 +38,9 @@
                                             <a href="#" data-action="eliminar" data-path="admin/escuela" data-object="{{ $e->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
-                                    <td>{{$e->nombre}}</td>
+                                    <td>
+                                        {{$e->codigo.' / '.$e->nombre}}
+                                    </td>
                                     <td>
                                         {{$e->direccion}}<br>
                                         {{$e->ubicacion->nombre.' / '.$e->ubicacion->ubicacion_superior->nombre.' / '.$e->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}
