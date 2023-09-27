@@ -91,10 +91,10 @@ class UsuarioController extends Controller
             $usuario->estado = '1';
 
             if($usuario->save()):
-                /*$b = new Bitacora;
-                $b->action = "Creación de usuario: ".$usuario->ibm;
-                $b->usuario_id = Auth::id();
-                $b->save();*/
+                $b = new Bitacora;
+                $b->accion = 'Registro de usuario: '.$usuario->usuario;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return redirect('/admin/usuarios')->with('messages', '¡El usuario se creo con éxito, ahora puede iniciar sesión!')
                     ->with('typealert', 'success');
@@ -143,10 +143,10 @@ class UsuarioController extends Controller
             $usuario->usuario = e($request->input('usuario'));
 
             if($usuario->save()):
-                /*$b = new Bitacora;
-                $b->action = "Creación de usuario: ".$usuario->ibm;
-                $b->usuario_id = Auth::id();
-                $b->save();*/
+                $b = new Bitacora;
+                $b->accion = 'Edición de información del usuario: '.$usuario->usuario;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return back()->with('messages', '¡Informacion del usuario actualizada, con exito!')
                     ->with('typealert', 'info');
@@ -169,6 +169,11 @@ class UsuarioController extends Controller
         $usuario->permisos = json_encode($request->except(['_token']));
 
         if($usuario->save()):            
+            $b = new Bitacora;
+            $b->accion = 'Actualización de permisos del usuario: '.$usuario->usuario;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages','¡Los permisos del usuario fueron actualizados con éxito!.')
                 ->with('typealert', 'info');
         endif;
@@ -180,6 +185,11 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($contra_prede); 
 
         if($usuario->save()):
+            $b = new Bitacora;
+            $b->accion = 'Restablecimiento de contraseña del usuario: '.$usuario->usuario;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages', '¡Contraseña restablecida con exito!.')
                     ->with('typealert', 'info');
         endif;
@@ -191,6 +201,11 @@ class UsuarioController extends Controller
         $usuario->pin = Hash::make($pin_prede);
 
         if($usuario->save()):
+            $b = new Bitacora;
+            $b->accion = 'Restablecimiento de pin de autorizaciones del usuario: '.$usuario->usuario;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages', '¡Pin restablecido con exito!.')
                     ->with('typealert', 'info');
         endif;
@@ -200,6 +215,11 @@ class UsuarioController extends Controller
         $usuario = Usuario::findOrFail($id);
 
         if($usuario->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación del usuario: '.$usuario->usuario;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages', '¡Usuario eliminado con exito!.')
                     ->with('typealert', 'warning');
         endif;

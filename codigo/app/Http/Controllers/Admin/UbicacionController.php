@@ -44,7 +44,7 @@ class UbicacionController extends Controller
 
             if($u->save()):
                 $b = new Bitacora;
-                $b->accion = "Creación de ubicación ".$u->nombre;
+                $b->accion = 'Registro de ubicación nivel 1 con nombre: '.$u->nombre;
                 $b->id_usuario = Auth::id();
                 $b->save();
 
@@ -86,6 +86,10 @@ class UbicacionController extends Controller
             $u->id_principal = $request->input('id_principal');
 
             if($u->save()):
+                $b = new Bitacora;
+                $b->accion = 'Registro de ubicación nivel 2 con nombre: '.$u->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return back()->with('messages', '¡Ubicación Nivel 1 creada y guardada con exito!.')
                     ->with('typealert', 'success');
@@ -125,6 +129,10 @@ class UbicacionController extends Controller
             $u->id_principal = $request->input('id_principal');
 
             if($u->save()):
+                $b = new Bitacora;
+                $b->accion = 'Registro de ubicación nivel 3 con nombre: '.$u->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return back()->with('messages', '¡Ubicación Nivel 2 creada y guardada con exito!.')
                     ->with('typealert', 'success');
@@ -158,6 +166,10 @@ class UbicacionController extends Controller
             $ubicacion->nombre = e($request->input('nombre'));
 
             if($ubicacion->save()):
+                $b = new Bitacora;
+                $b->accion = 'Edición de nombre de ubicación con nombre: '.$ubicacion->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return back()->with('messages', '¡Información actualizada y guardada con exito!.')
                     ->with('typealert', 'info');
@@ -169,6 +181,11 @@ class UbicacionController extends Controller
         $ubicacion = Ubicacion::findOrFail($id);
 
         if($ubicacion->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación de ubicación con nombre: '.$ubicacion->nombre;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages', '¡Ubicación eliminada con exito!.')
                     ->with('typealert', 'warning');
         endif;

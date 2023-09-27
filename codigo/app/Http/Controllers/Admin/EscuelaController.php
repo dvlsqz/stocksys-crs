@@ -76,6 +76,10 @@ class EscuelaController extends Controller
 
 
             if($e->save()):
+                $b = new Bitacora;
+                $b->accion = 'Registro de escuela: '.$e->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return redirect('/admin/escuelas')->with('messages', '¡Escuela creada y guardada con exito!.')
                     ->with('typealert', 'success');
@@ -131,6 +135,10 @@ class EscuelaController extends Controller
             $e->estado = '0';
 
             if($e->save()):
+                $b = new Bitacora;
+                $b->accion = 'Edición de información de la escuela: '.$e->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return redirect('/admin/escuelas')->with('messages', '¡Información actualizada y guardada con exito!.')
                 ->with('typealert', 'info');
@@ -142,6 +150,11 @@ class EscuelaController extends Controller
         $escuela = Escuela::findOrFail($id);
 
         if($escuela->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación de la escuela: '.$escuela->nombre;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages', '¡Escuela eliminada con exito!.')
                     ->with('typealert', 'warning');
         endif;

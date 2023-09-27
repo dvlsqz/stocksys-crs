@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Institucion, App\Models\Ubicacion;
+use App\Models\Institucion, App\Models\Ubicacion,  App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class InstitucionController extends Controller
@@ -69,6 +69,10 @@ class InstitucionController extends Controller
 
 
             if($i->save()):
+                $b = new Bitacora;
+                $b->accion = 'Registro de institución con nombre: '.$i->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return redirect('/admin/instituciones')->with('messages', '¡Institución creada y guardada con exito!.')
                     ->with('typealert', 'success');
@@ -119,6 +123,10 @@ class InstitucionController extends Controller
 
 
             if($i->save()):
+                $b = new Bitacora;
+                $b->accion = 'Edición de información de la institución con nombre: '.$i->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
                 return redirect('/admin/instituciones')->with('messages', '¡Información actualizada y guardada con exito!.')
                     ->with('typealert', 'info');
@@ -132,6 +140,11 @@ class InstitucionController extends Controller
         $institucion = Institucion::findOrFail($id);
 
         if($institucion->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación de la institución: '.$institucion->nombre;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
             return back()->with('messages', '¡Institución eliminada con exito!.')
                     ->with('typealert', 'warning');
         endif;
