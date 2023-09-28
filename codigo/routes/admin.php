@@ -20,6 +20,7 @@ Route::prefix('/admin')->group(function(){
     Route::post('/ubicacion/n1/registrar', [UbicacionController::class, 'postUbicacionN1Registrar'])->name('ubicacion_registrar_n1');
     Route::get('/ubicacion/{id}/listado/n2', [UbicacionController::class, 'getUbicacionListadoN2'])->name('ubicacion_n2');
     Route::post('/ubicacion/n2/registrar', [UbicacionController::class, 'postUbicacionN2Registrar'])->name('ubicacion_registrar_n2');
+    Route::post('/ubicacion/importar', [UbicacionController::class, 'postUbicacionImportar'])->name('ubicacion_registrar');  
 
     //Modulo de instituciones
     Route::get('/instituciones', [InstitucionController::class, 'getInicio'])->name('instituciones');

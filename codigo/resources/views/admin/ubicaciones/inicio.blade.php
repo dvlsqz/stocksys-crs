@@ -75,6 +75,31 @@
         </div>
 
     </div>
+
+    <div class="row mtop16">
+        <div class="col-md-4">
+            <div class="card ">
+
+                <div class="card-header">
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Importar Ubicaciones</strong></h2>
+                </div>
+
+                <div class="card-body">
+                    {!! Form::open(['url' => '/admin/ubicacion/importar', 'files' => true]) !!}
+                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Cargar Archivo: </strong></label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                            {!! Form::file('ubicaciones') !!}
+                        </div>
+
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                    {!! Form::close() !!}
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
 </div>
 
 @endsection

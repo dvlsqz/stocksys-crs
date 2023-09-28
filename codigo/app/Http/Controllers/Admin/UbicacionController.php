@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Ubicacion, App\Models\Bitacora;
+use App\Imports\UbicacionesImport;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UbicacionController extends Controller
 {
@@ -189,6 +191,13 @@ class UbicacionController extends Controller
             return back()->with('messages', '¡Ubicación eliminada con exito!.')
                     ->with('typealert', 'warning');
         endif;
+    }
+
+    public function postUbicacionImportar(Request $request){
+        $prueba = Excel::toCollection(new UbicacionesImport, request()->file('ubicaciones'));
+        return $prueba;
+        //return back()->with('messages', '¡Ubicaciones importadas con exito!.')
+                    //->with('typealert', 'info');
     }
     
 }
