@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\InstitucionController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\EscuelaController;
 use App\Http\Controllers\Admin\RutaController;
+use App\Http\Controllers\Admin\EntregaController;
+use App\Http\Controllers\Admin\PruebasController;
 
 Route::prefix('/admin')->group(function(){
     Route::get('/', [PanelPrincipalController::class, 'getInicio'])->name('panel_principal');
@@ -50,10 +52,26 @@ Route::prefix('/admin')->group(function(){
     Route::get('/escuela/{id}/editar', [EscuelaController::class, 'getEscuelaEditar'])->name('escuela_editar');  
     Route::post('/escuela/{id}/editar', [EscuelaController::class, 'postEscuelaEditar'])->name('escuela_editar');
     Route::get('/escuela/{id}/eliminar', [EscuelaController::class, 'getEscuelaEliminar'])->name('escuela_eliminar');
+    Route::post('/escuela/importar', [EscuelaController::class, 'postEscuelaImportar'])->name('escuela_registrar');  
 
     //Modulo de rutas
     Route::get('/rutas', [RutaController::class, 'getInicio'])->name('rutas');
     Route::get('/ruta/registrar', [RutaController::class, 'getRutaRegistrar'])->name('ruta_registrar');  
     Route::post('/ruta/registrar', [RutaController::class, 'postRutaRegistrar'])->name('ruta_registrar');
+    Route::get('/ruta/{id}/eliminar', [RutaController::class, 'getRutaEliminar'])->name('ruta_eliminar');
     Route::get('/ruta/{id}/asignar_escuelas', [RutaController::class, 'getRutaAsignarEscuelas'])->name('ruta_asignar_escuelas');
+    Route::post('/ruta/asignar_escuelas', [RutaController::class, 'postRutaAsignarEscuelas'])->name('ruta_asignar_escuelas');
+    Route::get('/ruta_asignaciones/{id}/eliminar', [RutaController::class, 'getRutaEliminarEscuelas'])->name('ruta_asignar_escuelas');
+
+    //Modulo de Entregas
+    Route::get('/entregas', [EntregaController::class, 'getInicio'])->name('entregas');
+    Route::post('/entrega/registrar', [EntregaController::class, 'postEntregaRegistrar'])->name('entrega_registrar');    
+    Route::get('/entrega/{id}/editar', [EntregaController::class, 'getEntregaEditar'])->name('entrega_editar');
+    Route::post('/entrega/{id}/editar', [EntregaController::class, 'postEntregaEditar'])->name('entrega_editar');
+    Route::get('/entrega/{id}/eliminar', [EntregaController::class, 'getEntregaEliminar'])->name('entrega_eliminar');
+
+    //Modulo de Pruebas
+    Route::get('/pruebas', [PruebasController::class, 'getInicio'])->name('ubicaciones');
+    Route::post('/prueba/importar', [PruebasController::class, 'postArchivoImportar'])->name('escuela_registrar');
+
 });

@@ -9,7 +9,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card ">
 
                 <div class="card-header">
@@ -28,7 +28,7 @@
             
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong><i class="fa-solid fa-route"></i> Listado de Rutas</strong></h2>

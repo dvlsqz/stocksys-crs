@@ -43,6 +43,11 @@
 
                 <div class="card-header">
                     <h2 class="title"><i class="fas fa-file-alt"></i> <strong> Listados de Ubicaciones</strong></h2>
+                    <ul>                       
+                        <li>
+                            <a href="{{ url('/admin/usuario/registrar') }}" ><i class="fas fa-plus-circle"></i> Importar</a>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="card-body">

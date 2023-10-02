@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('contacto_no2', 40)->nullable();  
             $table->integer('no_preprimaria_tercero')->nullable();
             $table->integer('no_cuarto_sexto')->nullable();
+            $table->integer('no_beneficiarios')->nullable();
             $table->integer('no_lideres')->nullable();
             $table->integer('no_voluntarios')->nullable();
             $table->string('observaciones', 500)->nullable();

@@ -18,7 +18,7 @@ class UbicacionesImport implements ToModel, WithHeadingRow
         return new Ubicacion([
             'nombre' => $row['nombre'], 
             'nivel' => $row['nivel'],
-            'id_principal' => $row['ubicacion'],
+            'id_principal' => $row['id_principal'],
         ]);
     }
 }

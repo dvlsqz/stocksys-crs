@@ -9,7 +9,30 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-3">
+            <div class="card ">
+
+                <div class="card-header">
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Importar Escuelas</strong></h2>
+                </div>
+
+                <div class="card-body">
+                    {!! Form::open(['url' => '/admin/escuela/importar', 'files' => true]) !!}
+                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Cargar Archivo: </strong></label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                            {!! Form::file('escuelas') !!}
+                        </div>
+
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                    {!! Form::close() !!}
+                </div>
+
+            </div>
+            
+        </div>
+
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong><i class="fa-solid fa-school"></i> Listado de Escuelas</strong></h2>

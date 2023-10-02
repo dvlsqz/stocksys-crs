@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rutas', function (Blueprint $table) {
+        Schema::create('entregas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('correlativo');
-            $table->integer('id_ubicacion');
-            $table->string('observaciones', 500)->nullable(); 
-            $table->integer('estado');
+            $table->integer('mes_inicial');
+            $table->integer('mes_final');
+            $table->integer('dias_a_cubrir');
+            $table->integer('year');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rutas');
+        Schema::dropIfExists('entregas');
     }
 };

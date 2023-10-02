@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Escuela, App\Models\Ubicacion, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
+use App\Imports\EscuelasImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EscuelaController extends Controller
 {
@@ -158,5 +160,23 @@ class EscuelaController extends Controller
             return back()->with('messages', '¡Escuela eliminada con exito!.')
                     ->with('typealert', 'warning');
         endif;
+    }
+
+    public function postEscuelaImportar(Request $request){
+        /*Excel::import(new EscuelasImport, request()->file('escuelas'));
+        return $ubicaciones;
+
+        $datos = [
+            'ubicaciones' => $ubicaciones
+        ]; 
+
+        return view('admin.ubicaciones.validar_import', $datos);
+        return back()->with('messages', '¡Escuelas importadas con exito!.')
+                    ->with('typealert', 'info');*/
+        //$prueba = Excel::toArray(new EscuelasImport, request()->file('escuelas'));
+        Excel::import(new EscuelasImport, request()->file('escuelas'));
+        return back()->with('messages', '¡Escuelas importadas con exito!.')
+                    ->with('typealert', 'primary');
+        
     }
 }

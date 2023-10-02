@@ -20,7 +20,8 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{url('/admin/ubicaciones')}}"><i class="fa-solid fa-earth-americas"></i> Ubicaciones</a></li>
             <li><a class="dropdown-item" href="{{url('/admin/instituciones')}}"><i class="fa-solid fa-building"></i> Instituciones</a></li>
-            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-people-carry-box"></i> Entregas</a></li>
+            <li><a class="dropdown-item" href="{{url('/admin/entregas')}}"><i class="fa-solid fa-people-carry-box"></i> Entregas</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-weight-scale"></i> Tablas de Pesos</a></li>
           </ul>
         </li>
 
@@ -37,12 +38,12 @@
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
+          <a href="#" class="nav-link"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Alimentos</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Alimentos</a>
-        </li>
+          <a href="#" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
+        </li>       
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link"><i class="fa-solid fa-file-invoice"></i> Solicitudes de Despacho</a>

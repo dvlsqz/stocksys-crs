@@ -1,4 +1,4 @@
-<footer class="bg-info text-center text-lg-start fixed-bottom">
+<footer class="bg-info text-center text-lg-start fixed-bottom mtop16">
   
 
   <!-- Copyright -->

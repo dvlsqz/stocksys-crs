@@ -62,6 +62,11 @@ document.addEventListener('DOMContentLoaded', function(){
         allowClear: true
     });
 
+    $("#id_escuela").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+
     $("#rol").select2({
         placeholder: "Seleccione una Opción",
         allowClear: true

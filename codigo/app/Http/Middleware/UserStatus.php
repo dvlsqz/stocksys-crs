@@ -15,7 +15,7 @@ class UserStatus
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->estado != "0"):
+        if(Auth::user()->estado != "1"):
             return $next($request);
         else:
             return redirect('/cerrar_sesion');

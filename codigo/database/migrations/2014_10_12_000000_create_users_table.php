@@ -46,7 +46,29 @@ return new class extends Migration
             'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
             'rol'=>'0',
             'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_editar":"true","ruta_eliminar":"true"}',
-            'estado'=>'1',        
+            'estado'=>'0', 
+            "created_at" =>  \Carbon\Carbon::now(), 
+            "updated_at" => \Carbon\Carbon::now(),       
+        ));
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT users OFF');
+
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT users ON');
+        DB::table('users')->insert(array(
+            'id'=>'2',
+            'nombres'=>'Usuario',
+            'apellidos'=>'Prueba',
+            'contacto'=>NULL,
+            'correo'=>NULL,
+            'puesto'=>'Usuario de Prueba',
+            'id_institucion'=>'2',
+            'usuario'=>'usuario.prueba',
+            'password'=>'$2y$10$zXvXYnFeooqc6/DeU.Ful.Joy.G6Rm.2uALNtnvtJjKuIJiE9Beia',
+            'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
+            'rol'=>'0',
+            'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_editar":"true","ruta_eliminar":"true"}',
+            'estado'=>'0',       
+            "created_at" =>  \Carbon\Carbon::now(), 
+            "updated_at" => \Carbon\Carbon::now(), 
         ));
         DB::unprepared('SELECT 1; SET IDENTITY_INSERT users OFF');
     }

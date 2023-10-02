@@ -30,7 +30,7 @@ class ConexionController extends Controller
             ->with('typealert', 'danger');
         else:
             if(Auth::attempt(['usuario' => $request->input('usuario'), 'password'=>$request->input('contrasena')], true )):
-                if(Auth::user()->estado == "0"):
+                if(Auth::user()->estado == "1"):
                     return redirect('/cerrar_sesion');
                 else:
                     return redirect('/admin');
@@ -48,7 +48,7 @@ class ConexionController extends Controller
         $estado= Auth::user()->estado;
         Auth::logout();
 
-        if($estado== "0"):
+        if($estado== "1"):
             return redirect('/iniciar_sesion')->with('messages', 'Su usuario fue suspéndido.')
             ->with('typealert', 'danger');
         else:

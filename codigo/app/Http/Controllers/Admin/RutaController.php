@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Ruta, App\Models\Ubicacion,App\Models\Escuela, App\Models\Bitacora;
+use App\Models\Ruta, App\Models\RutaEscuela, App\Models\Ubicacion, App\Models\Escuela, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class RutaController extends Controller
@@ -49,7 +49,6 @@ class RutaController extends Controller
             $r = new Ruta;
             $r->correlativo = $correlativo+1;
             $r->id_ubicacion = $request->input('id_ubicacion');
-            $r->hora_salida = $request->input('hora_salida');
             $r->observaciones = e($request->input('observaciones'));
             $r->estado = '0';
 
@@ -62,16 +61,73 @@ class RutaController extends Controller
         endif;
     }
 
+    public function getRutaEliminar($id){
+        $ruta = Ruta::findOrFail($id);
+
+        if($ruta->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación de ruta';
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Ruta eliminada con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
+    }
+
     public function getRutaAsignarEscuelas($id){
         $ruta = Ruta::findOrFail($id);
         $escuelas = Escuela::where('id_ubicacion', $ruta->id_ubicacion)->get();
-
+        $asignaciones = RutaEscuela::where('id_ruta', $ruta->id)->orderBy('orden_llegada', 'asc')->get();
+        
 
         $datos = [
             'ruta' => $ruta,
-            'escuelas' => $escuelas
+            'escuelas' => $escuelas,
+            'asignaciones' => $asignaciones,
         ];
 
         return view('admin.rutas.asignar_escuelas',$datos);
+    }
+
+    public function postRutaAsignarEscuelas(Request $request){
+        $reglas = [
+            'id_escuela' => 'required'
+    	];
+    	$mensajes = [
+            'id_escuela.required' => 'Se requiere seleccione una escuela para la ruta.'
+    	];
+
+        $validator = Validator::make($request->all(), $reglas, $mensajes);
+    	if($validator->fails()):
+    		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
+        else: 
+            
+
+            $re = new RutaEscuela;
+            $re->id_ruta = $request->input('id_ruta');
+            $re->id_escuela = $request->input('id_escuela');
+            $re->orden_llegada = e($request->input('orden_llegada'));
+
+            if($re->save()):
+
+                return back()->with('messages', '¡Asignación realizada con exito!.')
+                    ->with('typealert', 'success');
+    		endif;
+        endif;
+    }
+
+    public function getRutaEliminarEscuelas($id){
+        $escuela_ruta = RutaEscuela::findOrFail($id);
+
+        if($escuela_ruta->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación de escuela asignada a ruta';
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Eliminada eliminada de esta ruta con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
     }
 }

@@ -43,6 +43,29 @@
         endif;
     }
 
+    function obtenerMeses($modo, $id){
+        $m = [
+            '1' => 'Enero',
+            '2' => 'Febrero',
+            '3' => 'Marzo',
+            '4' => 'Abril',
+            '5' => 'Mayo',
+            '6' => 'Junio',
+            '7' => 'Julio',
+            '8' => 'Agosto',
+            '9' => 'Septiembre',
+            '10' => 'Octubre',
+            '11' => 'Noviembre',
+            '12' => 'Diciembre',
+        ];
+
+        if(!is_null($modo)):
+            return $m;
+        else:
+            return $m[$id];
+        endif;
+    }
+
     //Key Value From JSON
     function kvfj($json, $key){
         if($json == null):
@@ -128,7 +151,18 @@
                     'ruta_asignar_escuelas' => 'Puede asignar escuelas a las rutas.',
                     'ruta_eliminar' => 'Puede eliminar rutas.'                           
                 ]
-            ]
+            ],
+            'entregas' => [
+                'icon' => '<i class="fa-solid fa-people-carry-box"></i>',
+                'title' => 'Modulo Entregas',
+                'keys' => [
+                    'entregas' => 'Puede ver el listado de entregas.',
+                    'entrega_registrar' => 'Puede agregar nuevas entregas.',
+                    'entrega_editar' => 'Puede editar entregas.',
+                    'entrega_eliminar' => 'Puede eliminar entregas.'                 
+                ]
+            ],
+
             
     
 

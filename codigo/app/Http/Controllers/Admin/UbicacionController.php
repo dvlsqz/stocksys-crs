@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Ubicacion, App\Models\Bitacora;
-use App\Imports\UbicacionesImport;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
+use App\Imports\UbicacionesImport,App\Imports\PruebasImport;
 use Maatwebsite\Excel\Facades\Excel;
-
+ 
 class UbicacionController extends Controller
 {
     public function __Construct(){
@@ -53,6 +53,57 @@ class UbicacionController extends Controller
                 return back()->with('messages', '¡Ubicación creada y guardada con exito!.')
                     ->with('typealert', 'success');
     		endif;
+        endif;
+    }
+
+    public function getUbicacionEditar($id){
+        $ubicacion = Ubicacion::findOrFail($id);
+
+        $datos = [
+            'ubicacion' => $ubicacion
+        ]; 
+
+        return view('admin.ubicaciones.editar', $datos);
+    }
+
+    public function postUbicacionEditar(Request $request, $id){
+        $reglas = [
+    		'nombre' => 'required'
+    	];
+    	$mensajes = [
+    		'nombre.required' => 'Se requiere un nombre para la ubicación.'
+    	];
+
+        $validator = Validator::make($request->all(), $reglas, $mensajes);
+    	if($validator->fails()):
+    		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
+        else: 
+            $ubicacion = Ubicacion::findOrFail($id);
+            $ubicacion->nombre = e($request->input('nombre'));
+
+            if($ubicacion->save()):
+                $b = new Bitacora;
+                $b->accion = 'Edición de nombre de ubicación con nombre: '.$ubicacion->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
+
+                return back()->with('messages', '¡Información actualizada y guardada con exito!.')
+                    ->with('typealert', 'info');
+    		endif;
+        endif;
+    }
+
+    public function getUbicacionEliminar($id){
+        $ubicacion = Ubicacion::findOrFail($id);
+
+        if($ubicacion->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminación de ubicación con nombre: '.$ubicacion->nombre;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Ubicación eliminada con exito!.')
+                    ->with('typealert', 'warning');
         endif;
     }
 
@@ -142,62 +193,14 @@ class UbicacionController extends Controller
         endif;
     }
 
-    public function getUbicacionEditar($id){
-        $ubicacion = Ubicacion::findOrFail($id);
-
-        $datos = [
-            'ubicacion' => $ubicacion
-        ]; 
-
-        return view('admin.ubicaciones.editar', $datos);
-    }
-
-    public function postUbicacionEditar(Request $request, $id){
-        $reglas = [
-    		'nombre' => 'required'
-    	];
-    	$mensajes = [
-    		'nombre.required' => 'Se requiere un nombre para la ubicación.'
-    	];
-
-        $validator = Validator::make($request->all(), $reglas, $mensajes);
-    	if($validator->fails()):
-    		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
-        else: 
-            $ubicacion = Ubicacion::findOrFail($id);
-            $ubicacion->nombre = e($request->input('nombre'));
-
-            if($ubicacion->save()):
-                $b = new Bitacora;
-                $b->accion = 'Edición de nombre de ubicación con nombre: '.$ubicacion->nombre;
-                $b->id_usuario = Auth::id();
-                $b->save();
-
-                return back()->with('messages', '¡Información actualizada y guardada con exito!.')
-                    ->with('typealert', 'info');
-    		endif;
-        endif;
-    }
-
-    public function getUbicacionEliminar($id){
-        $ubicacion = Ubicacion::findOrFail($id);
-
-        if($ubicacion->delete()):
-            $b = new Bitacora;
-            $b->accion = 'Eliminación de ubicación con nombre: '.$ubicacion->nombre;
-            $b->id_usuario = Auth::id();
-            $b->save();
-
-            return back()->with('messages', '¡Ubicación eliminada con exito!.')
-                    ->with('typealert', 'warning');
-        endif;
-    }
+    
 
     public function postUbicacionImportar(Request $request){
-        $prueba = Excel::toCollection(new UbicacionesImport, request()->file('ubicaciones'));
-        return $prueba;
-        //return back()->with('messages', '¡Ubicaciones importadas con exito!.')
-                    //->with('typealert', 'info');
+        Excel::import(new UbicacionesImport, request()->file('ubicaciones'));
+        //return $ubicaciones;
+
+        return back()->with('messages', '¡Ubicaciones importadas con exito!.')
+                    ->with('typealert', 'primary');
     }
     
 }

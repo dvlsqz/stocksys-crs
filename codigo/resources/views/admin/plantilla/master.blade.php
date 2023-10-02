@@ -47,7 +47,7 @@
     </div>
    
     
-    @include('admin.plantilla.footer')
+    
 
 </body>
 

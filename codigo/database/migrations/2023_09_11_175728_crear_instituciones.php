@@ -39,6 +39,21 @@ return new class extends Migration
             'estado'=>'0',        
         ));
         DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones OFF');
+        
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones ON');
+        DB::table('instituciones')->insert(array(
+            'id'=>'2',
+            'nombre'=>'Socio Prueba',
+            'direccion'=>'zona 5',
+            'nivel'=>'0',
+            'id_ubicacion'=>'3',
+            'encargado'=>NULL,
+            'contacto'=>NULL,
+            'correo'=>NULL,
+            'observaciones'=>NULL,  
+            'estado'=>'0',        
+        ));
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones OFF');
     }
 
     /**
