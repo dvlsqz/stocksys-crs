@@ -12,7 +12,7 @@ class Ubicacion extends Model
     use SoftDeletes;
 
     protected $table = 'ubicaciones';
-    protected $fillable = ['nombre', 'nivel', 'id_principal'];
+    protected $fillable = ['nombre', 'nivel', 'nomenclatura', 'id_principal'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function ubicacion_superior(){

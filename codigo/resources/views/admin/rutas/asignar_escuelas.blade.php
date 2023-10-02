@@ -51,7 +51,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-route"></i> Listado de Escuelas Asignadas A: Ruta {{$ruta->correlativo}}. - {{$ruta->ubicacion->nombre}}</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-route"></i> Listado de Escuelas Asignadas A Ruta: {{$ruta->ubicacion->nomenclatura.'0'.$ruta->correlativo}}</strong></h2>
                 </div>
 
                 <div class="card-body">

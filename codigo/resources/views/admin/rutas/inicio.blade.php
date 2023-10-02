@@ -52,7 +52,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        Ruta {{$r->correlativo}}. <br>
+                                        Ruta {{$r->ubicacion->nomenclatura.'0'.$r->correlativo}} <br>
                                         {{$r->ubicacion->nombre.' / '.$r->ubicacion->ubicacion_superior->nombre.' / '.$r->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}
                                     </td>
                                     <td>{{$r->estado}}</td>

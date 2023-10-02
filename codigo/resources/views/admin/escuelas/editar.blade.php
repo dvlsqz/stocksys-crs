@@ -1,5 +1,5 @@
 @extends('admin.plantilla.master')
-@section('title','Registar Institución')
+@section('title','Editar Escuela')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('/admin/escuelas') }}"><i class="fa-solid fa-route"></i> Escuelas</a></li>

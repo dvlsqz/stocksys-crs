@@ -91,7 +91,7 @@ class EscuelaController extends Controller
 
     public function getEscuelaEditar($id){
         $escuela = Escuela::findOrFail($id);
-        $ubicaciones = Ubicacion::where('nivel', 3)->pluck('nombre', 'id');
+        $ubicaciones = Ubicacion::where('nivel', 3)->get();
 
         $datos = [
             'escuela' => $escuela,
