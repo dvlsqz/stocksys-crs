@@ -31,8 +31,8 @@
 
     function obtenerEstadosUsuario($modo, $id){
         $estado = [
-            '0' => 'Suspendido',
-            '1' => 'Activo',
+            '0' => 'Activo',
+            '1' => 'Suspendido',
         ];
 
         
@@ -40,6 +40,25 @@
             return $estado;
         else:
             return $estado[$id];
+        endif;
+    }
+
+    function obtenerUnidadesMedidaAlimentos($modo, $id){
+        $ti = [
+            '0' => 'Kilogramos por unidad (Caneca/Saco)',
+            '1' => 'Gramos x unidad',
+            '2' => 'Libras Netas por Unidad = Kg por unidad x Libras por Kg.',
+            '3' => 'Quintales x unidad',
+            '4' => 'Peso bruto en quintales (peso neto + caneca metalica)',
+            '5' => 'Tonelada Metrica Kg.',
+            '6' => 'Unidades por TM'
+
+        ];
+
+        if(!is_null($modo)):
+            return $ti;
+        else:
+            return $ti[$id];
         endif;
     }
 
@@ -160,6 +179,17 @@
                     'entrega_registrar' => 'Puede agregar nuevas entregas.',
                     'entrega_editar' => 'Puede editar entregas.',
                     'entrega_eliminar' => 'Puede eliminar entregas.'                 
+                ]
+            ],
+            'alimentos' => [
+                'icon' => '<i class="fa-solid fa-weight-scale"></i>',
+                'title' => 'Modulo Alimentos',
+                'keys' => [
+                    'alimentos' => 'Puede ver el listado de alimentos.',
+                    'alimento_registrar' => 'Puede agregar nuevos alimentos.',
+                    'alimento_editar' => 'Puede editar alimentos.',
+                    'alimento_eliminar' => 'Puede eliminar alimentos.',
+                    'alimento_pesos' => 'Puede listar y editar pesos de los alimentos.'                            
                 ]
             ],
 

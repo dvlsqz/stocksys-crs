@@ -30,7 +30,6 @@
                                 <td><strong> NOMBRE </strong></td>
                                 <td><strong> USUARIO </strong></td>
                                 <td><strong> ROL </strong></td>
-                                <td><strong> ESTADO </strong></td>
                         </thead>
                         <tbody>
                             @foreach($usuarios as $u)
@@ -48,9 +47,15 @@
                                         {{$u->nombres.' '.$u->apellidos}} <br>
                                         Institución: {{$u->institucion->nombre}}
                                     </td>
-                                    <td>{{$u->usuario}}</td>
-                                    <td>{{$u->rol}}</td>
-                                    <td>{{$u->estado}}</td>
+                                    <td>
+                                        {{$u->usuario}} <br> 
+                                        @if($u->estado == 0)
+                                            <span class="badge text-bg-success">{{ obtenerEstadosUsuario(null, $u->estado) }}</span>
+                                        @else
+                                            <span class="badge text-bg-danger">{{ obtenerEstadosUsuario(null, $u->estado) }}</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ obtenerRoles(null, $u->rol) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

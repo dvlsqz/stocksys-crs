@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\EscuelaController;
 use App\Http\Controllers\Admin\RutaController;
 use App\Http\Controllers\Admin\EntregaController;
+use App\Http\Controllers\Admin\AlimentoController;
+use App\Http\Controllers\Admin\TablaConversionController;
 use App\Http\Controllers\Admin\PruebasController;
 
 Route::prefix('/admin')->group(function(){
@@ -56,7 +58,6 @@ Route::prefix('/admin')->group(function(){
 
     //Modulo de rutas
     Route::get('/rutas', [RutaController::class, 'getInicio'])->name('rutas');
-    Route::get('/ruta/registrar', [RutaController::class, 'getRutaRegistrar'])->name('ruta_registrar');  
     Route::post('/ruta/registrar', [RutaController::class, 'postRutaRegistrar'])->name('ruta_registrar');
     Route::get('/ruta/{id}/eliminar', [RutaController::class, 'getRutaEliminar'])->name('ruta_eliminar');
     Route::get('/ruta/{id}/asignar_escuelas', [RutaController::class, 'getRutaAsignarEscuelas'])->name('ruta_asignar_escuelas');
@@ -70,8 +71,20 @@ Route::prefix('/admin')->group(function(){
     Route::post('/entrega/{id}/editar', [EntregaController::class, 'postEntregaEditar'])->name('entrega_editar');
     Route::get('/entrega/{id}/eliminar', [EntregaController::class, 'getEntregaEliminar'])->name('entrega_eliminar');
 
+    //Modulo de Alimentos
+    Route::get('/alimentos', [AlimentoController::class, 'getInicio'])->name('alimentos');
+    Route::get('/alimento/registrar', [AlimentoController::class, 'getAlimentoRegistrar'])->name('alimento_registrar');  
+    Route::post('/alimento/registrar', [AlimentoController::class, 'postAlimentoRegistrar'])->name('alimento_registrar');    
+    Route::get('/alimento/{id}/editar', [AlimentoController::class, 'getAlimentoEditar'])->name('alimento_editar');  
+    Route::post('/alimento/{id}/editar', [AlimentoController::class, 'postAlimentoEditar'])->name('alimento_editar');
+    Route::get('/alimento/{id}/eliminar', [AlimentoController::class, 'getAlimentoEliminar'])->name('alimento_eliminar');
+    Route::get('/alimento/{id}/pesos', [AlimentoController::class, 'getAlimentoPesos'])->name('alimento_pesos');  
+    Route::post('/alimento/{id}/pesos', [AlimentoController::class, 'postAlimentoPesos'])->name('alimento_pesos');
+    
+
     //Modulo de Pruebas
     Route::get('/pruebas', [PruebasController::class, 'getInicio'])->name('ubicaciones');
     Route::post('/prueba/importar', [PruebasController::class, 'postArchivoImportar'])->name('escuela_registrar');
 
+    
 });
