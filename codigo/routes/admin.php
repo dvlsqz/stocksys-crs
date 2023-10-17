@@ -8,10 +8,11 @@ use App\Http\Controllers\Admin\EscuelaController;
 use App\Http\Controllers\Admin\RutaController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\AlimentoController;
-use App\Http\Controllers\Admin\TablaConversionController;
+use App\Http\Controllers\Admin\RacionController;
+use App\Http\Controllers\Admin\BitacoraController;
 use App\Http\Controllers\Admin\PruebasController;
 
-Route::prefix('/admin')->group(function(){
+Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Permissions']],function(){
     Route::get('/', [PanelPrincipalController::class, 'getInicio'])->name('panel_principal');
 
     //Modulo de Ubicaciones
@@ -78,9 +79,22 @@ Route::prefix('/admin')->group(function(){
     Route::get('/alimento/{id}/editar', [AlimentoController::class, 'getAlimentoEditar'])->name('alimento_editar');  
     Route::post('/alimento/{id}/editar', [AlimentoController::class, 'postAlimentoEditar'])->name('alimento_editar');
     Route::get('/alimento/{id}/eliminar', [AlimentoController::class, 'getAlimentoEliminar'])->name('alimento_eliminar');
-    Route::get('/alimento/{id}/pesos', [AlimentoController::class, 'getAlimentoPesos'])->name('alimento_pesos');  
-    Route::post('/alimento/{id}/pesos', [AlimentoController::class, 'postAlimentoPesos'])->name('alimento_pesos');
+    Route::get('/alimento/{id}/pesos', [AlimentoController::class, 'getAlimentoPesos'])->name('alimento_pesos');
+    Route::post('/alimento/pesos', [AlimentoController::class, 'postAlimentoPesos'])->name('alimento_pesos');
+
+    //Modulo de Raciones
+    Route::get('/raciones', [RacionController::class, 'getInicio'])->name('raciones');
+    Route::post('/racion/registrar', [RacionController::class, 'postRacionRegistrar'])->name('racion_registrar');    
+    Route::get('/racion/{id}/editar', [RacionController::class, 'getRacionEditar'])->name('racion_editar');
+    Route::post('/racion/{id}/editar', [RacionController::class, 'postRacionEditar'])->name('racion_editar');
+    Route::get('/racion/{id}/eliminar', [RacionController::class, 'getRacionEliminar'])->name('racion_eliminar');
+    Route::get('/racion/{id}/alimentos', [RacionController::class, 'getRacionAlimentos'])->name('racion_alimentos');
+    Route::post('/racion/alimentos', [RacionController::class, 'postRacionAlimentos'])->name('racion_alimentos');
+    Route::get('/racion/alimentos/{id}/eliminar', [RacionController::class, 'getRacionAlimentosEliminar'])->name('racion_alimentos');
     
+
+    //Reporte de Bitacoras
+    Route::get('/bitacoras', [BitacoraController::class, 'getInicio'])->name('bitacoras');
 
     //Modulo de Pruebas
     Route::get('/pruebas', [PruebasController::class, 'getInicio'])->name('ubicaciones');

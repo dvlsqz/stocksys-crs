@@ -10,12 +10,6 @@ use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class EntregaController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-    
     public function getInicio(){
 
         $entregas = Entrega::all();

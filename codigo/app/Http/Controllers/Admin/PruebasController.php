@@ -12,12 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PruebasController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-    
+  
     public function getInicio(){
         
 

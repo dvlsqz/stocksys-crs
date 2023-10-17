@@ -12,12 +12,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class EscuelaController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-
     public function getInicio(){
         $escuelas = Escuela::with(['ubicacion'])->get();
 

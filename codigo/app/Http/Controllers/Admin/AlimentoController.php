@@ -5,17 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Alimento, App\Models\Bitacora;
+use App\Models\Alimento, App\Models\PesoAlimento, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class AlimentoController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-
     public function getInicio(){
         $alimentos = Alimento::get();
         $alimento = new Alimento;
@@ -101,7 +95,7 @@ class AlimentoController extends Controller
     }
 
     public function getAlimentoEliminar($id){
-        $alimento = Escuela::findOrFail($id);
+        $alimento = Alimento::findOrFail($id);
 
         if($alimento->delete()):
             $b = new Bitacora;
@@ -111,6 +105,91 @@ class AlimentoController extends Controller
 
             return back()->with('messages', '¡Alimento eliminado con exito!.')
                     ->with('typealert', 'warning');
+        endif;
+    }
+
+    public function getAlimentoPesos($id){
+        $pesos_existen = PesoAlimento::where('id_alimento',$id)->count();
+        if($pesos_existen == 0):
+            $pesos = new PesoAlimento;
+        else:
+            $pesos = PesoAlimento::findOrFail($id);
+        endif;
+        $alimento = Alimento::findOrFail($id);
+
+        $datos = [
+            'id' => $id,
+            'pesos' => $pesos,
+            'alimento' => $alimento
+        ];
+
+        return view('admin.alimentos.pesos',$datos);
+    }
+
+    public function postAlimentoPesos(Request $request){
+        $reglas = [
+    		
+    	];
+    	$mensajes = [
+    		
+    	];
+
+        $validator = Validator::make($request->all(), $reglas, $mensajes);
+    	if($validator->fails()):
+    		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
+        else: 
+            $datos_ant = PesoAlimento::where('id_alimento',$request->input('id_alimento'))->count();
+            if($datos_ant == 0):
+                $a = Alimento::findOrFail($request->input('id_alimento'));
+                $p = new PesoAlimento;
+                $p->id_alimento = $request->input('id_alimento');
+                $p->gramos_x_libra = $request->input('gramos_x_libra');
+                $p->gramos_x_kg = $request->input('gramos_x_kg');
+                $p->libras_x_kg = $request->input('libras_x_kg');
+                $p->kg_x_unidad = $request->input('kg_x_unidad');
+                $p->gramos_x_unidad = $request->input('gramos_x_unidad');
+                $p->libras_x_unidad = $request->input('libras_x_unidad');
+                $p->quintales_x_unidad = $request->input('quintales_x_unidad');
+                $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
+                $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
+                $p->unidades_x_tm = $request->input('unidades_x_tm');
+
+                if($p->save()):
+                    $b = new Bitacora;
+                    $b->accion = 'Registro de peso de alimento: '.$a->nombre;
+                    $b->id_usuario = Auth::id();
+                    $b->save();
+
+                    return back()->with('messages', '¡Pesos de alimento creados y guardados con exito!.')
+                    ->with('typealert', 'success');
+                endif;
+            endif;
+
+            if($datos_ant == 1):
+                $a = Alimento::findOrFail($request->input('id_alimento'));
+                $p = PesoAlimento::findOrFail($request->input('id_alimento'));
+                $p->gramos_x_libra = $request->input('gramos_x_libra');
+                $p->gramos_x_kg = $request->input('gramos_x_kg');
+                $p->libras_x_kg = $request->input('libras_x_kg');
+                $p->kg_x_unidad = $request->input('kg_x_unidad');
+                $p->gramos_x_unidad = $request->input('gramos_x_unidad');
+                $p->libras_x_unidad = $request->input('libras_x_unidad');
+                $p->quintales_x_unidad = $request->input('quintales_x_unidad');
+                $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
+                $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
+                $p->unidades_x_tm = $request->input('unidades_x_tm');
+
+                if($p->save()):
+                    $b = new Bitacora;
+                    $b->accion = 'Actualización de pesos de alimento: '.$a->nombre;
+                    $b->id_usuario = Auth::id();
+                    $b->save();
+
+                    return back()->with('messages', '¡Información actualizada y guardada con exito!.')
+                    ->with('typealert', 'info');
+                endif;
+            endif;
+            
         endif;
     }
 }

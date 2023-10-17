@@ -62,6 +62,35 @@
         endif;
     }
 
+    function obtenerUnidadesMedidaRaciones($modo, $id){
+        $ti = [
+            '0' => 'Gramos',
+            '1' => 'Kilogramos',
+            '2' => 'Libras'
+        ];
+
+        if(!is_null($modo)):
+            return $ti;
+        else:
+            return $ti[$id];
+        endif;
+    }
+
+    function obtenerOpcionesBeneficiarios($modo, $id){
+        $ob = [
+            '0' => 'Estudiantes',
+            '1' => 'Lideres',
+            '2' => 'Voluntarios',
+            '3' => 'Docentes',
+        ];
+
+        if(!is_null($modo)):
+            return $ob;
+        else:
+            return $ob[$id];
+        endif;
+    }
+
     function obtenerMeses($modo, $id){
         $m = [
             '1' => 'Enero',
@@ -190,6 +219,24 @@
                     'alimento_editar' => 'Puede editar alimentos.',
                     'alimento_eliminar' => 'Puede eliminar alimentos.',
                     'alimento_pesos' => 'Puede listar y editar pesos de los alimentos.'                            
+                ]
+            ],
+            'raciones' => [
+                'icon' => '<i class="fa-solid fa-bowl-rice"></i>',
+                'title' => 'Modulo Raciones',
+                'keys' => [
+                    'raciones' => 'Puede ver el listado de raciones.',
+                    'racion_registrar' => 'Puede agregar nuevas raciones.',
+                    'racion_editar' => 'Puede editar raciones.',
+                    'racion_eliminar' => 'Puede eliminar raciones.',
+                    'racion_alimentos' => 'Puede crear, editar y eliminar alimentos que conforman las raciones.',          
+                ]
+            ],
+            'reportes' => [
+                'icon' => '<i class="fa-solid fa-box-archive"></i>',
+                'title' => 'Modulo Reportes',
+                'keys' => [
+                    'bitacoras' => 'Puede ver el listado de bitacoras del sistema.',        
                 ]
             ],
 

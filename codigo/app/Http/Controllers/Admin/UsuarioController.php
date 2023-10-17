@@ -10,11 +10,6 @@ use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class UsuarioController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
 
     public function getInicio(){
 

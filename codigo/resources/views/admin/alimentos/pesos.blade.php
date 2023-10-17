@@ -10,58 +10,44 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+
+        <div class="col-md-3"> 
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Peso</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Listado de Pesos: </strong>{{ $alimento->nombre }}</h2>
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/alimento/registrar', 'files' => true]) !!}
-                        @include('admin.alimentos.formulario')
-
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
-                    {!! Form::close() !!}
+                   <strong><i class="fa-solid fa-angles-right"></i> Gramos por libra: </strong> {{ $pesos->gramos_x_libra }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Gramos por Kg: </strong> {{ $pesos->gramos_x_kg }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Libras por KG: </strong> {{ $pesos->libras_x_kg }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Kilogramos por unidad (Caneca/Saco): </strong> {{ $pesos->kg_x_unidad }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Gramos x unidad: </strong> {{ $pesos->gramos_x_unidad }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Libras Netas por Unidad: </strong> {{ $pesos->libras_x_unidad }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Quintales x unidad:  </strong> {{ $pesos->quintales_x_unidad }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Peso bruto en quintales: </strong> {{ $pesos->peso_bruto_quintales }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Tonelada Metrica Kg: </strong> {{ $pesos->tonelada_metrica_kg }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Unidades por TM:  </strong> {{ $pesos->unidades_x_tm }} <br>
                 </div>
 
-            </div>
-            
+            </div>                
         </div>
-
+        
         <div class="col-md-9"> 
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Listado de Pesos</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Edición de Pesos: </strong>{{ $alimento->nombre }}</h2>
                 </div>
 
                 <div class="card-body">
-                    <table id="tabla" class="table table-striped table-hover mtop16">
-                        <thead>
-                            <tr>
-                                <td><strong> OPCIONES </strong></td>
-                                <td><strong> PESO </strong></td>
-                                <td><strong> VALOR </strong></td>
-                        </thead>
-                        <tbody>
-                            @foreach($alimentos as $a)
-                                <tr>
-                                    <td width="280px">
-                                        <div class="opts">
-                                            <a href="{{ url('/admin/alimento/'.$a->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/alimento" data-object="{{ $a->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {{$a->nombre}} <br>
-                                        <small><strong>Unidad Medida: </strong>{{ obtenerUnidadesMedidaAlimentos(null, $a->id_unidad_medida) }}</small> 
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    {!! Form::open(['url' => '/admin/alimento/pesos', 'files' => true]) !!}
+                        @include('admin.alimentos.formulario_pesos')
+
+                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        <a href="{{ url('/admin/alimentos') }}" class="btn btn-secondary mtop16">Regresar</a>
+                    {!! Form::close() !!}
                 </div>
 
             </div>                

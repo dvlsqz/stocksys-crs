@@ -10,12 +10,6 @@ use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class RutaController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-
     public function getInicio(){
         $rutas = Ruta::with(['ubicacion'])->get();
         $ruta = new Ruta;

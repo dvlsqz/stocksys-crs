@@ -12,12 +12,6 @@ use Maatwebsite\Excel\Facades\Excel;
  
 class UbicacionController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-    
     public function getInicio(){
         $ubicaciones = Ubicacion::where('nivel', 1)->get();
 

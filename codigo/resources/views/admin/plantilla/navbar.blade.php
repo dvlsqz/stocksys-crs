@@ -41,7 +41,7 @@
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
+          <a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
         </li>       
 
         <li class="nav-item d-none d-sm-inline-block">
@@ -56,7 +56,7 @@
             <li><a class="dropdown-item" href="{{url('/admin/ubicaciones')}}">Ubicaciones</a></li>
             <li><a class="dropdown-item" href="#">Instituciones</a></li>
             <div class="dropdown-divider"></div>
-            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-clock"></i> Bitacoras del Sistema</a></li>
+            <li><a class="dropdown-item" href="{{url('/admin/bitacoras')}}"><i class="fa-solid fa-user-clock"></i> Bitacoras del Sistema</a></li>
           </ul>
         </li>
 

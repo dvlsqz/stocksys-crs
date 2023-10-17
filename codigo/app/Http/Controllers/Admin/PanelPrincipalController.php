@@ -7,12 +7,6 @@ use Illuminate\Http\Request;
 
 class PanelPrincipalController extends Controller
 {
-    public function __Construct(){
-        $this->middleware('auth');
-        $this->middleware('UserStatus');
-        $this->middleware('Permissions');
-    }
-
     public function getInicio(){       
 
         $datos = [
