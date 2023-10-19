@@ -57,7 +57,7 @@ class UbicacionController extends Controller
             'ubicacion' => $ubicacion
         ]; 
 
-        return view('admin.ubicaciones.editar', $datos);
+        return response()->json($datos);
     }
 
     public function postUbicacionEditar(Request $request, $id){

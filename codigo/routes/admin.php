@@ -19,7 +19,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/ubicaciones', [UbicacionController::class, 'getInicio'])->name('ubicaciones');
     Route::post('/ubicacion/registrar', [UbicacionController::class, 'postUbicacionRegistrar'])->name('ubicacion_registrar');    
     Route::get('/ubicacion/{id}/editar', [UbicacionController::class, 'getUbicacionEditar'])->name('ubicacion_editar');
-    Route::post('/ubicacion/{id}/editar', [UbicacionController::class, 'postUbicacionEditar'])->name('ubicacion_editar');
+    Route::post('/ubicacion/editar', [UbicacionController::class, 'postUbicacionEditar'])->name('ubicacion_editar');
     Route::get('/ubicacion/{id}/eliminar', [UbicacionController::class, 'getUbicacionEliminar'])->name('ubicacion_eliminar');
     Route::get('/ubicacion/{id}/listado/n1', [UbicacionController::class, 'getUbicacionListadoN1'])->name('ubicacion_n1');
     Route::post('/ubicacion/n1/registrar', [UbicacionController::class, 'postUbicacionN1Registrar'])->name('ubicacion_registrar_n1');

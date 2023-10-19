@@ -18,17 +18,7 @@
 
                 <div class="card-body">
                     {!! Form::open(['url' => '/admin/ubicacion/registrar', 'files' => true]) !!}
-                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nombre: </strong></label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                            {!! Form::text('nombre', null, ['class'=>'form-control']) !!}
-                        </div>
-
-                        <label for="unit_id"  class="mtop16"><strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nivel / Tipo:</strong></label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-                            {!! Form::select('nivel', ['1'=>'País'],1,['class'=>'form-select']) !!}
-                        </div>
+                        @include('admin.ubicaciones.formulario')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
                     {!! Form::close() !!}
@@ -59,7 +49,7 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/ubicacion/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="" title="Editar" id="formularioEditar" data-toggle="modal" data-target='#practice_modal' data-id="{{ $u->id }}"><i class="fas fa-edit"></i></a>
                                             <a href="{{ url('/admin/ubicacion/'.$u->id.'/listado/n1') }}"  title="Listado"><i class="fa-solid fa-list"></i></a>
                                             <a href="#" data-action="eliminar" data-path="admin/ubicacion" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
@@ -102,5 +92,8 @@
         </div>
     </div>
 </div>
+@include('admin.ubicaciones.modal')
+@include('admin.ubicaciones.scripts')
+
 
 @endsection

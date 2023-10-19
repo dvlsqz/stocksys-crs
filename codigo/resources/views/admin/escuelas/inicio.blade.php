@@ -48,7 +48,7 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
-                                <td><strong> CODIGO / NOMBRE </strong></td>
+                                <td><strong> NOMBRE </strong></td>
                                 <td><strong> UBICACIÓN </strong></td>
                                 <td><strong> ESTADO </strong></td>
                         </thead>
@@ -62,11 +62,12 @@
                                         </div>
                                     </td>
                                     <td>
-                                        {{$e->codigo.' / '.$e->nombre}}
+                                        {{$e->nombre}} <br>
+                                        <small><strong>Codigo: </strong>{{$e->codigo}}</small>
                                     </td>
                                     <td>
                                         {{$e->direccion}}<br>
-                                        {{$e->ubicacion->nombre.' / '.$e->ubicacion->ubicacion_superior->nombre.' / '.$e->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}
+                                        <small><strong>{{$e->ubicacion->nombre.' / '.$e->ubicacion->ubicacion_superior->nombre.' / '.$e->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}</strong></small>
                                     </td>
                                     <td>{{$e->estado}}</td>
                                 </tr>

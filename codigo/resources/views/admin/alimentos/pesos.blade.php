@@ -28,7 +28,7 @@
                    <strong><i class="fa-solid fa-angles-right"></i> Quintales x unidad:  </strong> {{ $pesos->quintales_x_unidad }} <br>
                    <strong><i class="fa-solid fa-angles-right"></i> Peso bruto en quintales: </strong> {{ $pesos->peso_bruto_quintales }} <br>
                    <strong><i class="fa-solid fa-angles-right"></i> Tonelada Metrica Kg: </strong> {{ $pesos->tonelada_metrica_kg }} <br>
-                   <strong><i class="fa-solid fa-angles-right"></i> Unidades por TM:  </strong> {{ $pesos->unidades_x_tm }} <br>
+                   <strong><i class="fa-solid fa-angles-right"></i> Unidades por TM:  </strong> {{ $pesos->unidades_x_tm }} <br> 
                 </div>
 
             </div>                

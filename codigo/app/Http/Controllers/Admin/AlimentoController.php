@@ -168,16 +168,66 @@ class AlimentoController extends Controller
             if($datos_ant == 1):
                 $a = Alimento::findOrFail($request->input('id_alimento'));
                 $p = PesoAlimento::findOrFail($request->input('id_alimento'));
-                $p->gramos_x_libra = $request->input('gramos_x_libra');
-                $p->gramos_x_kg = $request->input('gramos_x_kg');
-                $p->libras_x_kg = $request->input('libras_x_kg');
-                $p->kg_x_unidad = $request->input('kg_x_unidad');
-                $p->gramos_x_unidad = $request->input('gramos_x_unidad');
-                $p->libras_x_unidad = $request->input('libras_x_unidad');
-                $p->quintales_x_unidad = $request->input('quintales_x_unidad');
-                $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
-                $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
-                $p->unidades_x_tm = $request->input('unidades_x_tm');
+
+                if(empty($request->input('gramos_x_libra'))):
+                    $p->gramos_x_libra = $request->input('gramos_x_libra_ant');
+                else:
+                    $p->gramos_x_libra = $request->input('gramos_x_libra');
+                endif;
+                
+                if(empty($request->input('gramos_x_kg'))):
+                    $p->gramos_x_kg = $request->input('gramos_x_kg_ant');
+                else:
+                    $p->gramos_x_kg = $request->input('gramos_x_kg');
+                endif;
+
+                if(empty($request->input('libras_x_kg'))):
+                    $p->libras_x_kg  = $request->input('libras_x_kg_ant');
+                else:
+                    $p->libras_x_kg  = $request->input('libras_x_kg');
+                endif;
+
+                if(empty($request->input('kg_x_unidad'))):
+                    $p->kg_x_unidad = $request->input('kg_x_unidad_ant');
+                else:
+                    $p->kg_x_unidad = $request->input('kg_x_unidad');
+                endif;
+
+                if(empty($request->input('gramos_x_unidad'))):
+                    $p->gramos_x_unidad = $request->input('gramos_x_unidad_ant');
+                else:
+                    $p->gramos_x_unidad = $request->input('gramos_x_unidad');
+                endif;
+
+                if(empty($request->input('libras_x_unidad'))):
+                    $p->libras_x_unidad = $request->input('libras_x_unidad_ant');
+                else:
+                    $p->libras_x_unidad = $request->input('libras_x_unidad');
+                endif;
+
+                if(empty($request->input('quintales_x_unidad'))):
+                    $p->quintales_x_unidad = $request->input('quintales_x_unidad_ant');
+                else:
+                    $p->quintales_x_unidad = $request->input('quintales_x_unidad');
+                endif;
+
+                if(empty($request->input('peso_bruto_quintales'))):
+                    $p->peso_bruto_quintales = $request->input('peso_bruto_quintales_ant');
+                else:
+                    $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
+                endif;
+
+                if(empty($request->input('tonelada_metrica_kg'))):
+                    $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg_ant');
+                else:
+                    $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
+                endif;
+                
+                if(empty($request->input('unidades_x_tm'))):
+                    $p->unidades_x_tm = $request->input('unidades_x_tm_ant');
+                else:
+                    $p->unidades_x_tm = $request->input('unidades_x_tm');
+                endif;
 
                 if($p->save()):
                     $b = new Bitacora;

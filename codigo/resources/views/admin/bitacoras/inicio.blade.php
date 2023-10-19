@@ -2,7 +2,7 @@
 @section('title','Bitacoras del Sistema')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/bitacoras') }}"><i class="fa-solid fa-users"></i> Bitacoras</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/bitacoras') }}"><i class="fa-solid fa-user-clock"></i> Bitacoras</a></li>
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-users"></i> Listado de Bitacoras del Sistema</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-user-clock"></i> Listado de Bitacoras del Sistema</strong></h2>
                     <ul>                       
                         <li>
                             <a href="{{ url('/admin/usuario/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar Usuario</a>
@@ -35,7 +35,7 @@
                                     <td>{{$b->accion}} </td>
                                     <td>
                                         {{$b->usuario->usuario}} <br>
-                                        <span class="badge text-bg-dark">{{$b->usuario->institucion->nombre}}</span>
+                                        <small><span class="badge text-bg-dark">{{$b->usuario->institucion->nombre}}</span></small>
                                         
                                     </td>
                                     <td>{{$b->created_at}}</td>
