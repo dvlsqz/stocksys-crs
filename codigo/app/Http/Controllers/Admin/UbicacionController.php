@@ -60,7 +60,9 @@ class UbicacionController extends Controller
         return response()->json($datos);
     }
 
-    public function postUbicacionEditar(Request $request, $id){
+    public function postUbicacionEditar(Request $request){
+        return $request->all();
+        
         $reglas = [
     		'nombre' => 'required'
     	];

@@ -6,7 +6,7 @@
         console.log(id);
 
         $.get('/admin/ubicacion/' + id + '/editar', function (data) {
-            console.log(data.ubicacion.nombre);
+            $('#id').val(data.ubicacion.id);
             $('#nombre').val(data.ubicacion.nombre);
      })
 
