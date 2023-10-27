@@ -42,10 +42,10 @@
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
-        </li>       
+        </li>        
 
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link"><i class="fa-solid fa-file-invoice"></i> Solicitudes de Despacho</a>
+          <a href="{{url('/admin/solicitudes')}}" class="nav-link"><i class="fa-solid fa-file-invoice"></i> Solicitudes de Despacho</a>
         </li>
 
         <li class="nav-item dropdown">

@@ -11,7 +11,7 @@ use Validator, Auth, Hash, Config, Carbon\Carbon;
 class BitacoraController extends Controller
 {
     public function getInicio(){
-        $bitacoras = Bitacora::with(['usuario'])->get();
+        $bitacoras = Bitacora::with(['usuario'])->orderBy('created_at','desc')->get();
 
         $datos = [
             'bitacoras' => $bitacoras

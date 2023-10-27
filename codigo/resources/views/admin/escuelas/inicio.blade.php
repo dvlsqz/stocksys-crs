@@ -50,7 +50,7 @@
                                 <td><strong> OPCIONES </strong></td>
                                 <td><strong> NOMBRE </strong></td>
                                 <td><strong> UBICACIÓN </strong></td>
-                                <td><strong> ESTADO </strong></td>
+                                <td><strong> RUTA </strong></td>
                         </thead>
                         <tbody>
                             @foreach($escuelas as $e)
@@ -69,7 +69,13 @@
                                         {{$e->direccion}}<br>
                                         <small><strong>{{$e->ubicacion->nombre.' / '.$e->ubicacion->ubicacion_superior->nombre.' / '.$e->ubicacion->ubicacion_superior->ubicacion_superior->nombre}}</strong></small>
                                     </td>
-                                    <td>{{$e->estado}}</td>
+                                    <td>
+                                        @if($e->ruta_asignada)
+                                            <span class="badge text-bg-primary">{{$e->ruta_asignada->ruta->ubicacion->nomenclatura.'0'.$e->ruta_asignada->ruta->correlativo}}</span>
+                                        @else
+                                            <span class="badge text-bg-danger">Sin Asignar</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

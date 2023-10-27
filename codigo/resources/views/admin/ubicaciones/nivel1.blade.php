@@ -61,7 +61,7 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="" title="Editar" id="formularioEditar" data-toggle="modal" data-target='#practice_modal' data-id="{{ $u->id }}"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ url('/admin/ubicacion/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
                                             <a href="{{ url('/admin/ubicacion/'.$u->id.'/listado/n2') }}"  title="Listado"><i class="fa-solid fa-list"></i></a>
                                             <a href="#" data-action="eliminar" data-path="admin/ubicacion" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
@@ -80,7 +80,5 @@
     </div>
 </div>
 
-@include('admin.ubicaciones.modal')
-@include('admin.ubicaciones.scripts')
 
 @endsection

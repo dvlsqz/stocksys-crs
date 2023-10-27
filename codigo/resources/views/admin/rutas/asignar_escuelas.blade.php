@@ -80,8 +80,8 @@
                                     </td>
                                     <td>{{$as->orden_llegada}}</td>
                                     <td>
-                                        {{$as->escuela->no_beneficiarios}}
-                                        @php($total += $as->escuela->no_beneficiarios) 
+                                        {{$as->escuela->no_total_beneficiarios}}
+                                        @php($total += $as->escuela->no_total_beneficiarios) 
                                     </td>
                                     <td>{{$as->escuela->director}}</td>
                                 </tr>

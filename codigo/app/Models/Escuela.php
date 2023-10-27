@@ -12,10 +12,14 @@ class Escuela extends Model
     use SoftDeletes;
 
     protected $table = 'escuelas';
-    protected $fillable = ['codigo','nombre', 'direccion', 'id_ubicacion', 'no_beneficiarios','director','estado'];
+    protected $fillable = ['jornada', 'codigo','nombre', 'direccion', 'id_ubicacion', 'no_total_beneficiarios','director','estado'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function ubicacion(){
         return $this->hasOne(Ubicacion::class,'id','id_ubicacion');
+    }
+
+    public function ruta_asignada(){
+        return $this->hasOne(RutaEscuela::class,'id_escuela','id');
     }
 }

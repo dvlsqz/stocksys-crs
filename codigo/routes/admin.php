@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RutaController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\AlimentoController;
 use App\Http\Controllers\Admin\RacionController;
+use App\Http\Controllers\Admin\SolicitudController;
 use App\Http\Controllers\Admin\BitacoraController;
 use App\Http\Controllers\Admin\PruebasController;
 
@@ -19,7 +20,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/ubicaciones', [UbicacionController::class, 'getInicio'])->name('ubicaciones');
     Route::post('/ubicacion/registrar', [UbicacionController::class, 'postUbicacionRegistrar'])->name('ubicacion_registrar');    
     Route::get('/ubicacion/{id}/editar', [UbicacionController::class, 'getUbicacionEditar'])->name('ubicacion_editar');
-    Route::post('/ubicacion/editar', [UbicacionController::class, 'postUbicacionEditar'])->name('ubicacion_editar');
+    Route::post('/ubicacion/{id}/editar', [UbicacionController::class, 'postUbicacionEditar'])->name('ubicacion_editar');
     Route::get('/ubicacion/{id}/eliminar', [UbicacionController::class, 'getUbicacionEliminar'])->name('ubicacion_eliminar');
     Route::get('/ubicacion/{id}/listado/n1', [UbicacionController::class, 'getUbicacionListadoN1'])->name('ubicacion_n1');
     Route::post('/ubicacion/n1/registrar', [UbicacionController::class, 'postUbicacionN1Registrar'])->name('ubicacion_registrar_n1');
@@ -91,6 +92,10 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/racion/{id}/alimentos', [RacionController::class, 'getRacionAlimentos'])->name('racion_alimentos');
     Route::post('/racion/alimentos', [RacionController::class, 'postRacionAlimentos'])->name('racion_alimentos');
     Route::get('/racion/alimentos/{id}/eliminar', [RacionController::class, 'getRacionAlimentosEliminar'])->name('racion_alimentos');
+
+    //Modulo de Solicitudes
+    Route::get('/solicitudes', [SolicitudController::class, 'getInicio'])->name('solicitudes');
+    Route::post('/solicitud/importar', [SolicitudController::class, 'postSolicitudImportar'])->name('solicitudes');
     
 
     //Reporte de Bitacoras

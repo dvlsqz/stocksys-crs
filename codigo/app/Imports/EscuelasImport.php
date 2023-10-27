@@ -17,11 +17,12 @@ class EscuelasImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         return new Escuela([
+            'jornada'     => $row['jornada'],
             'codigo'     => $row['codigo'],
             'nombre'    => $row['nombre'],  
             'direccion' => $row['direccion'],            
             'id_ubicacion' => $row['id_ubicacion'], 
-            'no_beneficiarios' => $row['no_beneficiarios'], 
+            'no_total_beneficiarios' => $row['no_beneficiarios'], 
             'director' => $row['director'],   
             'estado' => $row['estado'],          
         ]);

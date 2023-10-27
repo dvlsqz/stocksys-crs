@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class EscuelaController extends Controller
 {
     public function getInicio(){
-        $escuelas = Escuela::with(['ubicacion'])->get();
+        $escuelas = Escuela::with(['ubicacion', 'ruta_asignada'])->get();
 
         $datos = [
             'escuelas' => $escuelas

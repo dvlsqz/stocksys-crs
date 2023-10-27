@@ -232,6 +232,16 @@
                     'racion_alimentos' => 'Puede crear, editar y eliminar alimentos que conforman las raciones.',          
                 ]
             ],
+            'solicitudes' => [
+                'icon' => '<i class="fa-solid fa-file-invoice"></i>',
+                'title' => 'Modulo Solicitudes',
+                'keys' => [
+                    'solicitudes' => 'Puede ver el listado de solicitudes.',
+                    'solicitud_registrar' => 'Puede agregar nuevas solicitudes.',
+                    'solicitud_editar' => 'Puede editar solicitudes.',
+                    'solicitud_eliminar' => 'Puede eliminar solicitudes.',        
+                ]
+            ],
             'reportes' => [
                 'icon' => '<i class="fa-solid fa-box-archive"></i>',
                 'title' => 'Modulo Reportes',
