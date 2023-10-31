@@ -36,13 +36,49 @@
           <a href="{{url('/admin/rutas')}}" class="nav-link"><i class="fa-solid fa-route"></i> Rutas</a>
         </li>
 
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="{{url('/admin/alimentos')}}" class="nav-link"><i class="fa-solid fa-wheat-awn"></i> Alimentos</a>
-        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa-solid fa-boxes-packing"></i>  Almacen </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{{url('/admin/alimentos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Insumos</a>
+            </li>
 
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
-        </li>        
+            <li >
+              <a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
+            </li>  
+            
+
+            <li ><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Principal <i class="fa-solid fa-caret-right"></i></a>
+              <ul class="submenu dropdown-menu">
+                  <li><a class="dropdown-item" href=""> Third level 1</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 2</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 3 &raquo </a>
+                <ul class="submenu dropdown-menu">
+                    <li><a class="dropdown-item" href=""> Fourth level 1</a></li>
+                    <li><a class="dropdown-item" href=""> Fourth level 2</a></li>
+                </ul>
+                  </li>
+                  <li><a class="dropdown-item" href=""> Second level  4</a></li>
+                  <li><a class="dropdown-item" href=""> Second level  5</a></li>
+              </ul>
+            </li>
+
+            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Socio <i class="fa-solid fa-caret-right"></i></a>
+              <ul class="submenu dropdown-menu">
+                  <li><a class="dropdown-item" href=""> Third level 1</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 2</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 3 &raquo </a>
+                <ul class="submenu dropdown-menu">
+                    <li><a class="dropdown-item" href=""> Fourth level 1</a></li>
+                    <li><a class="dropdown-item" href=""> Fourth level 2</a></li>
+                </ul>
+                  </li>
+                  <li><a class="dropdown-item" href=""> Second level  4</a></li>
+                  <li><a class="dropdown-item" href=""> Second level  5</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>              
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="{{url('/admin/solicitudes')}}" class="nav-link"><i class="fa-solid fa-file-invoice"></i> Solicitudes de Despacho</a>
