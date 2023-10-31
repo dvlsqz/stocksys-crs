@@ -40,7 +40,7 @@
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa-solid fa-boxes-packing"></i>  Almacen </a>
           <ul class="dropdown-menu">
             <li>
-              <a href="{{url('/admin/alimentos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Insumos</a>
+              <a href="{{url('/admin/insumos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Insumos</a>
             </li>
 
             <li >

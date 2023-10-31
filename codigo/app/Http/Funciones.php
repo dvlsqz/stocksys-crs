@@ -43,7 +43,7 @@
         endif;
     }
 
-    function obtenerUnidadesMedidaAlimentos($modo, $id){
+    function obtenerUnidadesMedidaInsumos($modo, $id){
         $ti = [
             '0' => 'Kilogramos por unidad (Caneca/Saco)',
             '1' => 'Gramos x unidad',
@@ -52,6 +52,20 @@
             '4' => 'Peso bruto en quintales (peso neto + caneca metalica)',
             '5' => 'Tonelada Metrica Kg.',
             '6' => 'Unidades por TM'
+
+        ];
+
+        if(!is_null($modo)):
+            return $ti;
+        else:
+            return $ti[$id];
+        endif;
+    }
+
+    function obtenerCategoriaInsumos($modo, $id){
+        $ti = [
+            '0' => 'Alimentos',
+            '1' => 'Limpieza'
 
         ];
 
@@ -210,15 +224,15 @@
                     'entrega_eliminar' => 'Puede eliminar entregas.'                 
                 ]
             ],
-            'alimentos' => [
-                'icon' => '<i class="fa-solid fa-weight-scale"></i>',
-                'title' => 'Modulo Alimentos',
+            'insumos' => [
+                'icon' => '<i class="fa-solid fa-boxes-stacked"></i>',
+                'title' => 'Modulo Insumos',
                 'keys' => [
-                    'alimentos' => 'Puede ver el listado de alimentos.',
-                    'alimento_registrar' => 'Puede agregar nuevos alimentos.',
-                    'alimento_editar' => 'Puede editar alimentos.',
-                    'alimento_eliminar' => 'Puede eliminar alimentos.',
-                    'alimento_pesos' => 'Puede listar y editar pesos de los alimentos.'                            
+                    'insumos' => 'Puede ver el listado de insumos.',
+                    'insumo_registrar' => 'Puede agregar nuevos insumos.',
+                    'insumo_editar' => 'Puede editar insumos.',
+                    'insumo_eliminar' => 'Puede eliminar insumos.',
+                    'insumo_pesos' => 'Puede listar y editar pesos de los insumos.'                            
                 ]
             ],
             'raciones' => [

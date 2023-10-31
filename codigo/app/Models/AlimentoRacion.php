@@ -15,6 +15,6 @@ class AlimentoRacion extends Model
     protected $hidden = ['created_at', 'updated_at']; 
 
     public function alimento(){
-        return $this->hasOne(Alimento::class,'id','id_alimento');
+        return $this->hasOne(Insumo::class,'id','id_alimento');
     }
 }

@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\EscuelaController;
 use App\Http\Controllers\Admin\RutaController;
 use App\Http\Controllers\Admin\EntregaController;
-use App\Http\Controllers\Admin\AlimentoController;
+use App\Http\Controllers\Admin\InsumoController;
 use App\Http\Controllers\Admin\RacionController;
 use App\Http\Controllers\Admin\SolicitudController;
 use App\Http\Controllers\Admin\BitacoraController;
@@ -74,14 +74,14 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/entrega/{id}/eliminar', [EntregaController::class, 'getEntregaEliminar'])->name('entrega_eliminar');
 
     //Modulo de Alimentos
-    Route::get('/alimentos', [AlimentoController::class, 'getInicio'])->name('alimentos');
-    Route::get('/alimento/registrar', [AlimentoController::class, 'getAlimentoRegistrar'])->name('alimento_registrar');  
-    Route::post('/alimento/registrar', [AlimentoController::class, 'postAlimentoRegistrar'])->name('alimento_registrar');    
-    Route::get('/alimento/{id}/editar', [AlimentoController::class, 'getAlimentoEditar'])->name('alimento_editar');  
-    Route::post('/alimento/{id}/editar', [AlimentoController::class, 'postAlimentoEditar'])->name('alimento_editar');
-    Route::get('/alimento/{id}/eliminar', [AlimentoController::class, 'getAlimentoEliminar'])->name('alimento_eliminar');
-    Route::get('/alimento/{id}/pesos', [AlimentoController::class, 'getAlimentoPesos'])->name('alimento_pesos');
-    Route::post('/alimento/pesos', [AlimentoController::class, 'postAlimentoPesos'])->name('alimento_pesos');
+    Route::get('/insumos', [InsumoController::class, 'getInicio'])->name('insumos');
+    Route::get('/insumo/registrar', [InsumoController::class, 'getInsumoRegistrar'])->name('insumo_registrar');  
+    Route::post('/insumo/registrar', [InsumoController::class, 'postInsumoRegistrar'])->name('insumo_registrar');    
+    Route::get('/insumo/{id}/editar', [InsumoController::class, 'getInsumoEditar'])->name('insumo_editar');  
+    Route::post('/insumo/{id}/editar', [InsumoController::class, 'postInsumoEditar'])->name('insumo_editar');
+    Route::get('/insumo/{id}/eliminar', [InsumoController::class, 'getInsumoEliminar'])->name('insumo_eliminar');
+    Route::get('/insumo/{id}/pesos', [InsumoController::class, 'getInsumoPesos'])->name('insumo_pesos');
+    Route::post('/insumo/pesos', [InsumoController::class, 'postInsumoPesos'])->name('insumo_pesos');
 
     //Modulo de Raciones
     Route::get('/raciones', [RacionController::class, 'getInicio'])->name('raciones');
