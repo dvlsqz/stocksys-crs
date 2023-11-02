@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Racion, App\Models\AlimentoRacion, App\Models\Alimento, App\Models\Bitacora;
+use App\Models\Racion, App\Models\AlimentoRacion, App\Models\Insumo, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class RacionController extends Controller
@@ -108,7 +108,7 @@ class RacionController extends Controller
     public function getRacionAlimentos($id){
         $alimentos_racion = AlimentoRacion::where('id_racion',$id)->get();
         $racion = Racion::findOrFail($id);
-        $alimentos = Alimento::pluck('nombre', 'id');
+        $alimentos = Insumo::where('categoria' , 0)->pluck('nombre', 'id');
         $id = $id;
 
         $datos = [
@@ -139,9 +139,13 @@ class RacionController extends Controller
             $ar->cantidad = $request->input('cantidad');
             $ar->unidad_medida = $request->input('unidad_medida');
 
+            $alimento = Insumo::findOrFail($ar->id_alimento);
+            $racion = Racion::findOrFail($ar->id_racion);
+
+
             if($ar->save()):
                 $b = new Bitacora;
-                $b->accion = 'Se agrego alimento a la ración: '.$ar->nombre;
+                $b->accion = 'Se agrego alimento '.$alimento->nombre.' a la ración '.$racion->nombre;
                 $b->id_usuario = Auth::id();
                 $b->save();
 

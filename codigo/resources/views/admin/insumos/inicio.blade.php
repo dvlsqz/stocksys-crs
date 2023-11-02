@@ -49,15 +49,17 @@
                                     <td width="280px">
                                         <div class="opts">
                                             <a href="{{ url('/admin/insumo/'.$i->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/insumo/'.$i->id.'/pesos') }}"  title="Pesos"><i class="fa-solid fa-scale-unbalanced-flip"></i></a>
+                                            @if($i->categoria == 0)
+                                                <a href="{{ url('/admin/insumo/'.$i->id.'/pesos') }}"  title="Pesos"><i class="fa-solid fa-scale-unbalanced-flip"></i></a>
+                                            @endif
                                             <a href="#" data-action="eliminar" data-path="admin/insumo" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
                                     <td>
-                                        {{$a->nombre}} <br>
-                                        <small><strong>Unidad Medida: </strong>{{ obtenerUnidadesMedidaInsumos(null, $a->id_unidad_medida) }}</small> 
+                                        {{$i->nombre}} <br>
+                                        <small><strong>Unidad Medida: </strong>{{ obtenerUnidadesMedidaInsumos(null, $i->id_unidad_medida) }}</small> 
                                     </td>
-                                    <td></td>
+                                    <td>{{ obtenerCategoriaInsumos(null, $i->categoria) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

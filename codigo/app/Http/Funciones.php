@@ -51,7 +51,8 @@
             '3' => 'Quintales x unidad',
             '4' => 'Peso bruto en quintales (peso neto + caneca metalica)',
             '5' => 'Tonelada Metrica Kg.',
-            '6' => 'Unidades por TM'
+            '6' => 'Unidades por TM',
+            '7' => 'Kit'
 
         ];
 

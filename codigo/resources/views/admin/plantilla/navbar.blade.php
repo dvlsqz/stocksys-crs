@@ -50,33 +50,20 @@
 
             <li ><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Principal <i class="fa-solid fa-caret-right"></i></a>
               <ul class="submenu dropdown-menu">
-                  <li><a class="dropdown-item" href=""> Third level 1</a></li>
-                  <li><a class="dropdown-item" href=""> Third level 2</a></li>
-                  <li><a class="dropdown-item" href=""> Third level 3 &raquo </a>
-                <ul class="submenu dropdown-menu">
-                    <li><a class="dropdown-item" href=""> Fourth level 1</a></li>
-                    <li><a class="dropdown-item" href=""> Fourth level 2</a></li>
-                </ul>
-                  </li>
-                  <li><a class="dropdown-item" href=""> Second level  4</a></li>
-                  <li><a class="dropdown-item" href=""> Second level  5</a></li>
+                <li><a class="dropdown-item" href=""><i class="fa-solid fa-calculator"></i> Inventario</a></li>
+                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
+                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
               </ul>
             </li>
 
             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Socio <i class="fa-solid fa-caret-right"></i></a>
               <ul class="submenu dropdown-menu">
-                  <li><a class="dropdown-item" href=""> Third level 1</a></li>
-                  <li><a class="dropdown-item" href=""> Third level 2</a></li>
-                  <li><a class="dropdown-item" href=""> Third level 3 &raquo </a>
-                <ul class="submenu dropdown-menu">
-                    <li><a class="dropdown-item" href=""> Fourth level 1</a></li>
-                    <li><a class="dropdown-item" href=""> Fourth level 2</a></li>
-                </ul>
-                  </li>
-                  <li><a class="dropdown-item" href=""> Second level  4</a></li>
-                  <li><a class="dropdown-item" href=""> Second level  5</a></li>
+                <li><a class="dropdown-item" href=""><i class="fa-solid fa-calculator"></i> Inventario</a></li>
+                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
+                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
               </ul>
             </li>
+
           </ul>
         </li>              
 

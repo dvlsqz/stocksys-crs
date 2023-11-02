@@ -40,8 +40,7 @@ class InsumoController extends Controller
             $i->id_unidad_medida = $request->input('id_unidad_medida'); 
             $i->categoria = $request->input('categoria');
             $i->observaciones = e($request->input('observaciones'));
-            $i->id_institucion = Auth::user()->id_institucion;
-
+            
             if($i->save()):
                 $b = new Bitacora;
                 $b->accion = 'Registro de insumo: '.$i->nombre;
