@@ -9,36 +9,15 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <div class="card ">
+        
 
-                <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Importar Solicitudes</strong></h2>
-                </div>
-
-                <div class="card-body">
-                    {!! Form::open(['url' => '/admin/solicitud/importar', 'files' => true]) !!}
-                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Cargar Archivo: </strong></label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                            {!! Form::file('solicitudes') !!}
-                        </div>
-
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
-                    {!! Form::close() !!}
-                </div>
-
-            </div>
-            
-        </div>
-
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong><i class="fa-solid fa-file-invoice"></i> Listado de Solicitudes</strong></h2>
                     <ul>                       
                         <li>
-                            <a href="{{ url('/admin/escuela/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
+                            <a href="{{ url('/admin/solicitud_despacho/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
                         </li>
                     </ul>
                 </div>

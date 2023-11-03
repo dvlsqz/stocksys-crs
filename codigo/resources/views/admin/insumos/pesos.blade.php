@@ -2,8 +2,8 @@
 @section('title','Pesos Alimento')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/alimentos') }}"><i class="fa-solid fa-wheat-awn"></i> Alimentos</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/alimentos') }}"><i class="fa-solid fa-wheat-awn"></i> Pesos Alimento</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/insumos') }}"><i class="fa-solid fa-wheat-awn"></i> Insumos</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/insumos') }}"><i class="fa-solid fa-wheat-awn"></i> Pesos Alimento</a></li>
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Listado de Pesos: </strong>{{ $alimento->nombre }}</h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Listado de Pesos: </strong>{{ $insumo->nombre }}</h2>
                 </div>
 
                 <div class="card-body">
@@ -38,15 +38,15 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Edición de Pesos: </strong>{{ $alimento->nombre }}</h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-wheat-awn"></i> Edición de Pesos: </strong>{{ $insumo->nombre }}</h2>
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/alimento/pesos', 'files' => true]) !!}
-                        @include('admin.alimentos.formulario_pesos')
+                    {!! Form::open(['url' => '/admin/insumo/pesos', 'files' => true]) !!}
+                        @include('admin.insumos.formulario_pesos')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
-                        <a href="{{ url('/admin/alimentos') }}" class="btn btn-secondary mtop16">Regresar</a>
+                        <a href="{{ url('/admin/insumos') }}" class="btn btn-secondary mtop16">Regresar</a>
                     {!! Form::close() !!}
                 </div>
 

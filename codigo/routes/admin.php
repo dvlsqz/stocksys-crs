@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RutaController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\InsumoController;
 use App\Http\Controllers\Admin\RacionController;
+use App\Http\Controllers\Admin\BodegaController;
 use App\Http\Controllers\Admin\SolicitudController;
 use App\Http\Controllers\Admin\BitacoraController;
 use App\Http\Controllers\Admin\PruebasController;
@@ -93,9 +94,21 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/racion/alimentos', [RacionController::class, 'postRacionAlimentos'])->name('racion_alimentos');
     Route::get('/racion/alimentos/{id}/eliminar', [RacionController::class, 'getRacionAlimentosEliminar'])->name('racion_alimentos');
 
+    //Modulo de Bodega - Bodega Principal
+    Route::get('/bodega_principal/inventario', [BodegaController::class, 'getBodegaPrincipalInventario'])->name('bodega_principal_inventario');
+    Route::get('/bodega_principal/ingresos', [BodegalController::class, 'getBodegaPrincipalIngreso'])->name('bodega_principal_ingresos');
+    Route::get('/bodega_principal/egresos', [BodegaController::class, 'getBodegaPrincipalEgreso'])->name('bodega_principal_egresos');
+
+    //Modulo de Bodega - Bodega Socio
+    Route::get('/bodega_socio/inventario', [BodegaController::class, 'getBodegaSocioInventario'])->name('bodega_socio_inventario');
+    Route::get('/bodega_socio/ingresos', [BodegalController::class, 'getBodegaSocioIngreso'])->name('bodega_socio_ingresos');
+    Route::get('/bodega_socio/egresos', [BodegaController::class, 'getBodegaSocioEgreso'])->name('bodega_socio_egresos');
+
+
     //Modulo de Solicitudes
-    Route::get('/solicitudes', [SolicitudController::class, 'getInicio'])->name('solicitudes');
-    Route::post('/solicitud/importar', [SolicitudController::class, 'postSolicitudImportar'])->name('solicitudes');
+    Route::get('/solicitudes_despachos', [SolicitudController::class, 'getInicio'])->name('solicitudes');
+    Route::get('/solicitud_despacho/registrar', [SolicitudController::class, 'getSolicitudRegistrar'])->name('escuela_registrar');
+    Route::post('/solicitud_despacho/importar', [SolicitudController::class, 'postSolicitudImportar'])->name('solicitudes');
     
 
     //Reporte de Bitacoras

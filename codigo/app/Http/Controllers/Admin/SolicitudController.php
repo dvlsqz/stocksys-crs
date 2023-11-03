@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Solicitud, App\Models\Bitacora;
+use App\Models\Solicitud, App\Models\Entrega, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 use App\Imports\SolicitudImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -20,6 +20,16 @@ class SolicitudController extends Controller
         ];
 
         return view('admin.solicitudes.inicio',$datos);
+    }
+
+    public function getSolicitudRegistrar(){
+        $entregas = Entrega::where('year', 2023)->get();
+
+        $datos = [
+            'entregas' => $entregas
+        ];
+
+        return view('admin.solicitudes.registrar',$datos);
     }
 
     public function postSolicitudImportar(Request $request){
