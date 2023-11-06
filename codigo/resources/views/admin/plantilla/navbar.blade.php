@@ -50,17 +50,17 @@
 
             <li ><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Principal <i class="fa-solid fa-caret-right"></i></a>
               <ul class="submenu dropdown-menu">
-                <li><a class="dropdown-item" href=""><i class="fa-solid fa-calculator"></i> Inventario</a></li>
-                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
-                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
+                <li><a class="dropdown-item" href="{{url('/admin/bodega_principal/inventario')}}"><i class="fa-solid fa-calculator"></i> Inventario</a></li>
+                <li><a class="dropdown-item" href="{{url('/admin/bodega_principal/ingresos')}}"><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
+                <li><a class="dropdown-item" href="{{url('/admin/bodega_principal/egresos')}}"><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
               </ul>
             </li>
 
             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Socio <i class="fa-solid fa-caret-right"></i></a>
               <ul class="submenu dropdown-menu">
-                <li><a class="dropdown-item" href=""><i class="fa-solid fa-calculator"></i> Inventario</a></li>
-                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
-                <li><a class="dropdown-item" href=""><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
+                <li><a class="dropdown-item" href="{{url('/admin/bodega_socio/inventario')}}"><i class="fa-solid fa-calculator"></i> Inventario</a></li>
+                <li><a class="dropdown-item" href="{{url('/admin/bodega_socio/ingresos')}}"><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
+                <li><a class="dropdown-item" href="{{url('/admin/bodega_socio/egresos')}}"><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
               </ul>
             </li>
 

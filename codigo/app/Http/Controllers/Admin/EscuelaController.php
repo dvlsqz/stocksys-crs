@@ -55,6 +55,7 @@ class EscuelaController extends Controller
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
             $e = new Escuela;
+            $e->jornada = $request->input('jornada');
             $e->codigo = e($request->input('codigo'));
             $e->nombre = e($request->input('nombre'));
             $e->direccion = e($request->input('direccion'));
@@ -62,8 +63,16 @@ class EscuelaController extends Controller
             $e->director = e($request->input('director'));
             $e->contacto_no1 = e($request->input('contacto_no1'));
             $e->contacto_no2 = e($request->input('contacto_no2'));
-            $e->no_preprimaria_tercero = e($request->input('no_preprimaria_tercero'));
-            $e->no_cuarto_sexto = e($request->input('no_cuarto_sexto'));
+
+            if($request->input('desgloce') == 0):
+                $e->no_total_beneficiarios = $request->input('no_total_beneficiarios');
+            else:
+                $e->no_ninos_pre = $request->input('no_ninos_pre');
+                $e->no_ninas_pre = $request->input('no_ninas_pre');
+                $e->no_ninos_pri = $request->input('no_ninos_pri');
+                $e->no_ninas_pri = $request->input('no_ninas_pri');
+                $e->no_total_beneficiarios = $e->no_ninos_pre + $e->no_ninas_pre + $e->no_ninos_pri + $e->no_ninas_pri;
+            endif;
             $e->no_lideres = e($request->input('no_lideres'));
             $e->no_voluntarios = e($request->input('no_voluntarios'));
             $e->observaciones = e($request->input('observaciones'));
@@ -116,6 +125,7 @@ class EscuelaController extends Controller
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
             $e = Escuela::findOrFail($id);
+            $e->jornada = $request->input('jornada');
             $e->codigo = e($request->input('codigo'));
             $e->nombre = e($request->input('nombre'));
             $e->direccion = e($request->input('direccion'));
@@ -123,8 +133,11 @@ class EscuelaController extends Controller
             $e->director = e($request->input('director'));
             $e->contacto_no1 = e($request->input('contacto_no1'));
             $e->contacto_no2 = e($request->input('contacto_no2'));
-            $e->no_preprimaria_tercero = e($request->input('no_preprimaria_tercero'));
-            $e->no_cuarto_sexto = e($request->input('no_cuarto_sexto'));
+            $e->no_ninos_pre = $request->input('no_ninos_pre');
+            $e->no_ninas_pre = $request->input('no_ninas_pre');
+            $e->no_ninos_pri = $request->input('no_ninos_pri');
+            $e->no_ninas_pri = $request->input('no_ninas_pri');
+            $e->no_total_beneficiarios = $request->input('no_total_beneficiarios');
             $e->no_lideres = e($request->input('no_lideres'));
             $e->no_voluntarios = e($request->input('no_voluntarios'));
             $e->observaciones = e($request->input('observaciones'));

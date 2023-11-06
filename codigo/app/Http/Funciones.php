@@ -247,6 +247,18 @@
                     'racion_alimentos' => 'Puede crear, editar y eliminar alimentos que conforman las raciones.',          
                 ]
             ],
+            'bodegas' => [
+                'icon' => '<i class="fa-solid fa-warehouse"></i>',
+                'title' => 'Modulo Bodegas',
+                'keys' => [
+                    'bodega_principal_inventario' => 'Puede ver el inventario de la bodega principal.',
+                    'bodega_principal_ingresos' => 'Puede registrar ingresos a la bodega principal.',    
+                    'bodega_principal_egresos' => 'Puede registrar egresos a la bodega principal.',  
+                    'bodega_socio_inventario' => 'Puede ver el inventario de la bodega socio.',
+                    'bodega_socio_ingresos' => 'Puede registrar ingresos a la bodega socio.',    
+                    'bodega_socio_egresos' => 'Puede registrar egresos a la bodega socio.',  
+                ]
+            ],
             'solicitudes' => [
                 'icon' => '<i class="fa-solid fa-file-invoice"></i>',
                 'title' => 'Modulo Solicitudes',
