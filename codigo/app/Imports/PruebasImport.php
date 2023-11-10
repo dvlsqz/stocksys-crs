@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Escuela;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
 class PruebasImport implements ToModel, WithHeadingRow
 {

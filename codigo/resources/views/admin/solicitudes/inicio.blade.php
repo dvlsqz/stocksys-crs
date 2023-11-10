@@ -27,11 +27,26 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
-                                <td><strong> NOMBRE </strong></td>
-                                <td><strong> UBICACIÓN </strong></td>
+                                <td><strong> ID </strong></td>
+                                <td><strong> ENTREGA </strong></td>
+                                <td><strong> USUARIO </strong></td>
                                 <td><strong> ESTADO </strong></td>
                         </thead>
                         <tbody>
+                            @foreach($solicitudes as $s)
+                                <tr>
+                                    <td width="240px">
+                                        <div class="opts">
+                                            <a href="{{ url('/admin/escuela/'.$s->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-action="eliminar" data-path="admin/solicitud" data-object="{{ $s->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                        </div>
+                                    </td>
+                                    <td>{{ $s->id }}</td>
+                                    <td>{{ obtenerMeses(null, $s->entrega->mes_inicial).' / '.obtenerMeses(null, $s->entrega->mes_final) }}</td>
+                                    <td>{{ $s->usuario->nombres.' '.$s->usuario->apellidos}}</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
                             
                         </tbody>
                     </table>

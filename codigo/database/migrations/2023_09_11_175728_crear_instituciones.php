@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones ON');
+        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones ON');
         DB::table('instituciones')->insert(array(
             'id'=>'1',
             'nombre'=>'DECAH',
@@ -51,7 +51,7 @@ return new class extends Migration
             'observaciones'=>NULL,  
             'estado'=>'0',        
         ));
-        DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones OFF');
+        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT instituciones OFF');
     }
 
     /**

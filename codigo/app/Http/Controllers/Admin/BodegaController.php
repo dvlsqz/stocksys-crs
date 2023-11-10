@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Bodega, App\Models\Insumo, App\Models\Bitacora;
+use App\Models\Bodega, App\Models\Insumo, App\Models\Institucion, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class BodegaController extends Controller
@@ -54,6 +54,11 @@ class BodegaController extends Controller
     }
 
     public function getBodegaPrincipalIngreso(){
+        $datos = [
+
+        ];
+
+        return view('admin.bodega.bodega_principal.ingresos' ,$datos);
         
     }
 
@@ -106,7 +111,15 @@ class BodegaController extends Controller
     }
 
     public function getBodegaSocioIngreso(){
+        $bodegas = Institucion::where('nivel', 2)->pluck('nombre','id');
+        $insumos = Insumo::pluck('nombre','id');
+
+        $datos = [
+            'insumos' => $insumos,
+            'bodegas' => $bodegas
+        ];
         
+        return view('admin.bodega.bodega_socio.ingreso' ,$datos);
     }
 
     public function getBodegaSocioEgreso(){ 

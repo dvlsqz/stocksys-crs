@@ -32,7 +32,7 @@ return new class extends Migration
             
         });
 
-        DB::unprepared('SELECT 1; SET IDENTITY_INSERT users ON');
+        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT users ON');
         DB::table('users')->insert(array(
             'id'=>'1',
             'nombres'=>'Ricardo Daniel',
@@ -68,7 +68,7 @@ return new class extends Migration
             "created_at" =>  \Carbon\Carbon::now(), 
             "updated_at" => \Carbon\Carbon::now(), 
         ));
-        DB::unprepared('SELECT 1; SET IDENTITY_INSERT users OFF');
+        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT users OFF');
     }
 
     /**

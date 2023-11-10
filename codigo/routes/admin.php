@@ -97,20 +97,22 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     //Modulo de Bodega - Bodega Principal
     Route::get('/bodega_principal/inventario', [BodegaController::class, 'getBodegaPrincipalInventario'])->name('bodega_principal_inventario');
     Route::post('/bodega_principal/inventario/registrar', [BodegaController::class, 'postBodegaPrincipalInventarioRegistrar'])->name('bodega_principal_inventario');
-    Route::get('/bodega_principal/ingresos', [BodegalController::class, 'getBodegaPrincipalIngreso'])->name('bodega_principal_ingresos');
+    Route::get('/bodega_principal/ingresos', [BodegaController::class, 'getBodegaPrincipalIngreso'])->name('bodega_principal_ingresos');
     Route::get('/bodega_principal/egresos', [BodegaController::class, 'getBodegaPrincipalEgreso'])->name('bodega_principal_egresos');
 
     //Modulo de Bodega - Bodega Socio
     Route::get('/bodega_socio/inventario', [BodegaController::class, 'getBodegaSocioInventario'])->name('bodega_socio_inventario');
     Route::post('/bodega_socio/inventario/registrar', [BodegaController::class, 'postBodegaSocioInventarioRegistrar'])->name('bodega_socio_inventario');
-    Route::get('/bodega_socio/ingresos', [BodegalController::class, 'getBodegaSocioIngreso'])->name('bodega_socio_ingresos');
+    Route::get('/bodega_socio/ingresos', [BodegaController::class, 'getBodegaSocioIngreso'])->name('bodega_socio_ingresos');
     Route::get('/bodega_socio/egresos', [BodegaController::class, 'getBodegaSocioEgreso'])->name('bodega_socio_egresos');
 
 
     //Modulo de Solicitudes
     Route::get('/solicitudes_despachos', [SolicitudController::class, 'getInicio'])->name('solicitudes');
     Route::get('/solicitud_despacho/registrar', [SolicitudController::class, 'getSolicitudRegistrar'])->name('escuela_registrar');
+    Route::post('/solicitud_despacho/inicio', [SolicitudController::class, 'postSolicitudInicio'])->name('solicitudes');
     Route::post('/solicitud_despacho/importar', [SolicitudController::class, 'postSolicitudImportar'])->name('solicitudes');
+    Route::post('/solicitud_despacho/guardar_datos', [SolicitudController::class, 'postSolicitudGuardarDatos'])->name('solicitudes');
     
 
     //Reporte de Bitacoras

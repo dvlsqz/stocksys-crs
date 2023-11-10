@@ -28,8 +28,45 @@ document.addEventListener('DOMContentLoaded', function(){
         "searching": true,
         "ordering": true,
         "info": true,
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay registros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+            "infoFiltered": "(Filtrado de _MAX_ total registros)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Registros",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });     
+
+    $('#tabla-carga-datos').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
         "autoWidth": false,
         "responsive": true,
+        scrollX: true,
+        "autoWidth": false,
+        "columnDefs": [
+            {"className": "dt-center", "targets": "_all"},
+          {
+            targets: 1,
+            width: 1,
+          }
+        ],
         language: {
             "decimal": "",
             "emptyTable": "No hay registros",
