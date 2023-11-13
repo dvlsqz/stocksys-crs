@@ -265,6 +265,7 @@
                 'keys' => [
                     'solicitudes' => 'Puede ver el listado de solicitudes.',
                     'solicitud_registrar' => 'Puede agregar nuevas solicitudes.',
+                    'solicitud_mostrar' => 'Puede ver los detalles de las solicitudes.',
                     'solicitud_editar' => 'Puede editar solicitudes.',
                     'solicitud_eliminar' => 'Puede eliminar solicitudes.',        
                 ]

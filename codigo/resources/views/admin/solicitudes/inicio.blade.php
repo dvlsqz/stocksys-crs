@@ -37,7 +37,7 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/escuela/'.$s->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ url('/admin/solicitud_despacho/'.$s->id.'/mostrar') }}"  title="Datos de Solicitud"><i class="fa-solid fa-gear"></i></a>
                                             <a href="#" data-action="eliminar" data-path="admin/solicitud" data-object="{{ $s->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>

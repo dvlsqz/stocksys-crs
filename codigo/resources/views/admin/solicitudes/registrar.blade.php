@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/solicitud_despacho/inicio', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/admin/solicitud_despacho/registrar', 'files' => true]) !!}
 
                         <div class="row">
                             <div class="col-md-6">
@@ -62,6 +62,19 @@
 
 
                             
+                        </div>
+
+                        <hr />
+                        <h5><strong>Cargar Archivo Con Datos De La Solicitud</strong></h5>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Cargar Archivo: </strong></label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                    {!! Form::file('datos') !!}
+                                </div>
+                            </div>                            
                         </div>
 
                         {!! Form::submit('Iniciar Proceso', ['class'=>'btn btn-info mtop16']) !!}

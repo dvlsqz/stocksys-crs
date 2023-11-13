@@ -21,4 +21,8 @@ class Solicitud extends Model
     public function usuario(){
         return $this->hasOne(Usuario::class,'id','id_usuario');
     }
+
+    public function detalles(){
+        return $this->hasMany(SolicitudDetalles::class,'id_solicitud','id');
+    }
 }

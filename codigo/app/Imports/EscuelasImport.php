@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class EscuelasImport implements ToModel, WithHeadingRow, WithValidation
 {
+    
     /**
     * @param array $row
     *

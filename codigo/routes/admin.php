@@ -108,11 +108,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
 
 
     //Modulo de Solicitudes
+    
     Route::get('/solicitudes_despachos', [SolicitudController::class, 'getInicio'])->name('solicitudes');
-    Route::get('/solicitud_despacho/registrar', [SolicitudController::class, 'getSolicitudRegistrar'])->name('escuela_registrar');
-    Route::post('/solicitud_despacho/inicio', [SolicitudController::class, 'postSolicitudInicio'])->name('solicitudes');
-    Route::post('/solicitud_despacho/importar', [SolicitudController::class, 'postSolicitudImportar'])->name('solicitudes');
-    Route::post('/solicitud_despacho/guardar_datos', [SolicitudController::class, 'postSolicitudGuardarDatos'])->name('solicitudes');
+    Route::get('/solicitud_despacho/registrar', [SolicitudController::class, 'getSolicitudRegistrar'])->name('solicitud_registrar');
+    Route::post('/solicitud_despacho/registrar', [SolicitudController::class, 'postSolicitudRegistrar'])->name('solicitud_registrar');
+    Route::get('/solicitud_despacho/{id}/mostrar', [SolicitudController::class, 'getSolicitudMostrar'])->name('solicitud_mostrar');
+    
     
 
     //Reporte de Bitacoras

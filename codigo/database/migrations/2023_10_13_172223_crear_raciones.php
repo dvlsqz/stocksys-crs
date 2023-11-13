@@ -19,6 +19,35 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT raciones ON');
+        DB::table('raciones')->insert(array(
+            'id'=>'1',
+            'nombre'=>'Escolar',
+            'tipo_alimentos'=> 'solicitud_comida_escolar',
+            'asignado_a'=>'0'       
+        ));
+
+        DB::table('raciones')->insert(array(
+            'id'=>'2',
+            'nombre'=>'Lideres',
+            'tipo_alimentos'=> 'lideres_de_alimentacion_escolar',
+            'asignado_a'=>'1'           
+        ));
+
+        DB::table('raciones')->insert(array(
+            'id'=>'3',
+            'nombre'=>'Voluntarios',
+            'tipo_alimentos'=> 'solicitud_racion_psc',
+            'asignado_a'=>'2'         
+        ));
+        DB::table('raciones')->insert(array(
+            'id'=>'4',
+            'nombre'=>'Docentes',
+            'tipo_alimentos'=> 'solicitud_racion_psc',
+            'asignado_a'=>'3'         
+        ));
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT raciones OFF');
     }
 
     /**
