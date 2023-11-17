@@ -266,8 +266,10 @@
                     'solicitudes' => 'Puede ver el listado de solicitudes.',
                     'solicitud_registrar' => 'Puede agregar nuevas solicitudes.',
                     'solicitud_mostrar' => 'Puede ver los detalles de las solicitudes.',
-                    'solicitud_editar' => 'Puede editar solicitudes.',
-                    'solicitud_eliminar' => 'Puede eliminar solicitudes.',        
+                    'solicitud_eliminar' => 'Puede eliminar solicitudes.',  
+                    'solicitud_detalle_eliminar' => 'Puede eliminar detalles de solicitudes.',   
+                    'solicitud_detalle_editar' => 'Puede editar detalles de las solicitudes.', 
+                    'solicitud_rutas' => 'Puede visualizar las rutas de las solicitudes',    
                 ]
             ],
             'reportes' => [

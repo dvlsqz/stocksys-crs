@@ -22,4 +22,8 @@ class Escuela extends Model
     public function ruta_asignada(){
         return $this->hasOne(RutaEscuela::class,'id_escuela','id');
     }
+
+    public function solicitudes(){
+        return $this->hasMany(SolicitudDetalles::class, 'id_escuela', 'id');
+    }
 }

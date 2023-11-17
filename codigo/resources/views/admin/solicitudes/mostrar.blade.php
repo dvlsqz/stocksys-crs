@@ -10,7 +10,26 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2 d-flex">
+            <div class="card ">
+
+                <div class="card-header">
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Controles de Solicitud</strong></h2>
+                    
+                </div>
+
+                <div class="card-body">              
+                    <div class="d-grid gap-2">
+                    <a class="btn btn-outline-primary" href="{{ url('/admin/solicitudes_despachos') }}"  title="Editar"><i class="fa-solid fa-arrow-rotate-left"></i> Regresar</a>
+                        <a class="btn btn-outline-primary" href="{{ url('/admin/solicitud_despacho/'.$solicitud->id.'/rutas') }}"  title="Editar"><i class="fa-solid fa-road-circle-exclamation"></i> Rutas De Entrega</a>
+                        <a class="btn btn-outline-primary" href="{{ url('/admin/solicitud_despacho/detalles/editar') }}"  title="Editar"><i class="fa-solid fa-file-circle-exclamation"></i> Solicitud A Bodega Primaria</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-10">
             <div class="card ">
 
                 <div class="card-header">
@@ -80,17 +99,16 @@
                 
                 </div>
 
-            </div>
-            
+            </div>            
         </div>
 
     </div>
 
     <div class="row mtop16">
-        <div class="col-12">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-users"></i> Validación de Información Importada</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-file-excel"></i> Información Importada Del Archivo:</strong> {{$solicitud->nombre_archivo}}</h2>
                 </div>
 
                 <div class="card-body">
@@ -98,6 +116,7 @@
                     <table id="tabla-carga-datos" class="table table-striped table-hover display nowrap mtop16" width="100%">
                         <thead style="font-size: 1em; " >
                             <tr>
+                                <td ><strong> OPCIONES</strong></td>
                                 <td ><strong> FECHA SOLICITUD</strong></td>
                                 <td ><strong> MUNICIPIO ESCUELA </strong></td>
                                 <td ><strong> JORNADA ESCUELA </strong></td>
@@ -130,32 +149,46 @@
                         <tbody>
                             
                             @foreach($solicitud->detalles as $sd)
-                               <td>{{$sd->fecha}}</td>
-                               <td>{{$sd->escuela->ubicacion->nombre}}</td>
-                               <td>{{$sd->escuela->jornada}}</td>
-                               <td>{{$sd->escuela->codigo}}</td>
-                               <td>{{$sd->escuela->nombre}}</td>
-                               <td>{{$sd->escuela->direccion}}</td>
-                               <td>{{$sd->mes_de_solicitud}}</td>
-                               <td>{{$sd->dias_de_solicitud}}</td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                                <tr>
+                                    <td width="240px">
+                                        <div class="opts">
+                                            <a href="{{ url('/admin/solicitud_despacho/detalles/'.$sd->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-action="eliminar" data-path="admin/solicitud_despacho/detalles" data-object="{{ $sd->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                        </div>
+                                    </td>
+                                    <td> {{ Carbon\Carbon::parse($sd->fecha)->format('d/m/Y') }} </td>
+                                    <td>{{$sd->escuela->ubicacion->nombre}}</td>
+                                    <td>{{$sd->escuela->jornada === 0 ? "Matutina" : "Vespertina"}} </td>
+                                    <td>{{$sd->escuela->codigo}}</td>
+                                    <td>{{$sd->escuela->nombre}}</td>
+                                    <td>{{$sd->escuela->direccion}}</td>
+                                    <td>{{$sd->mes_de_solicitud}}</td>
+                                    <td>{{$sd->dias_de_solicitud}}</td>
+                                    <td>
+                                        @if($sd->escuela->ruta_asignada)
+                                            {{$sd->escuela->ruta_asignada->ruta->ubicacion->nomenclatura.'0'.$sd->escuela->ruta_asignada->ruta->correlativo}}
+                                        @else
+                                            Sin Asignar
+                                        @endif
+                                    </td>
+                                    <td>{{$sd->ninas_pre_primaria_a_tercero_primaria}}</td>
+                                    <td>{{$sd->ninos_pre_primaria_a_tercero_primaria}}</td>
+                                    <td>{{$sd->total_pre_primaria_a_tercero_primaria}}</td>
+                                    <td>{{$sd->ninas_cuarto_a_sexto}}</td>
+                                    <td>{{$sd->ninos_cuarto_a_sexto}}</td>
+                                    <td>{{$sd->total_cuarto_a_sexto}}</td>
+                                    <td>{{$sd->total_de_estudiantes}}</td>
+                                    <td>{{$sd->total_de_raciones_de_estudiantes}}</td>
+                                    <td>{{$sd->total_docentes}}</td>
+                                    <td>{{$sd->total_voluntarios}}</td>
+                                    <td>{{$sd->total_de_docentes_y_voluntarios}}</td>
+                                    <td>{{$sd->total_de_raciones_de_docentes_y_voluntarios}}</td>
+                                    <td>{{$sd->total_de_personas}}</td>
+                                    <td>{{$sd->total_de_raciones}}</td>
+                                    <td>{{$sd->racion->tipo_alimentos}}</td>
+                                    <td>{{$sd->numero_de_entrega}}</td>
+                                    <td>{{$sd->tipo}}</td>
+                                </tr>
                             @endforeach
                         
                         </tbody>
@@ -163,6 +196,31 @@
                 </div>
 
                 <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span for="name" style="font-size: 0.8125em"><strong>TOTAL ESTUDIANTES: </strong> <br> {{number_format($total_estudiantes)}}</span>                            
+                        </div>  
+
+                        <div class="col-md-2">
+                            <span for="name" style="font-size: 0.8125em"><strong>TOTAL RACIONES ESTUDIANTES: </strong> <br> {{number_format($total_raciones_estudiantes)}}</span>                            
+                        </div>  
+
+                        <div class="col-md-2">
+                            <span for="name" style="font-size: 0.8125em"><strong>TOTAL DOCENTES Y VOLUNTARIOS: </strong> <br> {{number_format($total_docentes_voluntarios)}}</span>                            
+                        </div>  
+
+                        <div class="col-md-2">
+                            <span for="name" style="font-size: 0.8125em"><strong>TOTAL RACIONES DOCENTES Y VOLUNTARIOS: </strong> <br> {{number_format($total_raciones_docentes_voluntarios)}}</span>                            
+                        </div>  
+
+                        <div class="col-md-2">
+                            <span for="name" style="font-size: 0.8125em"><strong>TOTAL PERSONAS: </strong> <br> {{number_format($total_personas)}}</span>                            
+                        </div>  
+
+                        <div class="col-md-2">
+                            <span for="name" style="font-size: 0.8125em"><strong>TOTAL RACIONES: </strong> <br> {{number_format($total_raciones)}}</span>                            
+                        </div>  
+                    </div>
                     
                 </div>
             </div>

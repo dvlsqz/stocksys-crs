@@ -82,7 +82,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                                     {!! Form::number('no_unidades', null, ['class'=>'form-control', 'id' => 'no_unidades']) !!}
-                                </div>
+                                </div> 
                             </div>
 
                             <div class="col-md-2">

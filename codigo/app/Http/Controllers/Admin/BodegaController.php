@@ -125,4 +125,4 @@ class BodegaController extends Controller
     public function getBodegaSocioEgreso(){ 
         
     }
-}
+} 

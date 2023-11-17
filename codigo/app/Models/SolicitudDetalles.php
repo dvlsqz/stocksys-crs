@@ -45,4 +45,8 @@ class SolicitudDetalles extends Model
     public function escuela(){
         return $this->hasOne(Escuela::class,'id','id_escuela');
     }
+
+    public function racion(){
+        return $this->hasOne(Racion::class,'id','tipo_de_actividad_alimentos');
+    }
 }
