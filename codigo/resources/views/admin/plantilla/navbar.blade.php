@@ -39,28 +39,28 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa-solid fa-boxes-packing"></i>  Almacen </a>
           <ul class="dropdown-menu">
-            <li>
-              <a href="{{url('/admin/insumos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Insumos</a>
-            </li>
+            
 
-            <li >
-              <a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
-            </li>  
+            
             
 
             <li ><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Principal <i class="fa-solid fa-caret-right"></i></a>
               <ul class="submenu dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/admin/bodega_principal/inventario')}}"><i class="fa-solid fa-calculator"></i> Inventario</a></li>
-                <li><a class="dropdown-item" href="{{url('/admin/bodega_principal/ingresos')}}"><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
-                <li><a class="dropdown-item" href="{{url('/admin/bodega_principal/egresos')}}"><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
+                <li><a href="{{url('/admin/bodega_principal/inventario')}}" class="nav-link"><i class="fa-solid fa-calculator"></i> Inventario</a></li>
+                <li><a href="{{url('/admin/insumos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Insumos</a></li>
+                <li><a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a></li>  
+                <li><a href="{{url('/admin/bodega_principal/ingresos')}}" class="nav-link"><i class="fa-solid fa-right-to-bracket"></i> Ingresos</a></li>
+                <li><a href="{{url('/admin/bodega_principal/egresos')}}" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i> Egresos </a>
               </ul>
             </li>
 
             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-warehouse"></i> Bodega Socio <i class="fa-solid fa-caret-right"></i></a>
               <ul class="submenu dropdown-menu">
-                <li><a class="dropdown-item" href="{{url('/admin/bodega_socio/inventario')}}"><i class="fa-solid fa-calculator"></i> Inventario</a></li>
-                <li><a class="dropdown-item" href="{{url('/admin/bodega_socio/ingresos')}}"><i class="fa-solid fa-right-to-bracket"></i> Registrar Ingresos</a></li>
-                <li><a class="dropdown-item" href="{{url('/admin/bodega_socio/egresos')}}"><i class="fa-solid fa-right-from-bracket"></i> Registrar Egresos </a>
+                <li><a href="{{url('/admin/bodega_socio/insumos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Listado Insumos</a></li>
+                <li><a href="{{url('/admin/insumos')}}" class="nav-link"><i class="fa-solid fa-boxes-stacked"></i> Insumos</a></li>
+                <li><a href="{{url('/admin/raciones')}}" class="nav-link"><i class="fa-solid fa-bowl-rice"></i> Raciones</a></li>  
+                <li><a href="{{url('/admin/bodega_socio/ingresos')}}" class="nav-link"><i class="fa-solid fa-right-to-bracket"></i> Ingresos</a></li>
+                <li><a href="{{url('/admin/bodega_socio/egresos')}}" class="nav-link"><i class="fa-solid fa-right-from-bracket"></i> Egresos </a>
               </ul>
             </li>
 

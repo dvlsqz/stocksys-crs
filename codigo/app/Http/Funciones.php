@@ -52,7 +52,8 @@
             '4' => 'Peso bruto en quintales (peso neto + caneca metalica)',
             '5' => 'Tonelada Metrica Kg.',
             '6' => 'Unidades por TM',
-            '7' => 'Kit'
+            '7' => 'Barril',
+            '8' => 'Cilindro'
 
         ];
 
@@ -254,7 +255,7 @@
                     'bodega_principal_inventario' => 'Puede ver el inventario de la bodega principal.',
                     'bodega_principal_ingresos' => 'Puede registrar ingresos a la bodega principal.',    
                     'bodega_principal_egresos' => 'Puede registrar egresos a la bodega principal.',  
-                    'bodega_socio_inventario' => 'Puede ver el inventario de la bodega socio.',
+                    'bodega_socio_insumos' => 'Puede ver el listado de insumos de la bodega socio.',
                     'bodega_socio_ingresos' => 'Puede registrar ingresos a la bodega socio.',    
                     'bodega_socio_egresos' => 'Puede registrar egresos a la bodega socio.',  
                 ]

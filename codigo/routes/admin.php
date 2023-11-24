@@ -72,17 +72,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/entrega/registrar', [EntregaController::class, 'postEntregaRegistrar'])->name('entrega_registrar');    
     Route::get('/entrega/{id}/editar', [EntregaController::class, 'getEntregaEditar'])->name('entrega_editar');
     Route::post('/entrega/{id}/editar', [EntregaController::class, 'postEntregaEditar'])->name('entrega_editar');
-    Route::get('/entrega/{id}/eliminar', [EntregaController::class, 'getEntregaEliminar'])->name('entrega_eliminar');
-
-    //Modulo de Alimentos
-    Route::get('/insumos', [InsumoController::class, 'getInicio'])->name('insumos');
-    Route::get('/insumo/registrar', [InsumoController::class, 'getInsumoRegistrar'])->name('insumo_registrar');  
-    Route::post('/insumo/registrar', [InsumoController::class, 'postInsumoRegistrar'])->name('insumo_registrar');    
-    Route::get('/insumo/{id}/editar', [InsumoController::class, 'getInsumoEditar'])->name('insumo_editar');  
-    Route::post('/insumo/{id}/editar', [InsumoController::class, 'postInsumoEditar'])->name('insumo_editar');
-    Route::get('/insumo/{id}/eliminar', [InsumoController::class, 'getInsumoEliminar'])->name('insumo_eliminar');
-    Route::get('/insumo/{id}/pesos', [InsumoController::class, 'getInsumoPesos'])->name('insumo_pesos');
-    Route::post('/insumo/pesos', [InsumoController::class, 'postInsumoPesos'])->name('insumo_pesos');
+    Route::get('/entrega/{id}/eliminar', [EntregaController::class, 'getEntregaEliminar'])->name('entrega_eliminar');    
 
     //Modulo de Raciones
     Route::get('/raciones', [RacionController::class, 'getInicio'])->name('raciones');
@@ -94,21 +84,40 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/racion/alimentos', [RacionController::class, 'postRacionAlimentos'])->name('racion_alimentos');
     Route::get('/racion/alimentos/{id}/eliminar', [RacionController::class, 'getRacionAlimentosEliminar'])->name('racion_alimentos');
 
-    //Modulo de Bodega - Bodega Principal
-    Route::get('/bodega_principal/inventario', [BodegaController::class, 'getBodegaPrincipalInventario'])->name('bodega_principal_inventario');
-    Route::post('/bodega_principal/inventario/registrar', [BodegaController::class, 'postBodegaPrincipalInventarioRegistrar'])->name('bodega_principal_inventario');
-    Route::get('/bodega_principal/ingresos', [BodegaController::class, 'getBodegaPrincipalIngreso'])->name('bodega_principal_ingresos');
-    Route::get('/bodega_principal/egresos', [BodegaController::class, 'getBodegaPrincipalEgreso'])->name('bodega_principal_egresos');
-
     //Modulo de Bodega - Bodega Socio
-    Route::get('/bodega_socio/inventario', [BodegaController::class, 'getBodegaSocioInventario'])->name('bodega_socio_inventario');
+    Route::get('/bodega_socio/insumos', [BodegaController::class, 'getBodegaSocioInsumos'])->name('bodega_socio_insumos');
     Route::post('/bodega_socio/inventario/registrar', [BodegaController::class, 'postBodegaSocioInventarioRegistrar'])->name('bodega_socio_inventario');
     Route::get('/bodega_socio/ingresos', [BodegaController::class, 'getBodegaSocioIngreso'])->name('bodega_socio_ingresos');
+    Route::post('/bodega_socio/ingresos', [BodegaController::class, 'postBodegaSocioIngreso'])->name('bodega_socio_ingresos');
     Route::get('/bodega_socio/egresos', [BodegaController::class, 'getBodegaSocioEgreso'])->name('bodega_socio_egresos');
 
-
-    //Modulo de Solicitudes
+        //Modulo de Alimentos
+        Route::get('/insumos', [InsumoController::class, 'getInicio'])->name('insumos');
+        Route::get('/insumo/bodega_socio/registrar', [InsumoController::class, 'getInsumoBodegaSocioRegistrar'])->name('insumo_registrar');  
+        Route::post('/insumo/bodega_socio/registrar', [InsumoController::class, 'postInsumoBodegaSocioRegistrar'])->name('insumo_registrar');    
+        Route::get('/insumo/{id}/editar', [InsumoController::class, 'getInsumoEditar'])->name('insumo_editar');  
+        Route::post('/insumo/{id}/editar', [InsumoController::class, 'postInsumoEditar'])->name('insumo_editar');
+        Route::get('/insumo/{id}/eliminar', [InsumoController::class, 'getInsumoEliminar'])->name('insumo_eliminar');
+        Route::get('/insumo/{id}/pesos', [InsumoController::class, 'getInsumoPesos'])->name('insumo_pesos');
+        Route::post('/insumo/pesos', [InsumoController::class, 'postInsumoPesos'])->name('insumo_pesos');
     
+        //Modulo de Bodega - Bodega Principal
+        Route::get('/bodega_principal/inventario', [BodegaController::class, 'getBodegaPrincipalInventario'])->name('bodega_principal_inventario');
+        Route::post('/bodega_principal/inventario/registrar', [BodegaController::class, 'postBodegaPrincipalInventarioRegistrar'])->name('bodega_principal_inventario');
+        Route::get('/bodega_principal/ingresos', [BodegaController::class, 'getBodegaPrincipalIngreso'])->name('bodega_principal_ingresos');
+        Route::get('/bodega_principal/egresos', [BodegaController::class, 'getBodegaPrincipalEgreso'])->name('bodega_principal_egresos');
+    
+        //Modulo de Bodega - Bodega Socio
+        Route::get('/bodega_socio/inventario', [BodegaController::class, 'getBodegaSocioInventario'])->name('bodega_socio_inventario');
+        Route::post('/bodega_socio/inventario/registrar', [BodegaController::class, 'postBodegaSocioInventarioRegistrar'])->name('bodega_socio_inventario');
+        Route::get('/bodega_socio/ingresos', [BodegaController::class, 'getBodegaSocioIngreso'])->name('bodega_socio_ingresos');
+        Route::post('/bodega_socio/ingresos', [BodegaController::class, 'postBodegaSocioIngreso'])->name('bodega_socio_ingresos');
+        Route::get('/bodega_socio/egresos', [BodegaController::class, 'getBodegaSocioEgreso'])->name('bodega_socio_egresos');
+
+    
+
+
+    //Modulo de Solicitudes    
     Route::get('/solicitudes_despachos', [SolicitudController::class, 'getInicio'])->name('solicitudes');
     Route::get('/solicitud_despacho/registrar', [SolicitudController::class, 'getSolicitudRegistrar'])->name('solicitud_registrar');
     Route::post('/solicitud_despacho/registrar', [SolicitudController::class, 'postSolicitudRegistrar'])->name('solicitud_registrar');

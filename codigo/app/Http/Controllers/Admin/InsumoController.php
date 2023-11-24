@@ -19,11 +19,11 @@ class InsumoController extends Controller
             'insumo' => $insumo
         ];
 
-        return view('admin.insumos.inicio',$datos);
+        return view('admin.insumos.inicio',$datos); 
     }
 
 
-    public function postInsumoRegistrar(Request $request){
+    public function postInsumoBodegaSocioRegistrar(Request $request){
         $reglas = [
     		'nombre' => 'required'
     	];
@@ -39,13 +39,17 @@ class InsumoController extends Controller
             $i->nombre = e($request->input('nombre'));       
             $i->id_unidad_medida = $request->input('id_unidad_medida'); 
             $i->categoria = $request->input('categoria');
+            $i->saldo = 0;
+            $i->tipo_bodega = 0;   
+            $i->id_institucion = Auth::user()->id_institucion;
             $i->observaciones = e($request->input('observaciones'));
             
             if($i->save()):
                 $b = new Bitacora;
-                $b->accion = 'Registro de insumo: '.$i->nombre;
+                $b->accion = 'Registro de insumo '.$i->nombre.' en bodega socio con saldo inicial 0';
                 $b->id_usuario = Auth::id();
                 $b->save();
+
 
                 return redirect('/admin/insumos')->with('messages', '¡insumo creado y guardado con exito!.')
                     ->with('typealert', 'success');

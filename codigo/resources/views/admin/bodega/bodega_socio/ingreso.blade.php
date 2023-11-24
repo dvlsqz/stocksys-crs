@@ -18,14 +18,14 @@
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/escuela/registrar', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/admin/bodega_socio/ingresos', 'files' => true]) !!}
                         <h5><strong>Información de Ingreso</strong></h5>
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Fecha de Ingreso: </strong></label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-                                    {!! Form::date('date', null, ['class'=>'form-control']) !!}
+                                    {!! Form::date('fecha_ingreso', null, ['class'=>'form-control']) !!}
                                 </div>
                             </div>
 
@@ -33,7 +33,7 @@
                                 <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Bodega de Despacho: </strong></label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-                                    {!! Form::select('despachado', $bodegas,0,['class'=>'form-select']) !!}
+                                    {!! Form::select('bodega_despachado', $bodegas,0,['class'=>'form-select']) !!}
                                 </div>
                             </div>
 
@@ -41,7 +41,7 @@
                                 <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Tipo De Documento: </strong></label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-                                    {!! Form::select('documento', ['0'=>'Guia de Transporte Terrestre','1'=>'Otros'],0,['class'=>'form-select']) !!}
+                                    {!! Form::select('tipo_documento', ['0'=>'Guia de Transporte Terrestre','1'=>'Otros'],0,['class'=>'form-select']) !!}
                                 </div>
                             </div>  
 
@@ -65,7 +65,12 @@
                                 <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Insumo: </strong></label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-                                    {!! Form::select('idinsumo', $insumos,0,['class'=>'form-select', 'id' => 'idinsumo']) !!}
+                                    <select name="idinsumo" id="idinsumo" style="width: 90%" >
+                                        @foreach($insumos as $i)
+                                            <option value=""></option>
+                                            <option value="{{ $i->id }}">{{ $i->insumo->nombre }}</option>
+                                        @endforeach
+                                    </select> 
                                 </div>
                             </div>
 
