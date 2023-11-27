@@ -132,5 +132,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/pruebas', [PruebasController::class, 'getInicio'])->name('ubicaciones');
     Route::post('/prueba/importar', [PruebasController::class, 'postArchivoImportar'])->name('escuela_registrar');
 
+    Route::get('/stocks/api/detalle/escuela/ruta', 'Admin\SolicitudController@getDetalleEscuela'); 
+
     
 });

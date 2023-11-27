@@ -1,3 +1,5 @@
+const http = new XMLHttpRequest();
+const csrfToken = document.getElementsByName('csrf-token')[0].getAttribute('content');
 var base = location.protocol+'//'+location.host;
 var route = document.getElementsByName('routeName')[0].getAttribute('content');
 
@@ -9,10 +11,15 @@ document.addEventListener('DOMContentLoaded', function(){
     
 
     btn_eliminar = document.getElementsByClassName('btn-eliminar');
+    btn_detalle = document.getElementsByClassName('btn-detalle');
     var btn_generar_usuario = document.getElementById('btn_generar_usuario');
 
     for(i=0; i < btn_eliminar.length; i++){
         btn_eliminar[i].addEventListener('click', delete_object);
+    }
+
+    for(i=0; i < btn_detalle.length; i++){
+        btn_detalle[i].addEventListener('click', detalle_object);
     }
 
     if(btn_generar_usuario){
@@ -20,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function(){
             e.preventDefault();
             setGenerarUsuario();
         });
-    }
+    } 
 
     $('#tabla').DataTable({
         "paging": true,
@@ -208,22 +215,34 @@ function delete_object(e){
 
 }
 
-function setGenerarUsuario(){
-    var p_nombre = document.getElementById('p_nombre');
-    var s_nombre  = document.getElementById('s_nombre');
-    var p_apellido = document.getElementById('p_apellido');
-    var frm_usuario = document.getElementById('frm_usuario');
-
-    var seg_nombre = s_nombre.value;
-    var inicial_seg_nombre = seg_nombre.charAt(0);
-
-    var usuario = p_nombre.value+'.'+p_apellido.value;
-
-    var usuario_opcional = p_nombre.value + inicial_seg_nombre + '.' + p_apellido.value;
-
-    frm_usuario.value = usuario.toLowerCase();
-
-    //console.log(usuario_opcional.toLowerCase());
+function detalle_object(e){
+    e.preventDefault();
     
+    var object = this.getAttribute('data-object');
+
+    console.log(object);
+
+    var url = base + '/admin/agem/api/load/services';
+    http.open('GET', url3, true);
+    http.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    http.send();
+    http.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var data = this.responseText;
+            data = JSON.parse(data);
+            //console.log(data);  
+            
+            if(data.length > 0){
+                data.forEach( function(service, index){                                    
+                    $('#pidservice option[value="'+service.id+'"]').remove();  
+                    //console.log(schedule.schedule_id);                                        
+                }); 
+            
+            }else{
+                $('#pidservice').html(options1);
+            }
+            
+        }
+    } 
 
 }

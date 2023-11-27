@@ -212,17 +212,7 @@ class SolicitudController extends Controller
             ->where('rutas_escuelas.id_ruta', $idRuta)
             ->first();
 
-        $detalles_solicitud_escuelas = DB::table('solicitud_detalles')
-            ->select(
-                DB::raw('escuelas.id as escuela_id'),
-                DB::raw('raciones.tipo_alimentos as tipo'),
-                DB::raw('solicitud_detalles.mes_de_solicitud as mes'),
-                DB::raw('solicitud_detalles.total_de_raciones as total_raciones')
-            )
-            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
-            ->where('solicitud_detalles.id_solicitud', $id)
-            ->get();
+        
 
             //return $detalles_solicitud_escuelas;
         
@@ -239,6 +229,20 @@ class SolicitudController extends Controller
         ];
 
         return view('admin.solicitudes.detalles.rutas_desgloce',$datos);
+    }
+
+    public function getDetalleEscuela($idSolicitud, $idEscuela){
+        $detalles_solicitud_escuelas = DB::table('solicitud_detalles')
+        ->select(
+            DB::raw('escuelas.id as escuela_id'),
+            DB::raw('raciones.tipo_alimentos as tipo'),
+            DB::raw('solicitud_detalles.mes_de_solicitud as mes'),
+            DB::raw('solicitud_detalles.total_de_raciones as total_raciones')
+        )
+        ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+        ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+        ->where('solicitud_detalles.id_solicitud', $id)
+        ->get();
     }
 
 }
