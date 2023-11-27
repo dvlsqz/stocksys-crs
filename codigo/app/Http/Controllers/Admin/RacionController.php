@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Racion, App\Models\AlimentoRacion, App\Models\Insumo, App\Models\Bitacora;
+use App\Models\Racion, App\Models\AlimentoRacion, App\Models\Insumo, App\Models\Bodega, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 
 class RacionController extends Controller
 {
-    public function getInicio(){
+    public function getInicio($bodega){
 
-        $raciones = Racion::all();
+        $raciones = Racion::where('tipo_bodega',$bodega)->where('id_institucion', Auth::user()->id_institucion)->get();
         $racion = new Racion;
 
         $datos = [
@@ -108,7 +108,7 @@ class RacionController extends Controller
     public function getRacionAlimentos($id){
         $alimentos_racion = AlimentoRacion::where('id_racion',$id)->get();
         $racion = Racion::findOrFail($id);
-        $alimentos = Insumo::where('categoria' , 0)->pluck('nombre', 'id');
+        $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->pluck('nombre', 'id');
         $id = $id;
 
         $datos = [

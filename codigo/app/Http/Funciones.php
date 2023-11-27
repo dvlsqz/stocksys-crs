@@ -67,7 +67,7 @@
     function obtenerCategoriaInsumos($modo, $id){
         $ti = [
             '0' => 'Alimentos',
-            '1' => 'Limpieza'
+            '1' => 'Otros'
 
         ];
 
@@ -252,12 +252,18 @@
                 'icon' => '<i class="fa-solid fa-warehouse"></i>',
                 'title' => 'Modulo Bodegas',
                 'keys' => [
-                    'bodega_principal_inventario' => 'Puede ver el inventario de la bodega principal.',
+                    'bodega_principal_insumos' => 'Puede ver el listado de insumos de la bodega principal.',
+                    'bodega_principal_insumo_registrar' => 'Puede registrar insumos en la bodega principal.',
                     'bodega_principal_ingresos' => 'Puede registrar ingresos a la bodega principal.',    
                     'bodega_principal_egresos' => 'Puede registrar egresos a la bodega principal.',  
+                    'bodega_principal_eliminar' => 'Puede eliminar registros de la bodega principal.',
+
                     'bodega_socio_insumos' => 'Puede ver el listado de insumos de la bodega socio.',
+                    'bodega_socio_insumo_registrar' => 'Puede registrar insumos en la bodega socio.',
                     'bodega_socio_ingresos' => 'Puede registrar ingresos a la bodega socio.',    
                     'bodega_socio_egresos' => 'Puede registrar egresos a la bodega socio.',  
+                    'bodega_socio_insumo_pesos' => 'Puede ver y editar los pesos de los insumos de la bodega socio.',
+                    'bodega_socio_eliminar' => 'Puede eliminar registros de la bodega socio.',
                 ]
             ],
             'solicitudes' => [

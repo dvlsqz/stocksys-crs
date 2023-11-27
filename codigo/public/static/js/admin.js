@@ -109,6 +109,11 @@ document.addEventListener('DOMContentLoaded', function(){
         allowClear: true
     });
 
+    $("#idinsumo").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+
     $(document).on('click', '.dropdown-menu', function (e) {
         e.stopPropagation();
       });

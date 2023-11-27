@@ -186,20 +186,20 @@ class SolicitudController extends Controller
         $ruta = Ruta::where('id', $idRuta)->first();
         
         $detalles_ruta_escuelas = DB::table('solicitud_detalles')
-            ->select(
-                DB::raw('escuelas.id as escuela_id'),
-                DB::raw('escuelas.nombre as escuela'),
-                DB::raw('rutas_escuelas.orden_llegada as orden_llegada'),
-                DB::raw('SUM(solicitud_detalles.total_de_raciones) as total_raciones')
-            )
-            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-            ->join('rutas_escuelas', 'rutas_escuelas.id_escuela', 'escuelas.id' )
-            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
-            ->where('solicitud_detalles.id_solicitud', $id)
-            ->where('rutas_escuelas.id_ruta', $idRuta)
-            ->groupBy('solicitud_detalles.id_escuela')
-            ->orderBy('rutas_escuelas.orden_llegada', 'asc')
-            ->get();
+                ->select(
+                    DB::raw('escuelas.id as escuela_id'),
+                    DB::raw('escuelas.nombre as escuela'),
+                    DB::raw('rutas_escuelas.orden_llegada as orden_llegada'),
+                    DB::raw('SUM(solicitud_detalles.total_de_raciones) as total_raciones')
+                )
+                ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+                ->join('rutas_escuelas', 'rutas_escuelas.id_escuela', 'escuelas.id' )
+                ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+                ->where('solicitud_detalles.id_solicitud', $id)
+                ->where('rutas_escuelas.id_ruta', $idRuta)
+                ->groupBy('solicitud_detalles.id_escuela')
+                ->orderBy('rutas_escuelas.orden_llegada', 'asc')
+                ->get();
 
         $total_raciones = DB::table('solicitud_detalles')
             ->select(               
