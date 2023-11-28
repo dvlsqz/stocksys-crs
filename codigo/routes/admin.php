@@ -82,8 +82,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/racion/{id}/editar', [RacionController::class, 'postRacionEditar'])->name('racion_editar');
     Route::get('/racion/{id}/eliminar', [RacionController::class, 'getRacionEliminar'])->name('racion_eliminar');
     Route::get('/racion/{id}/alimentos', [RacionController::class, 'getRacionAlimentos'])->name('racion_alimentos');
-    Route::post('/racion/alimentos', [RacionController::class, 'postRacionAlimentos'])->name('racion_alimentos');
-    Route::get('/racion/alimentos/{id}/eliminar', [RacionController::class, 'getRacionAlimentosEliminar'])->name('racion_alimentos');
+    Route::post('/racion/alimentos/asignar', [RacionController::class, 'postRacionAlimentos'])->name('racion_alimentos');
+    Route::get('/racion/alimentos/{id}/eliminar', [RacionController::class, 'getRacionAlimentosEliminar'])->name('racion_alimentos_eliminar');
 
     //Modulo de Bodega - Bodega Socio
     Route::get('/bodega_socio/insumos', [BodegaSocioController::class, 'getInsumos'])->name('bodega_socio_insumos');

@@ -139,7 +139,7 @@ class RacionController extends Controller
             $ar->cantidad = $request->input('cantidad');
             $ar->unidad_medida = $request->input('unidad_medida');
 
-            $alimento = Insumo::findOrFail($ar->id_alimento);
+            $alimento = Bodega::findOrFail($ar->id_alimento);
             $racion = Racion::findOrFail($ar->id_racion);
 
 

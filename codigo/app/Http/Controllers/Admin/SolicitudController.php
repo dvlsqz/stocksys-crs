@@ -200,7 +200,26 @@ class SolicitudController extends Controller
                 ->groupBy('solicitud_detalles.id_escuela', 'escuelas.id', 'escuelas.nombre', 'rutas_escuelas.orden_llegada')
                 ->orderBy('rutas_escuelas.orden_llegada', 'asc')
                 ->get();
+        $idEscuelas;
+        foreach($detalles_ruta_escuelas as $det):
+            $idEscuelas[] = $det->escuela_id;
+        endforeach;
 
+        
+        $detalles_solicitudes_escuelas = DB::table('solicitud_detalles')
+            ->select(
+                DB::raw('escuelas.id as escuela_id'),
+                DB::raw('raciones.tipo_alimentos as tipo_racion'),
+                DB::raw('solicitud_detalles.*')
+            )
+            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->where('solicitud_detalles.id_solicitud', $id)
+            ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
+            ->get();
+        
+        $racion = Racion::with('alimentos')->where('id_institucion', Auth::user()->id_institucion)->get();
+        //return $racion;
         $total_raciones = DB::table('solicitud_detalles')
             ->select(               
                 DB::raw('SUM(solicitud_detalles.total_de_raciones) as total_raciones')
@@ -222,8 +241,10 @@ class SolicitudController extends Controller
         $datos = [
             'rutas_principales' => $rutas_principales,
             'ruta' => $ruta,
+            'racion' => $racion,
             'idSolicitud' => $idSolicitud,
             'detalles_ruta_escuelas' => $detalles_ruta_escuelas,
+            'detalles_solicitudes_escuelas' => $detalles_solicitudes_escuelas,
             'total_raciones' => $total_raciones
         ];
 
@@ -231,22 +252,11 @@ class SolicitudController extends Controller
     }
 
     public function getDetalleEscuela($idSolicitud, $idEscuela){
-        $solicitud_escolar = DB::table('solicitud_detalles')
-        ->select(
-            DB::raw('escuelas.id as escuela_id'),
-            DB::raw('raciones.tipo_alimentos as tipo'),
-            DB::raw('solicitud_detalles.mes_de_solicitud as mes'),
-            DB::raw('solicitud_detalles.dias_de_solicitud as dias'),
-            DB::raw('solicitud_detalles.total_pre_primaria_a_tercero_primaria as total_estudiantes')
-        )
-        ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-        ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
-        ->join('alimentos_raciones', 'alimentos_raciones.id', 'raciones.id')
-        ->join('alimentos', 'alimentos.id', 'alimentos_raciones.id_alimento')
-        ->where('solicitud_detalles.id_solicitud', $idSolicitud)
-        ->where('solicitud_detalles.id_escuela', $idEscuela)
-        ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)
-        ->get();
+        $solicitud_escolar = SolicitudDetalles::with(['escuela' ,'racion'])
+            ->where('id_solicitud', $idSolicitud)
+            ->where('id_escuela', $idEscuela)
+            ->where('tipo_de_actividad_alimentos',1)
+            ->get();
 
         $datos = [
             'solicitud_escolar' => $solicitud_escolar

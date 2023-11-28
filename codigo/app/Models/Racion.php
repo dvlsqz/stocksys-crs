@@ -13,4 +13,8 @@ class Racion extends Model
 
     protected $table = 'raciones';
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function alimentos(){
+        return $this->hasMany(AlimentoRacion::class,'id_racion','id');
+    }
 }

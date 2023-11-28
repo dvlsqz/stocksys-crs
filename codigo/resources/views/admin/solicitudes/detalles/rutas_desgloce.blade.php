@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-10">
             <div class="card ">
 
                 <div class="card-header">                
@@ -43,13 +43,54 @@
                 <div class="card-body " style="text-align:center; overflow-y: scroll; line-height: 1em; height:325px;">  
                     <ol class="list-group list-group-numbered">
                         @php($total_raciones = 0)
+                        @php($peso_racion =0 )
                         @if(count($detalles_ruta_escuelas) > 0)
                             @foreach($detalles_ruta_escuelas as $det)
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold"> 
-                                            {{$det->escuela}} - Total Raciones: {{number_format($det->total_raciones)}} <a href="#" data-action="detalle" data-path="admin/escuela" data-object="{{ $idSolicitud}}" data-object1="{{ $det->escuela_id}}" class="btn-detalle" data-toogle="tooltrip" data-placement="top" title="Ver Detalle" ><i class="fa-solid fa-eye"></i> Detalle</a> 
+                                            {{$det->escuela}} - Total Raciones: {{number_format($det->total_raciones)}} 
                                             @php($total_raciones += $det->total_raciones)
+                                            
+                                            <table id="detalles" class= "table table-striped table-bordered table-condensed table-hover mtop16">
+                                                <thead style="background-color: #c3f3ea">
+                                                    <tr>
+                                                        <th>RACION</th>
+                                                        <th>DIAS / MES</th>
+                                                        <th>TOTAL DE PREPRIMARIA A TERCERO PRIMARIA</th>
+                                                        <th>TOTAL DE CUARTO A SEXTO PRIMARIA</th>
+                                                        <th>TOTAL DE VOLUNTARIOS Y DOCENTES / LIDERES</th>
+                                                        <th>TOTAL DE RACIONES</th>
+                                                        <th>PESO TOTAL LBS</th>
+                                                        <th>UNIDAD DE MEDIDA (LIBRAS/CAJAS)</th>
+                                                        <th>PESO TOTAL (LIBRAS)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($detalles_solicitudes_escuelas as $det_s)  
+                                                        @if($det->escuela_id == $det_s->escuela_id)
+                                                            <tr>
+                                                                <td> {{$det_s->tipo_racion}} </td>
+                                                                <td> {{$det_s->dias_de_solicitud.' / '.$det_s->mes_de_solicitud}} </td>
+                                                                <td> {{$det_s->total_pre_primaria_a_tercero_primaria}} </td>
+                                                                <td> {{$det_s->total_cuarto_a_sexto}} </td>
+                                                                <td> {{$det_s->total_de_docentes_y_voluntarios}} </td>
+                                                                <td> {{ $det_s->dias_de_solicitud * ( $det_s->total_pre_primaria_a_tercero_primaria + $det_s->total_cuarto_a_sexto + $det_s->total_de_docentes_y_voluntarios ) }} </td>
+                                                                @foreach($racion as $r)
+                                                                    @if($det_s->tipo_de_actividad_alimentos == $r->id)
+                                                                        @for($i=0; $i < count($r->alimentos); $i++)
+                                                                            @php($peso_racion = $r->alimentos[$i]->cantidad)
+                                                                        @endfor
+                                                                        
+                                                                    @endif
+                                                                @endforeach
+                                                                <td> {{$peso_racion}} </td>
+
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>                                                                                                          
                                     </div>
                                     
@@ -68,58 +109,7 @@
             </div>
         </div>
 
-        <div class="col-md-5">
-            <div class="card ">
-
-                <div class="card-header">
-                    <h2 class="title"><strong><i class="fa-solid fa-gears"></i> Detalle de la Escuela</strong>   </h2>
-                    
-                </div>
-
-                <div class="card-body" style="text-align:center; overflow-y: scroll; line-height: 1em; height:370px; text-align:center;">  
-                    <div id="msg-det-escuelas" >
-                        <strong style="color: red;">Seleccione una escuela para ver su detalle.</strong>
-                    </div>
-
-                    <div id="det-escuelas" style="display: none;">
-                        <div>
-                            <strong>Solicitudes PrePrimaria a Tercero Primaria</strong>
-                            <div class="col-md-3 mtop16">
-                                <label for="name"> <strong>Total de Raciones: </strong></label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                                    {!! Form::text('nombre', null, ['class'=>'form-control']) !!}
-                                </div>
-                            </div>
-
-                        </div>
-                        <hr>
-                        <div>
-                            <strong>Solicitudes Cuarto a Sexto Primaria</strong>
-                        </div>
-                        <hr>
-                        <div>
-                            <strong>Solicitudes Voluntarios y Docentes</strong>
-                        </div>
-                        <hr>
-                        <div>
-                            <strong>Solicitudes Lideres</strong>
-                        </div>
-
-                        
-
-                        
-                    </div>
-                    
-                        
-                </div> 
-
-                <div class="card-footer clearfix">
-
-                </div>
-
-            </div>
-        </div>
+        
 
         
 

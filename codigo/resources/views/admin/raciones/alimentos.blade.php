@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/racion/alimentos', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/admin/racion/alimentos/asignar', 'files' => true]) !!}
                         @include('admin.raciones.formulario_alimentos')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}

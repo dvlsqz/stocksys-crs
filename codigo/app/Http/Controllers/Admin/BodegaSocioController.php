@@ -175,11 +175,11 @@ class BodegaSocioController extends Controller
     	if($validator->fails()):
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
-            $datos_ant = PesoInsumo::where('id_insumo',$request->input('id_insumo'))->count();
+            $datos_ant = PesoInsumo::where('id_insumo',$request->input('id_alimento'))->count();
             if($datos_ant == 0):
-                $i = Bodega::findOrFail($request->input('id_insumo'));
+                $i = Bodega::findOrFail($request->input('id_alimento'));
                 $p = new PesoInsumo;
-                $p->id_insumo = $request->input('id_insumo');
+                $p->id_insumo = $request->input('id_alimento');
                 $p->gramos_x_libra = $request->input('gramos_x_libra');
                 $p->gramos_x_kg = $request->input('gramos_x_kg');
                 $p->libras_x_kg = $request->input('libras_x_kg');
@@ -190,10 +190,10 @@ class BodegaSocioController extends Controller
                 $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
                 $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
                 $p->unidades_x_tm = $request->input('unidades_x_tm');
-
+                $insumo = $i->nombre;
                 if($p->save()):
                     $b = new Bitacora;
-                    $b->accion = 'Registro de peso de insumo: '.$i->nombre;
+                    $b->accion = 'Registro de peso de insumo: '.$insumo;
                     $b->id_usuario = Auth::id();
                     $b->save();
 
@@ -203,8 +203,8 @@ class BodegaSocioController extends Controller
             endif;
 
             if($datos_ant == 1):
-                $i = Bodega::findOrFail($request->input('id_insumo'));
-                $p = PesoInsumo::findOrFail($request->input('id_insumo'));
+                $i = Bodega::findOrFail($request->input('id_alimento'));
+                $p = PesoInsumo::findOrFail($request->input('id_alimento'));
 
                 if(empty($request->input('gramos_x_libra'))):
                     $p->gramos_x_libra = $request->input('gramos_x_libra_ant');
@@ -266,9 +266,10 @@ class BodegaSocioController extends Controller
                     $p->unidades_x_tm = $request->input('unidades_x_tm');
                 endif;
 
+                $insumo = $i->nombre;
                 if($p->save()):
                     $b = new Bitacora;
-                    $b->accion = 'Actualización de pesos de insumo: '.$i->nombre;
+                    $b->accion = 'Registro de peso de insumo: '.$insumo;
                     $b->id_usuario = Auth::id();
                     $b->save();
 

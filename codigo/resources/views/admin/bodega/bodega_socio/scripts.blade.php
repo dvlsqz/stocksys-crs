@@ -33,7 +33,7 @@
     function limpiar(){
         $("#pl").val("");
         $("#no_unidades").val("");
-        $("#unidad_medida").val("");
+        $("#unidad_medida").val(""); 
     }
 
     function evaluar()

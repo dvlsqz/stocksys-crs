@@ -216,30 +216,4 @@ function delete_object(e){
 
 }
 
-function detalle_object(e){
-    e.preventDefault();
-    document.getElementById('msg-det-escuelas').style.display ='none';
-    document.getElementById('det-escuelas').style.display ='block';
-    
-    var object = this.getAttribute('data-object');
-    var object1 = this.getAttribute('data-object1');
 
-    console.log(object, object1);
-
-    var url = base + '/stocks/api/detalle/escuela/ruta/'+object+'/'+object1;
-    http.open('GET', url, true);
-    http.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    http.send();
-    http.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            var data = this.responseText;
-            data = JSON.parse(data);
-            console.log(data);  
-
-            
-            
-            
-        }
-    } 
-
-}
