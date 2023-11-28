@@ -48,7 +48,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold"> 
-                                            {{$det->escuela}} - Total Raciones: {{number_format($det->total_raciones)}} <a href="#" data-action="detalle" data-path="admin/escuela" data-object="{{ $det->escuela_id}}" class="btn-detalle" data-toogle="tooltrip" data-placement="top" title="Ver Detalle" ><i class="fa-solid fa-eye"></i> Detalle</a> 
+                                            {{$det->escuela}} - Total Raciones: {{number_format($det->total_raciones)}} <a href="#" data-action="detalle" data-path="admin/escuela" data-object="{{ $idSolicitud}}" data-object1="{{ $det->escuela_id}}" class="btn-detalle" data-toogle="tooltrip" data-placement="top" title="Ver Detalle" ><i class="fa-solid fa-eye"></i> Detalle</a> 
                                             @php($total_raciones += $det->total_raciones)
                                         </div>                                                                                                          
                                     </div>
@@ -77,6 +77,39 @@
                 </div>
 
                 <div class="card-body" style="text-align:center; overflow-y: scroll; line-height: 1em; height:370px; text-align:center;">  
+                    <div id="msg-det-escuelas" >
+                        <strong style="color: red;">Seleccione una escuela para ver su detalle.</strong>
+                    </div>
+
+                    <div id="det-escuelas" style="display: none;">
+                        <div>
+                            <strong>Solicitudes PrePrimaria a Tercero Primaria</strong>
+                            <div class="col-md-3 mtop16">
+                                <label for="name"> <strong>Total de Raciones: </strong></label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                    {!! Form::text('nombre', null, ['class'=>'form-control']) !!}
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div>
+                            <strong>Solicitudes Cuarto a Sexto Primaria</strong>
+                        </div>
+                        <hr>
+                        <div>
+                            <strong>Solicitudes Voluntarios y Docentes</strong>
+                        </div>
+                        <hr>
+                        <div>
+                            <strong>Solicitudes Lideres</strong>
+                        </div>
+
+                        
+
+                        
+                    </div>
                     
                         
                 </div> 

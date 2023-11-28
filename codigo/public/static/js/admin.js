@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     for(i=0; i < btn_detalle.length; i++){
         btn_detalle[i].addEventListener('click', detalle_object);
+        
     }
 
     if(btn_generar_usuario){
@@ -217,30 +218,26 @@ function delete_object(e){
 
 function detalle_object(e){
     e.preventDefault();
+    document.getElementById('msg-det-escuelas').style.display ='none';
+    document.getElementById('det-escuelas').style.display ='block';
     
     var object = this.getAttribute('data-object');
+    var object1 = this.getAttribute('data-object1');
 
-    console.log(object);
+    console.log(object, object1);
 
-    var url = base + '/admin/agem/api/load/services';
-    http.open('GET', url3, true);
+    var url = base + '/stocks/api/detalle/escuela/ruta/'+object+'/'+object1;
+    http.open('GET', url, true);
     http.setRequestHeader('X-CSRF-TOKEN', csrfToken);
     http.send();
     http.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             var data = this.responseText;
             data = JSON.parse(data);
-            //console.log(data);  
+            console.log(data);  
+
             
-            if(data.length > 0){
-                data.forEach( function(service, index){                                    
-                    $('#pidservice option[value="'+service.id+'"]').remove();  
-                    //console.log(schedule.schedule_id);                                        
-                }); 
             
-            }else{
-                $('#pidservice').html(options1);
-            }
             
         }
     } 

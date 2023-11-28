@@ -23,6 +23,6 @@ Route::get('/', function () {
 
 //Modulo de Inicio de Sesion
 Route::get('/',[ConexionController::class, 'getIniciarSesion'])->name('login');
-Route::get('/iniciar_sesion',[ConexionController::class, 'getIniciarSesion'])->name('login');
-Route::post('/iniciar_sesion',[ConexionController::class, 'postIniciarSesion'])->name('login');
+Route::get('/iniciar_sesion',[ConexionController::class, 'getIniciarSesion']);
+Route::post('/iniciar_sesion',[ConexionController::class, 'postIniciarSesion']);
 Route::get('/cerrar_sesion',[ConexionController::class, 'getCerraSesion'])->name('logout');

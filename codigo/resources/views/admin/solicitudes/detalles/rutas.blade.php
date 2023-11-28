@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 d-flex">
+        <div class="col-md-2">
             <div class="card ">
 
                 <div class="card-header">
