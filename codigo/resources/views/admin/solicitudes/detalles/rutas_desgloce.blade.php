@@ -41,65 +41,72 @@
                 </div>
 
                 <div class="card-body " style="text-align:center; overflow-y: scroll; line-height: 1em; height:325px;">  
-                    <ol class="list-group list-group-numbered">
-                        @php($total_raciones = 0)
-                        @php($peso_racion =0 )
-                        @if(count($detalles_ruta_escuelas) > 0)
-                            @foreach($detalles_ruta_escuelas as $det)
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold"> 
-                                            {{$det->escuela}} - Total Raciones: {{number_format($det->total_raciones)}} 
-                                            @php($total_raciones += $det->total_raciones)
-                                            
-                                            <table id="detalles" class= "table table-striped table-bordered table-condensed table-hover mtop16">
-                                                <thead style="background-color: #c3f3ea">
-                                                    <tr>
-                                                        <th>RACION</th>
-                                                        <th>DIAS / MES</th>
-                                                        <th>TOTAL DE PREPRIMARIA A TERCERO PRIMARIA</th>
-                                                        <th>TOTAL DE CUARTO A SEXTO PRIMARIA</th>
-                                                        <th>TOTAL DE VOLUNTARIOS Y DOCENTES / LIDERES</th>
-                                                        <th>TOTAL DE RACIONES</th>
-                                                        <th>PESO TOTAL LBS</th>
-                                                        <th>UNIDAD DE MEDIDA (LIBRAS/CAJAS)</th>
-                                                        <th>PESO TOTAL (LIBRAS)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($detalles_solicitudes_escuelas as $det_s)  
-                                                        @if($det->escuela_id == $det_s->escuela_id)
-                                                            <tr>
-                                                                <td> {{$det_s->tipo_racion}} </td>
-                                                                <td> {{$det_s->dias_de_solicitud.' / '.$det_s->mes_de_solicitud}} </td>
-                                                                <td> {{$det_s->total_pre_primaria_a_tercero_primaria}} </td>
-                                                                <td> {{$det_s->total_cuarto_a_sexto}} </td>
-                                                                <td> {{$det_s->total_de_docentes_y_voluntarios}} </td>
-                                                                <td> {{ $det_s->dias_de_solicitud * ( $det_s->total_pre_primaria_a_tercero_primaria + $det_s->total_cuarto_a_sexto + $det_s->total_de_docentes_y_voluntarios ) }} </td>
-                                                                @foreach($racion as $r)
-                                                                    @if($det_s->tipo_de_actividad_alimentos == $r->id)
-                                                                        @for($i=0; $i < count($r->alimentos); $i++)
-                                                                            @php($peso_racion = $r->alimentos[$i]->cantidad)
-                                                                        @endfor
-                                                                        
-                                                                    @endif
-                                                                @endforeach
-                                                                <td> {{$peso_racion}} </td>
+                    @if(count($detalles_ruta_escuelas) > 0)                                    
+                        @foreach($detalles_ruta_escuelas as $det)
+                            <p class="mtop16"><i class="fa-solid fa-circle-right"></i> <b> {{$det->escuela}} - Total Raciones: {{number_format($det->total_raciones)}}</b> </p>
+                            <div class="row mtop16">
+                                <div class="col-md-3">
+                                    <b style="color:blue;">Niños Pre Primaria a Tercero Primaria</b><br>
+                                    @foreach($det_escuelas_preprimaria as $det1)
+                                        @if($det1->escuela_id == $det->escuela_id)
+                                            <p> 
+                                                <b>Dias/Mes:</b> {{ $det1->dias }} <b>No. Beneficiarios:</b> {{ $det1->total_ninos }} <br>
+                                                <b>Raciones:</b> {{ number_format($det1->dias * $det1->total_ninos)}}
+                                            </p>  
+                                        @endif
 
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>                                                                                                          
-                                    </div>
+                                        @foreach($racion as $r)
+                                            @if($r->id == $det1->racion & $det1->escuela_id == $det->escuela_id)                                            
+                                                @foreach($r->alimentos as $ra)
+                                                    {{$ra->alimento->nombre }} {{  number_format($ra->cantidad * $det1->dias * $det1->total_ninos) }} <br>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">
+                                    <b style="color:blue;">Niños Cuarto Primaria a Sexto Primaria</b><br>
+                                    @foreach($det_escuelas_primaria as $det2)
+                                        @if($det2->escuela_id == $det->escuela_id)
+                                            <p> 
+                                                <b>Dias/Mes:</b> {{ $det2->dias }} <b>No. Beneficiarios:</b> {{ $det2->total_ninos }} <br>
+                                                <b>Raciones:</b> {{ number_format($det2->dias * $det2->total_ninos)}}
+                                            </p>
+
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">
+                                    <b style="color:blue;">Lideres</b><br>
+                                    @foreach($det_escuelas_l as $det3)
+                                        @if($det3->escuela_id == $det->escuela_id)
+                                            <p> 
+                                                <b>Dias/Mes:</b> {{ $det3->dias }} <b>No. Beneficiarios:</b> {{ $det3->total_personas }} <br>
+                                                <b>Raciones:</b> {{ number_format($det3->dias * $det3->total_personas)}}
+                                            </p> 
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">                                    
+                                    <b style="color:blue;">Voluntarios y Docentes</b><br>
+                                    @foreach($det_escuelas_v_d as $det4)
+                                        @if($det4->escuela_id == $det->escuela_id)
+                                            <p> 
+                                                <b>Dias/Mes:</b> {{ $det4->dias }} <b>No. Beneficiarios:</b> {{ $det4->total_personas }} <br>
+                                                <b>Raciones:</b> {{ number_format($det4->dias * $det4->total_personas)}}
+                                            </p> 
+                                        @endif
+                                    @endforeach
                                     
-                                </li>
-                            @endforeach
-                        @else
-                            <strong style="color: red;">Ruta sin datos, asigne las escuelas primero.</strong>
-                        @endif
-                    </ol>
+                                </div>
+                            </div>
+                            <hr>
+                        @endforeach
+                                          
+                    @else
+                        <strong style="color: red;">Ruta sin datos, asigne las escuelas primero.</strong>
+                    @endif
+
                 </div> 
 
                 <div class="card-footer clearfix">

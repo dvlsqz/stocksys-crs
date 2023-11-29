@@ -184,8 +184,92 @@ class SolicitudController extends Controller
     public function getSolicitudRutaDetalle($id, $idRuta){
         $rutas_principales = Ruta::with('detalles')->orderBy('id_ubicacion', 'asc')->get();
         $ruta = Ruta::where('id', $idRuta)->first();
-        
         $detalles_ruta_escuelas = DB::table('solicitud_detalles')
+                ->select(
+                    DB::raw('escuelas.id as escuela_id'),
+                    DB::raw('escuelas.nombre as escuela'),
+                    DB::raw('rutas_escuelas.orden_llegada as orden_llegada'),
+                    DB::raw('SUM(solicitud_detalles.total_de_raciones) as total_raciones')
+                )
+                ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+                ->join('rutas_escuelas', 'rutas_escuelas.id_escuela', 'escuelas.id' )
+                ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+                ->where('solicitud_detalles.id_solicitud', $id)
+                ->where('rutas_escuelas.id_ruta', $idRuta)
+                ->groupBy('solicitud_detalles.id_escuela', 'escuelas.id', 'escuelas.nombre', 'rutas_escuelas.orden_llegada')
+                ->orderBy('rutas_escuelas.orden_llegada', 'asc')
+                ->get();
+
+        $idEscuelas;
+        foreach($detalles_ruta_escuelas as $det):
+            $idEscuelas[] = $det->escuela_id;
+        endforeach;
+
+        $det_escuelas_preprimaria = DB::table('solicitud_detalles')
+            ->select(
+                DB::raw('escuelas.id as escuela_id'),
+                DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('solicitud_detalles.total_pre_primaria_a_tercero_primaria as total_ninos'),
+                DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion')
+            )
+            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->where('solicitud_detalles.id_solicitud', $id)
+            ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
+            ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)
+            ->groupBy('escuelas.id' ,'solicitud_detalles.total_pre_primaria_a_tercero_primaria', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->get();
+
+        $det_escuelas_primaria = DB::table('solicitud_detalles')
+            ->select(
+                DB::raw('escuelas.id as escuela_id'),
+                DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('solicitud_detalles.total_cuarto_a_sexto as total_ninos'),
+                DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion')
+            )
+            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->where('solicitud_detalles.id_solicitud', $id)
+            ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
+            ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)
+            ->groupBy('escuelas.id','solicitud_detalles.total_cuarto_a_sexto', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->get();
+
+        $det_escuelas_l = DB::table('solicitud_detalles')
+            ->select(
+                DB::raw('escuelas.id as escuela_id'),
+                DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('solicitud_detalles.total_de_docentes_y_voluntarios as total_personas'),
+                DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion')
+            )
+            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->where('solicitud_detalles.id_solicitud', $id)
+            ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
+            ->where('solicitud_detalles.tipo_de_actividad_alimentos',2)
+            ->groupBy('escuelas.id','solicitud_detalles.total_de_docentes_y_voluntarios', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->get();
+
+        $det_escuelas_v_d = DB::table('solicitud_detalles')
+            ->select(
+                DB::raw('escuelas.id as escuela_id'),
+                DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('solicitud_detalles.total_de_docentes_y_voluntarios as total_personas'),
+                DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion')
+            )
+            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->where('solicitud_detalles.id_solicitud', $id)
+            ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
+            ->where('solicitud_detalles.tipo_de_actividad_alimentos', 3)
+            ->groupBy('escuelas.id','solicitud_detalles.total_de_docentes_y_voluntarios', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->get();
+
+        $racion = Racion::with('alimentos')->where('id_institucion', Auth::user()->id_institucion)->get();
+
+            //return $det_escuelas_preprimaria;
+        
+        /*$detalles_ruta_escuelas = DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('escuelas.id as escuela_id'),
                     DB::raw('escuelas.nombre as escuela'),
@@ -233,7 +317,7 @@ class SolicitudController extends Controller
 
         
 
-            //return $detalles_solicitud_escuelas;
+            //return $detalles_solicitud_escuelas;*/
         
 
        
@@ -241,11 +325,13 @@ class SolicitudController extends Controller
         $datos = [
             'rutas_principales' => $rutas_principales,
             'ruta' => $ruta,
-            'racion' => $racion,
             'idSolicitud' => $idSolicitud,
             'detalles_ruta_escuelas' => $detalles_ruta_escuelas,
-            'detalles_solicitudes_escuelas' => $detalles_solicitudes_escuelas,
-            'total_raciones' => $total_raciones
+            'det_escuelas_preprimaria' => $det_escuelas_preprimaria,
+            'det_escuelas_primaria' => $det_escuelas_primaria,
+            'det_escuelas_v_d' => $det_escuelas_v_d,
+            'det_escuelas_l' => $det_escuelas_l,
+            'racion' => $racion,
         ];
 
         return view('admin.solicitudes.detalles.rutas_desgloce',$datos);
