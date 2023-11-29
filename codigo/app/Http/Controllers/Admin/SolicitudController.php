@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Solicitud, App\Models\SolicitudDetalles,App\Models\Escuela, App\Models\Entrega, App\Models\Ruta, App\Models\RutaEscuela, App\Models\Racion, App\Models\Usuario, App\Models\Bitacora;
+use App\Models\Solicitud, App\Models\SolicitudDetalles,App\Models\Escuela, App\Models\Entrega, App\Models\Ruta, App\Models\RutaEscuela, App\Models\Racion,App\Models\AlimentoRacion, App\Models\Usuario, App\Models\Bitacora;
 use DB, Validator, Auth, Hash, Config, Carbon\Carbon;
 use App\Imports\SolicitudDetallesImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -265,6 +265,7 @@ class SolicitudController extends Controller
             ->groupBy('escuelas.id','solicitud_detalles.total_de_docentes_y_voluntarios', 'solicitud_detalles.tipo_de_actividad_alimentos')
             ->get();
 
+
         $racion = Racion::with('alimentos')->where('id_institucion', Auth::user()->id_institucion)->get();
 
             //return $det_escuelas_preprimaria;
@@ -332,6 +333,7 @@ class SolicitudController extends Controller
             'det_escuelas_v_d' => $det_escuelas_v_d,
             'det_escuelas_l' => $det_escuelas_l,
             'racion' => $racion,
+            'peso_raciones_estudiantes' => $peso_raciones_estudiantes,
         ];
 
         return view('admin.solicitudes.detalles.rutas_desgloce',$datos);

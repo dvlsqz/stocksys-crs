@@ -17,4 +17,6 @@ class Racion extends Model
     public function alimentos(){
         return $this->hasMany(AlimentoRacion::class,'id_racion','id');
     }
+
+
 }

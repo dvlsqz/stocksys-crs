@@ -55,13 +55,7 @@
                                             </p>  
                                         @endif
 
-                                        @foreach($racion as $r)
-                                            @if($r->id == $det1->racion & $det1->escuela_id == $det->escuela_id)                                            
-                                                @foreach($r->alimentos as $ra)
-                                                    {{$ra->alimento->nombre }} {{  number_format($ra->cantidad * $det1->dias * $det1->total_ninos) }} <br>
-                                                @endforeach
-                                            @endif
-                                        @endforeach
+                                            {{ $peso_raciones_estudiantes}}
                                     @endforeach
                                 </div>
                                 <div class="col-md-3">
