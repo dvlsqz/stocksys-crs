@@ -119,7 +119,10 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/solicitud_despacho/{id}/mostrar', [SolicitudController::class, 'getSolicitudMostrar'])->name('solicitud_mostrar');
     Route::get('/solicitud_despacho/{id}/eliminar', [SolicitudController::class, 'getSolicitudEliminar'])->name('solicitud_eliminar');
     Route::get('/solicitud_despacho/detalles/{id}/eliminar', [SolicitudController::class, 'getSolicitudDetallesEliminar'])->name('solicitud_detalle_eliminar');
+    Route::get('/solicitud_despacho/detalles/{id}/registrar', [SolicitudController::class, 'getSolicitudDetallesRegistrar'])->name('solicitud_detalle_registrar');
+    Route::post('/solicitud_despacho/detalles/registrar', [SolicitudController::class, 'postSolicitudDetallesRegistrar'])->name('solicitud_detalle_registrar');
     Route::get('/solicitud_despacho/detalles/{id}/editar', [SolicitudController::class, 'getSolicitudDetallesEditar'])->name('solicitud_detalle_editar');
+    Route::post('/solicitud_despacho/detalles/{id}/editar', [SolicitudController::class, 'postSolicitudDetallesEditar'])->name('solicitud_detalle_editar');
     Route::get('/solicitud_despacho/{id}/rutas', [SolicitudController::class, 'getSolicitudRutas'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho/{id}/ruta/{idRuta}', [SolicitudController::class, 'getSolicitudRutaDetalle'])->name('solicitud_rutas');
     

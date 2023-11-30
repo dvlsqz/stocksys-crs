@@ -14,12 +14,12 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Editar Detalle ID: </strong> {{ $detalles->id }}</h2>
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Detalle: </strong> </h2>
                     
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/solicitud_despacho/detalles/'.$detalles->id.'/editar', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/admin/solicitud_despacho/detalles/registrar', 'files' => true]) !!}
 
                         @include('admin.solicitudes.detalles.formulario')
 

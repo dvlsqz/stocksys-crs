@@ -36,7 +36,7 @@ class SolicitudDetalles extends Model
         'tipo'
     ];
     
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function solicitud(){
         return $this->hasOne(Solicitud::class,'id','id_solicitud');

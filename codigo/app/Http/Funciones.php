@@ -276,6 +276,7 @@
                     'solicitud_eliminar' => 'Puede eliminar solicitudes.',  
                     'solicitud_detalle_eliminar' => 'Puede eliminar detalles de solicitudes.',   
                     'solicitud_detalle_editar' => 'Puede editar detalles de las solicitudes.', 
+                    'solicitud_detalle_registrar' => 'Puede registrar detalles de las solicitudes.', 
                     'solicitud_rutas' => 'Puede visualizar las rutas de las solicitudes',    
                 ]
             ],

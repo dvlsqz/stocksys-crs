@@ -109,6 +109,11 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong><i class="fa-solid fa-file-excel"></i> Información Importada Del Archivo:</strong> {{$solicitud->nombre_archivo}}</h2>
+                    <ul>                       
+                        <li>
+                            <a href="{{ url('/admin/solicitud_despacho/detalles/'.$solicitud->id.'/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="card-body">
