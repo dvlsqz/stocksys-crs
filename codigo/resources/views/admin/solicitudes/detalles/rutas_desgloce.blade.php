@@ -1,5 +1,5 @@
 @extends('admin.plantilla.master')
-@section('title','Editar Escuela')
+@section('title','Desgloce de Rutas')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('/admin/solicitudes') }}"><i class="fa-solid fa-file-invoice"></i> Solicitudes</a></li>
