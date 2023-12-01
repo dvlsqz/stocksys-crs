@@ -20,7 +20,7 @@ class RacionController extends Controller
             'racion' => $racion
         ];
 
-        return view('admin.raciones.inicio',$datos);
+        return view('admin.bodega.bodega_socio.raciones.inicio',$datos);
     } 
 
     public function postRacionRegistrar(Request $request){
@@ -59,7 +59,7 @@ class RacionController extends Controller
             'racion' => $racion
         ]; 
 
-        return view('admin.raciones.editar', $datos);
+        return view('admin.bodega.bodega_socio.raciones.editar', $datos);
     }
 
     public function postRacionEditar(Request $request, $id){
@@ -118,7 +118,7 @@ class RacionController extends Controller
             'id' => $id
         ];
 
-        return view('admin.raciones.alimentos',$datos);
+        return view('admin.bodega.bodega_socio.raciones.alimentos',$datos);
     }
 
     public function postRacionAlimentos(Request $request){

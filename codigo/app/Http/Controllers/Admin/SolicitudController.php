@@ -321,16 +321,18 @@ class SolicitudController extends Controller
                         DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
                         DB::raw('solicitud_detalles.total_pre_primaria_a_tercero_primaria as total_ninos'),
                         DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion'),
-                        DB::raw('SUM(alimentos_raciones.cantidad) as peso')
+                        DB::raw('SUM( alimentos_raciones.cantidad) as peso')
                     )
                     ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-                    ->join('alimentos_raciones', 'alimentos_raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+                    ->join('alimentos_raciones', 'alimentos_raciones.id_racion', 'solicitud_detalles.tipo_de_actividad_alimentos')
                     ->where('solicitud_detalles.id_solicitud', $id)
                     ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
                     ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)
                     ->where('solicitud_detalles.deleted_at', null)
                     ->groupBy('escuelas.id','solicitud_detalles.total_pre_primaria_a_tercero_primaria', 'solicitud_detalles.tipo_de_actividad_alimentos')
                     ->get();
+
+                    //return $det_escuelas_preprimaria;
             $det_escuelas_primaria = DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('escuelas.id as escuela_id'),
@@ -340,7 +342,7 @@ class SolicitudController extends Controller
                     DB::raw('SUM(alimentos_raciones.cantidad) as peso')
                 )
                 ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-                ->join('alimentos_raciones', 'alimentos_raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+                ->join('alimentos_raciones', 'alimentos_raciones.id_racion', 'solicitud_detalles.tipo_de_actividad_alimentos')
                 ->where('solicitud_detalles.id_solicitud', $id)
                 ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
                 ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)                
@@ -357,7 +359,7 @@ class SolicitudController extends Controller
                     DB::raw('SUM(alimentos_raciones.cantidad) as peso')
                 )
                 ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-                ->join('alimentos_raciones', 'alimentos_raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+                ->join('alimentos_raciones', 'alimentos_raciones.id_racion', 'solicitud_detalles.tipo_de_actividad_alimentos')
                 ->where('solicitud_detalles.id_solicitud', $id)
                 ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
                 ->where('solicitud_detalles.tipo_de_actividad_alimentos',2)                
@@ -374,7 +376,7 @@ class SolicitudController extends Controller
                     DB::raw('SUM(alimentos_raciones.cantidad) as peso')
                 )
                 ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-                ->join('alimentos_raciones', 'alimentos_raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+                ->join('alimentos_raciones', 'alimentos_raciones.id_racion', 'solicitud_detalles.tipo_de_actividad_alimentos')
                 ->where('solicitud_detalles.id_solicitud', $id)
                 ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
                 ->where('solicitud_detalles.tipo_de_actividad_alimentos', 3)

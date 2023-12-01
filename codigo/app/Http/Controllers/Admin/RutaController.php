@@ -114,7 +114,7 @@ class RutaController extends Controller
     public function getRutaEliminarEscuelas($id){
         $escuela_ruta = RutaEscuela::findOrFail($id);
 
-        if($escuela_ruta->delete()):
+        if($escuela_ruta->forceDelete()):
             $b = new Bitacora;
             $b->accion = 'Eliminación de escuela asignada a ruta';
             $b->id_usuario = Auth::id();

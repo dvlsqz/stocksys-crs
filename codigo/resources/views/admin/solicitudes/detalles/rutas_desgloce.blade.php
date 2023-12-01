@@ -112,8 +112,8 @@
                                 </div>
                             </div>
                                 <p> 
-                                    <b>Peso Total de Raciones en Gramos:</b> {{ number_format( $total_peso_ruta, 2, '.', ',' ) }} <br> 
-                                    <b>Peso Total de Raciones en Quintales:</b> {{ number_format( (($total_peso_ruta)/453.59237)/100, 2, '.', ',' ) }} 
+                                    <b style="color: red;">Peso Total de Raciones en Gramos:</b> {{ number_format( $total_peso_ruta, 2, '.', ',' ) }} <br> 
+                                    <b style="color: red;">Peso Total de Raciones en Quintales:</b> {{ number_format( (($total_peso_ruta)/453.59237)/100, 2, '.', ',' ) }} 
                                 </p> 
                             <hr>
                         @endforeach
@@ -139,28 +139,9 @@
     </div>
 
 
-    <div class="row mtop16">
+    <div class="row mtop16" style="text-align:center;">
 
         
-
-        <div class="col-md-6">
-            <div class="card ">
-
-                <div class="card-header">
-                    <h2 class="title"><strong><i class="fa-solid fa-gears"></i> Administración de la Ruta</strong>   </h2>
-                    
-                </div>
-
-                <div class="card-body" style="text-align:center;">  
-                    
-                </div> 
-
-                <div class="card-footer clearfix">
-
-                </div>
-
-            </div>
-        </div>
 
         <div class="col-md-3">
             <div class="card ">
@@ -170,7 +151,91 @@
                     
                 </div>
 
-                <div class="card-body" style="text-align:center;">  
+                <div class="card-body" >  
+                    <div class="card ">
+
+                        <div class="card-header">
+                            <h2 class="title"><strong><i class="fa-solid fa-folder"></i> Confirmar Ruta Sin Dividir</strong>   </h2>
+                            
+                        </div>
+
+                        <div class="card-body" >  
+                            
+
+                        </div> 
+
+                    </div>
+                    <hr>
+                    <div class="card ">
+
+                        <div class="card-header">
+                            <h2 class="title"><strong><i class="fa-solid fa-folder-tree"></i> Crear Sub-Ruta</strong>   </h2>
+                            
+                        </div>
+
+                        <div class="card-body" >  
+                            
+
+                        </div> 
+
+                    </div>
+
+                </div> 
+
+                <div class="card-footer clearfix">
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card ">
+
+                <div class="card-header">
+                    <h2 class="title"><strong><i class="fa-solid fa-gears"></i> Distribución de la Ruta</strong>   </h2>
+                    
+                </div>
+
+                <div class="card-body" >  
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card ">
+
+                                <div class="card-header">
+                                    <h2 class="title"><strong><i class="fa-solid fa-gears"></i> Agregar Escuela a la Sub-Ruta</strong>   </h2>
+                                    
+                                </div>
+
+                                <div class="card-body" >  
+
+                                </div> 
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="title"><strong><i class="fa-solid fa-gears"></i> Listado de Sub-Rutas</strong>   </h2>
+                                </div>
+
+                                <div class="card-body">
+                                    <table id="tabla" class="table table-striped table-hover mtop16">
+                                        <thead>
+                                            <tr>
+                                                <td><strong> OPCIONES </strong></td>
+                                                <td><strong> ESCUELA</strong></td>
+                                                <td><strong> SUB-RUTA</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div> 
 
