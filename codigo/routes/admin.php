@@ -95,7 +95,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/bodega_socio/insumo/{id}/pesos', [BodegaSocioController::class, 'getInsumoPesos'])->name('bodega_socio_insumo_pesos');
     Route::post('/bodega_socio/insumo/pesos', [BodegaSocioController::class, 'postInsumoPesos'])->name('bodega_socio_insumo_pesos');
     Route::get('/bodega_socio/insumo/{id}/editar', [BodegaSocioController::class, 'getInsumoEditar'])->name('bodega_socio_editar');
-    Route::get('/bodega_socio/insumo/{id}/eliminar', [BodegaSocioController::class, 'getInsumoEliminar'])->name('bodega_socio_eliminar');       
+    Route::get('/bodega_socio/insumo/{id}/eliminar', [BodegaSocioController::class, 'getInsumoEliminar'])->name('bodega_socio_eliminar');        
 
 
     //Modulo de Bodega - Bodega Principal
@@ -125,6 +125,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/solicitud_despacho/detalles/{id}/editar', [SolicitudController::class, 'postSolicitudDetallesEditar'])->name('solicitud_detalle_editar');
     Route::get('/solicitud_despacho/{id}/rutas', [SolicitudController::class, 'getSolicitudRutas'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho/{id}/ruta/{idRuta}', [SolicitudController::class, 'getSolicitudRutaDetalle'])->name('solicitud_rutas');
+    Route::post('/solicitud_despacho/confirmar_ruta/sin_division', [SolicitudController::class,'postSolicitudRutaConfirmar'])->name('solicitud_rutas');
+    Route::post('/solicitud_despacho/crear_subruta', [SolicitudController::class,'postSolicitudCrearSubRuta'])->name('solicitud_rutas');
     
     
 
