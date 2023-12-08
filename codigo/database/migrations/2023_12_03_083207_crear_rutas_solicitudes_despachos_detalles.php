@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('id_ruta_despacho')->nullable();
             $table->integer('id_escuela')->nullable();
+            $table->integer('orden_llegada')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

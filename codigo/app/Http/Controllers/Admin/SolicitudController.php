@@ -430,7 +430,7 @@ class SolicitudController extends Controller
     public function postSolicitudRutaConfirmar(Request $request){
         $ruta_base = $request->input('ruta_base');
         $nombre_ruta = e($request->input('nombre_ruta_solicitud'));
-        $escuelas = RutaEscuela::select('id_escuela')->where('id_ruta', $ruta_base)->get();
+        $escuelas = RutaEscuela::select('id_escuela', 'orden_llegada')->where('id_ruta', $ruta_base)->get();
 
         DB::beginTransaction();
             $ruta_solicitud = new RutaSolicitud;
@@ -442,6 +442,7 @@ class SolicitudController extends Controller
                 $detalle = new RutaSolicitudDetalles;
                 $detalle->id_ruta_despacho = $ruta_solicitud->id;
                 $detalle->id_escuela= $escuela->id_escuela;
+                $detalle->orden_llegada= $escuela->orden_llegada;
                 $detalle->save();
             endforeach;
 

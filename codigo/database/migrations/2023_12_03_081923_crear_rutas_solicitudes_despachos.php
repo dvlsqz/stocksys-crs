@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rutas_solicitudes_despachos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('id_solicitud_despacho')->nullable();
             $table->integer('id_ruta_base')->nullable();
             $table->string('nombre')->nullable();
             $table->timestamps();

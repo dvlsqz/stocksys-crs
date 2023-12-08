@@ -16,6 +16,7 @@
 
                 <div class="card-body" >  
                 {!! Form::open(['url' => '/admin/solicitud_despacho/confirmar_ruta/sin_division', 'files' => true]) !!}
+                    {!! Form::hidden('id_solicitud', $idSolicitud, ['class'=>'form-control']) !!}
                     {!! Form::hidden('ruta_base', $ruta->id, ['class'=>'form-control']) !!}
                     {!! Form::hidden('nombre_ruta_solicitud', $ruta->ubicacion->nomenclatura.'0'.$ruta->correlativo, ['class'=>'form-control']) !!}
                 
@@ -39,9 +40,12 @@
                 </div>
 
                 <div class="card-body" >  
-                    {!! Form::open(['url' => '/admin/solicitud_despacho/crear_subruta', 'files' => true]) !!}                            
+                    {!! Form::open(['url' => '/admin/solicitud_despacho/crear_subruta', 'files' => true]) !!}       
+                        {!! Form::hidden('id_solicitud', $idSolicitud, ['class'=>'form-control']) !!}                     
                         {!! Form::hidden('ruta_base', $ruta->id, ['class'=>'form-control']) !!}
                         {!! Form::hidden('nombre_ruta_solicitud', $ruta->ubicacion->nomenclatura.'0'.$ruta->correlativo, ['class'=>'form-control']) !!}
+
+                        
 
                         {!! Form::submit('Editar', ['class'=>'btn btn-info mtop16']) !!}
 
@@ -101,6 +105,12 @@
                                                 <option value="{{ $e->id }}">{{ $e->codigo.' - '.$e->nombre}}</option>
                                             @endforeach
                                         </select>            
+                                    </div>
+
+                                    <label for="name " class="mtop16"> <strong>Orden de Llegada: </strong></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                        {!! Form::number('orden_llegada', 1, ['class'=>'form-control', 'min'=>'1']) !!}
                                     </div>
 
                                 {!! Form::submit('Editar', ['class'=>'btn btn-info mtop16']) !!}
