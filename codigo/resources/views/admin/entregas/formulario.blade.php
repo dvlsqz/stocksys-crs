@@ -19,5 +19,5 @@
 <label for="unit_id"  class="mtop16"><strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Año:</strong></label>
 <div class="input-group">
     <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
-    {!! Form::number('year', $entrega->year, ['class'=>'form-control', 'min'=>'2023', 'max'=>'2099', 'step'=>'1']) !!}
+    {!! Form::number('year', (isset($entrega->year))  ? $entrega->year : now()->year  , ['class'=>'form-control', 'min'=>'2023', 'max'=>'2099', 'step'=>'1']) !!}
 </div>

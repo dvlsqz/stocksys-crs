@@ -305,13 +305,34 @@ class SolicitudController extends Controller
                 ->get();
         
         $idSolicitud = $id;
-        $sub_rutas = RutaSolicitud::where('id_ruta_base', $idRuta)->get();
+        
         $escuelas = DB::table('escuelas')
                     ->join('rutas_escuelas', 'rutas_escuelas.id_escuela','escuelas.id')
                     ->where('rutas_escuelas.id_ruta', $idRuta)
                     ->get();
 
-        //return $escuelas;
+        $nombre_ruta = $ruta->ubicacion->nomenclatura.'0'.$ruta->correlativo;
+
+        $ruta_despacho = RutaSolicitud::with('detalles')
+            ->where('id_ruta_base', $idRuta)
+            ->where('nombre',$nombre_ruta)
+            ->where('deleted_at', null)
+            ->first();        
+        $sub_rutas = RutaSolicitud::with('detalles')
+            ->where('id_ruta_base', $idRuta)
+            ->whereNot('nombre',$nombre_ruta)
+            ->where('deleted_at', null)
+            ->get();
+
+        $tipo_ruta;
+        if(isset($ruta_despacho) ): 
+            $tipo_ruta = 0;
+        elseif(count($sub_rutas) > 0):
+            $tipo_ruta = 1;
+        else:
+            $tipo_ruta = 2;    
+        endif;
+
 
         if(count($detalles_ruta_escuelas) > 0):
             $idEscuelas;
@@ -321,23 +342,23 @@ class SolicitudController extends Controller
 
 
             $det_escuelas_preprimaria =  DB::table('solicitud_detalles')
-            ->select(
-                DB::raw('escuelas.id as escuela_id'),
-                DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
-                DB::raw('SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) as total_ninos'),
-                DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion'),
-                DB::raw('alimentos_racion.peso as peso_racion')
-            )
-            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-            ->join(DB::RAW("(SELECT id_racion, SUM(cantidad) as peso FROM alimentos_raciones GROUP BY id_racion) as alimentos_racion"), function($j){
-                $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos");
-            })
-            ->where('solicitud_detalles.id_solicitud', $id)
-            ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
-            ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)                
-            ->where('solicitud_detalles.deleted_at', null)
-            ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos', 'alimentos_racion.peso')
-            ->get();
+                ->select(
+                    DB::raw('escuelas.id as escuela_id'),
+                    DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                    DB::raw('SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) as total_ninos'),
+                    DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion'),
+                    DB::raw('alimentos_racion.peso as peso_racion')
+                )
+                ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+                ->join(DB::RAW("(SELECT id_racion, SUM(cantidad) as peso FROM alimentos_raciones GROUP BY id_racion) as alimentos_racion"), function($j){
+                    $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos");
+                })
+                ->where('solicitud_detalles.id_solicitud', $id)
+                ->whereIn('solicitud_detalles.id_escuela', $idEscuelas)
+                ->where('solicitud_detalles.tipo_de_actividad_alimentos', 1)                
+                ->where('solicitud_detalles.deleted_at', null)
+                ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos', 'alimentos_racion.peso')
+                ->get();
 
                     //return $det_escuelas_preprimaria;
             $det_escuelas_primaria = DB::table('solicitud_detalles')
@@ -399,10 +420,13 @@ class SolicitudController extends Controller
 
         
             
+            
             $datos = [
                 'rutas_principales' => $rutas_principales,
                 'ruta' => $ruta,
+                'ruta_despacho' => $ruta_despacho,
                 'sub_rutas' => $sub_rutas,
+                'tipo_ruta' => $tipo_ruta,
                 'escuelas' => $escuelas,
                 'idSolicitud' => $idSolicitud,
                 'detalles_ruta_escuelas' => $detalles_ruta_escuelas,
@@ -416,7 +440,9 @@ class SolicitudController extends Controller
             $datos = [
                 'rutas_principales' => $rutas_principales,
                 'ruta' => $ruta,
+                'ruta_despacho' => $ruta_despacho,
                 'sub_rutas' => $sub_rutas,
+                'tipo_ruta' => $tipo_ruta,
                 'escuelas' => $escuelas,
                 'idSolicitud' => $idSolicitud,
                 'detalles_ruta_escuelas' => $detalles_ruta_escuelas,
@@ -428,12 +454,14 @@ class SolicitudController extends Controller
     }
 
     public function postSolicitudRutaConfirmar(Request $request){
+        $idSolicitud = $request->input('id_solicitud');
         $ruta_base = $request->input('ruta_base');
         $nombre_ruta = e($request->input('nombre_ruta_solicitud'));
         $escuelas = RutaEscuela::select('id_escuela', 'orden_llegada')->where('id_ruta', $ruta_base)->get();
 
         DB::beginTransaction();
             $ruta_solicitud = new RutaSolicitud;
+            $ruta_solicitud->id_solicitud_despacho = $idSolicitud;
             $ruta_solicitud->id_ruta_base = $ruta_base;
             $ruta_solicitud->nombre = $nombre_ruta;
             $ruta_solicitud->save();
@@ -447,7 +475,7 @@ class SolicitudController extends Controller
             endforeach;
 
         DB::commit();
-
+ 
         if($ruta_solicitud->save()):
             $b = new Bitacora;
             $b->accion = 'Confirmación de ruta '.$nombre_ruta.' sin fraccionar';
@@ -459,17 +487,116 @@ class SolicitudController extends Controller
         endif;
     }
 
-    public function postSolicitudCrearSubRuta(Request $request){        
+    public function getSolicitudRutaConfirmadaEliminar($id){
+        $ruta = RutaSolicitud::findOrFail($id);
+        $detalles = RutaSolicitudDetalles::where('id_ruta_despacho',$id)->delete();
+
+        $nombre = $ruta->nombre;
+        $solicitud = $ruta->id_solicitud;
+
+
+        if($ruta->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminacion de ruta '.$nombre.' de la solicitud (ID): '.$solicitud;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Escuela eliminada con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
+
+    }
+
+    public function postSolicitudCrearSubRuta(Request $request){       
         $abecedario = range('A','Z');
         $ruta_base = $request->input('ruta_base');
         $ruta_nombre_base = e($request->input('nombre_ruta_solicitud'));
-        $conteo_ruta = RutaSolicitud::where('id_ruta_base', $ruta_base)->count();
+        $conteo_ruta = RutaSolicitud::where('id_ruta_base', $ruta_base)->where('deleted_at', null)->count();
+        $idSolicitud = $request->input('id_solicitud');
 
         $ruta_solicitud = new RutaSolicitud;
+        $ruta_solicitud->id_solicitud_despacho = $idSolicitud;
         $ruta_solicitud->id_ruta_base = $ruta_base;
         $ruta_solicitud->nombre = $ruta_nombre_base.$abecedario[$conteo_ruta];
-        $ruta_solicitud->save();
+
+        if($ruta_solicitud->save()):
+            $b = new Bitacora;
+            $b->accion = 'Creacion de sub-ruta con exito';
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Creacion de sub-ruta con exito!.')
+                ->with('typealert', 'success');
+        endif;
     }
+
+    public function postSolicitudAsignarEscuelaSubRuta(Request $request){       
+
+        $detalle = new RutaSolicitudDetalles;
+        $detalle->id_ruta_despacho = $request->input('id_sub_ruta_despacho');
+        $detalle->id_escuela= $request->input('id_escuela');
+        $detalle->orden_llegada= $request->input('orden_llegada');
+
+        if($detalle->save()):
+            $b = new Bitacora;
+            $b->accion = 'Asignacion de escuela a sub ruta con exito';
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Asignacion de escuela a sub ruta con exito!.')
+                ->with('typealert', 'success');
+        endif;
+    }
+
+    public function getSolicitudEscuelaSubRutaEliminar($id){
+        $escuela_sub_ruta = RutaSolicitudDetalles::findOrFail($id);
+
+
+        if($escuela_sub_ruta->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminacion de escuela a sub ruta asignada';
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Escuela eliminada de sub ruta con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
+
+    }
+
+    public function getSolicitudSubRutaEliminar($id){
+        $ruta = RutaSolicitud::findOrFail($id);
+        $detalles = RutaSolicitudDetalles::where('id_ruta_despacho',$id)->delete();
+
+        $nombre = $ruta->nombre;
+        $solicitud = $ruta->id_solicitud;
+
+
+        if($ruta->delete()):
+            $b = new Bitacora;
+            $b->accion = 'Eliminacion de sub ruta '.$nombre.' de la solicitud (ID): '.$solicitud;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Sub ruta eliminada con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
+
+    }
+
+    public function getSolicitudRutasConfirmadas($id){
+        $rutas = RutaSolicitud::with('ruta_base')->where('id_solicitud_despacho',$id)->get();
+
+        $datos = [
+            'rutas' => $rutas
+        ];
+
+
+        return view('admin.solicitudes.rutas_confirmadas',$datos);
+
+    }
+
+
 
 
 }

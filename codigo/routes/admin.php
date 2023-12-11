@@ -124,9 +124,14 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/solicitud_despacho/detalles/{id}/editar', [SolicitudController::class, 'getSolicitudDetallesEditar'])->name('solicitud_detalle_editar');
     Route::post('/solicitud_despacho/detalles/{id}/editar', [SolicitudController::class, 'postSolicitudDetallesEditar'])->name('solicitud_detalle_editar');
     Route::get('/solicitud_despacho/{id}/rutas', [SolicitudController::class, 'getSolicitudRutas'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho/{id}/rutas_confirmadas', [SolicitudController::class, 'getSolicitudRutasConfirmadas'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho/{id}/ruta/{idRuta}', [SolicitudController::class, 'getSolicitudRutaDetalle'])->name('solicitud_rutas');
     Route::post('/solicitud_despacho/confirmar_ruta/sin_division', [SolicitudController::class,'postSolicitudRutaConfirmar'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho_ruta_confirmada/{id}/eliminar', [SolicitudController::class,'getSolicitudRutaConfirmadaEliminar'])->name('solicitud_rutas');    
     Route::post('/solicitud_despacho/crear_subruta', [SolicitudController::class,'postSolicitudCrearSubRuta'])->name('solicitud_rutas');
+    Route::post('/solicitud_despacho/asignar_escuela_sub_ruta', [SolicitudController::class,'postSolicitudAsignarEscuelaSubRuta'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho_escuela_sub_ruta/{id}/eliminar', [SolicitudController::class,'getSolicitudEscuelaSubRutaEliminar'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho_sub_ruta/{id}/eliminar', [SolicitudController::class,'getSolicitudSubRutaEliminar'])->name('solicitud_rutas');   
     
     
 

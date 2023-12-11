@@ -19,6 +19,6 @@ class RutaSolicitud extends Model
     }
 
     public function detalles(){
-        return $this->hasMany(RutaSolicitudDetalles::class,'id_ruta','id');
+        return $this->hasMany(RutaSolicitudDetalles::class,'id_ruta_despacho','id');
     }
 }
