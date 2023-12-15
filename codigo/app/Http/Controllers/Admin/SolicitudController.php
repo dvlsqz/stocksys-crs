@@ -585,10 +585,12 @@ class SolicitudController extends Controller
     }
 
     public function getSolicitudRutasConfirmadas($id){
+        $idSolicitud = $id;
         $rutas = RutaSolicitud::with('ruta_base')->where('id_solicitud_despacho',$id)->get();
 
         $datos = [
-            'rutas' => $rutas
+            'rutas' => $rutas,
+            'idSolicitud' => $idSolicitud
         ];
 
 

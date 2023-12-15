@@ -2,7 +2,7 @@
 @section('title','Raciones')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Raciones</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/bodega_socio/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Raciones</a></li>
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/racion/registrar', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/admin/bodega_socio/racion/registrar', 'files' => true]) !!}
                         @include('admin.bodega.bodega_socio.raciones.formulario')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
@@ -48,9 +48,9 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/racion/'.$r->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/racion/'.$r->id.'/alimentos') }}"  title="Alimentos"><i class="fa-solid fa-bowl-rice"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/racion" data-object="{{ $r->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            <a href="{{ url('/admin/bodega_socio/racion/'.$r->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ url('/admin/bodega_socio/racion/'.$r->id.'/alimentos') }}"  title="Alimentos"><i class="fa-solid fa-bowl-rice"></i></a>
+                                            <a href="#" data-action="eliminar" data-path="admin/bodega_socio/racion" data-object="{{ $r->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
                                     <td>

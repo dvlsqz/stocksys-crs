@@ -15,3 +15,5 @@
     <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
     {!! Form::select('asignado_a', obtenerOpcionesBeneficiarios('list', null), $racion->asignado_a,['class'=>'form-select']) !!}
 </div>
+
+{!! Form::hidden('tipo_bodega', 1, ['class'=>'form-control']) !!}

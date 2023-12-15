@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 d-flex">
+        <div class="col-xs-2 col-md-2 d-flex">
             <div class="card ">
 
                 <div class="card-header">
@@ -19,11 +19,11 @@
                 </div>
 
                 <div class="card-body">              
-                    <div class="d-grid gap-2">
-                    <a class="btn btn-outline-primary" href="{{ url('/admin/solicitudes_despachos') }}"  title="Editar"><i class="fa-solid fa-arrow-rotate-left"></i> Regresar</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/solicitud_despacho/'.$solicitud->id.'/rutas') }}"  title="Editar"><i class="fa-solid fa-road-circle-exclamation"></i> Administracion Rutas De Entrega</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/solicitud_despacho/'.$solicitud->id.'/rutas_confirmadas') }}"  title="Editar"><i class="fa-solid fa-eye"></i> Rutas / Sub Rutas Confirmadas</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/solicitud_despacho/detalles/editar') }}"  title="Editar"><i class="fa-solid fa-file-circle-exclamation"></i> Solicitud A Bodega Primaria</a>
+                    <div class="d-grid gap-2  ">
+                        <a class="btn btn-outline-primary" style=" word-break: break-all; " href="{{ url('/admin/solicitudes_despachos') }}"  title="Editar"><i class="fa-solid fa-arrow-rotate-left"></i> Regresar</a>
+                        <a class="btn btn-outline-primary" style=" word-break: break-all; " href="{{ url('/admin/solicitud_despacho/'.$solicitud->id.'/rutas') }}"  title="Editar"><i class="fa-solid fa-road-circle-exclamation"></i> Administracion Rutas</a>
+                        <a class="btn btn-outline-primary" style=" word-break: break-all; " href="{{ url('/admin/solicitud_despacho/'.$solicitud->id.'/rutas_confirmadas') }}"  title="Editar"><i class="fa-solid fa-eye"></i> Rutas Confirmadas</a>
+                        <a class="btn btn-outline-primary" style=" word-break: break-all; " href="{{ url('/admin/solicitud_despacho/detalles/editar') }}"  title="Editar"><i class="fa-solid fa-file-circle-exclamation"></i> Solicitud A Bodega</a>
                     </div>
                 </div>
 

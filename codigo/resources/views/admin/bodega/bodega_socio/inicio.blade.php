@@ -9,7 +9,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">  
-        <div class="col-md-3">
+        <div class="col-md-3 d-flex">
             <div class="card ">
 
                 <div class="card-header">
@@ -90,8 +90,8 @@
                     <div class="d-grid gap-2">
                         <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/insumo/ingresos') }}" title="Ingresos"><i class="fas fa-plus-circle"></i> Ingresos</a>
                         <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/insumo/egresos') }}" title="Egresos"><i class="fas fa-minus-circle"></i> Egresos</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/raciones/1') }}" title="raciones"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/kits/1') }}" title="lits"><i class="fa-solid fa-boxes-stacked"></i> Kits</a>
+                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/raciones/1') }}" title="raciones"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
+                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/kits/1') }}" title="lits"><i class="fa-solid fa-boxes-stacked"></i> Kits</a>
                     </div>
                 </div>
 

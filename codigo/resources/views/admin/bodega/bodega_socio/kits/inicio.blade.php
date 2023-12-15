@@ -1,8 +1,8 @@
 @extends('admin.plantilla.master')
-@section('title','Raciones')
+@section('title','Kits')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Raciones</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/kits') }}"><i class="fa-solid fa-bowl-rice"></i> Kits</a></li>
 @endsection
 
 @section('content')
@@ -13,12 +13,12 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Entrega</strong></h2>
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Kit</strong></h2>
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/racion/registrar', 'files' => true]) !!}
-                        @include('admin.raciones.formulario')
+                    {!! Form::open(['url' => '/admin/bodega_socio/kit/registrar', 'files' => true]) !!}
+                        @include('admin.bodega.bodega_socio.kits.formulario')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
                     {!! Form::close() !!}
@@ -32,7 +32,7 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fa-solid fa-bowl-rice"></i> <strong> Listados de Raciones</strong></h2>
+                    <h2 class="title"><i class="fa-solid fa-bowl-rice"></i> <strong> Listados de Kits</strong></h2>
                 </div>
 
                 <div class="card-body">
@@ -44,20 +44,20 @@
                                 <td><strong> ASIGNADO A </strong></td>
                         </thead>
                         <tbody>
-                            @foreach($raciones as $r)
+                            @foreach($kits as $k)
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/racion/'.$r->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/racion/'.$r->id.'/alimentos') }}"  title="Alimentos"><i class="fa-solid fa-bowl-rice"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/racion" data-object="{{ $r->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            <a href="{{ url('/admin/bodega_socio/kit/'.$k->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ url('/admin/bodega_socio/kit/'.$k->id.'/insumos') }}"  title="Insumos"><i class="fa-solid fa-boxes-stacked"></i></a>
+                                            <a href="#" data-action="eliminar" data-path="admin/bodega_socio/kit" data-object="{{ $k->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
                                     <td>
-                                        {{ $r->nombre}} <br>
-                                        <span class="badge text-bg-dark">{{ $r->tipo_alimentos }}</span>
+                                        {{ $k->nombre}} <br>
+                                        <span class="badge text-bg-dark">{{ $k->tipo_insumos }}</span>
                                     </td>
-                                    <td>{{ obtenerOpcionesBeneficiarios(null, $r->asignado_a) }} </td>
+                                    <td>{{ obtenerOpcionesBeneficiarios(null, $k->asignado_a) }} </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -39,6 +39,8 @@ class RacionController extends Controller
             $r->nombre = e($request->input('nombre'));
             $r->tipo_alimentos = e($request->input('tipo_alimentos'));
             $r->asignado_a = $request->input('asignado_a');
+            $r->tipo_bodega = e($request->input('tipo_bodega'));
+            $r->id_institucion = Auth::user()->id_institucion;
 
             if($r->save()):
                 $b = new Bitacora;
@@ -112,7 +114,7 @@ class RacionController extends Controller
         $id = $id;
 
         $datos = [
-            'alimentos_racion' => $alimentos_racion,
+            'alimentos_racion' => $alimentos_racion, 
             'racion' => $racion,
             'alimentos' => $alimentos,
             'id' => $id

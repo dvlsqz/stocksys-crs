@@ -14,7 +14,7 @@
             <div class="card ">
 
                 <div class="card-header">                
-                    <h2 class="card-title"><strong><i class="fa-solid fa-road-circle-exclamation"></i> Listado de Rutas Confirmadas Para El Despacho De Solicitud #</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-road-circle-exclamation"></i> Listado de Rutas Confirmadas Para El Despacho De Solicitud #{{$idSolicitud}}</strong></h2>
 
                 </div>
 

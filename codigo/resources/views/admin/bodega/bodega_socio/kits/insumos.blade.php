@@ -1,9 +1,9 @@
 @extends('admin.plantilla.master')
-@section('title','Alimentos de la Ración')
+@section('title','Insumos del Kit')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('/admin/bodega_socio/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Raciones</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/bodega_socio/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Alimentos de la Ración</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Kits</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/raciones') }}"><i class="fa-solid fa-bowl-rice"></i> Insumos del Kit</a></li>
 @endsection
 
 @section('content')
@@ -14,12 +14,12 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Añadir Alimento a Ración</strong></h2>
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Añadir Insumo a Kit</strong></h2>
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open(['url' => '/admin/bodega_socio/racion/alimentos/asignar', 'files' => true]) !!}
-                        @include('admin.bodega.bodega_socio.raciones.formulario_alimentos')
+                    {!! Form::open(['url' => '/admin/bodega_socio/kit/insumos/asignar', 'files' => true]) !!}
+                        @include('admin.bodega.bodega_socio.kits.formulario_insumos')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
                     {!! Form::close() !!}
@@ -33,7 +33,7 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fa-solid fa-bowl-rice"></i> <strong> Listados de Alimentos Que Conforman La Ración: </strong> {{ $racion->nombre }}</h2>
+                    <h2 class="title"><i class="fa-solid fa-bowl-rice"></i> <strong> Listados de Insumos Que Conforman El Kit: </strong> {{ $kit->nombre }}</h2>
                 </div>
 
                 <div class="card-body">
@@ -41,21 +41,21 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
-                                <td><strong> ALIMENTO </strong></td>
-                                <td><strong> CANTIDAD / UNIDAD DE MEDIDA </strong></td>
+                                <td><strong> INSUMO </strong></td>
+                                <td><strong> CANTIDAD </strong></td>
                         </thead>
                         <tbody>
-                            @foreach($alimentos_racion as $ar)
+                            @foreach($insumos_kit as $ik)
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="#" data-action="eliminar" data-path="admin/bodega_socio/racion/alimentos" data-object="{{ $ar->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            <a href="#" data-action="eliminar" data-path="admin/bodega_socio/kit/insumos" data-object="{{ $ik->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
                                         </div>
                                     </td>
                                     <td>
-                                        {{ $ar->alimento->nombre }} <br>
+                                        {{ $ik->insumo->nombre }} <br>
                                     </td>
-                                    <td>{{ $ar->cantidad }}  {{ obtenerUnidadesMedidaRaciones(null, $ar->unidad_medida) }} </td>
+                                    <td>{{ $ik->cantidad }} </td>
                                 </tr>
                             @endforeach
                         </tbody>
