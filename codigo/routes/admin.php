@@ -154,4 +154,4 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     
 });
 
-Route::get('/stocks/api/detalle/escuela/ruta/{idSolicitud}/{idEscuela}',[SolicitudController::class, 'getDetalleEscuela']); 
+Route::get('/stocksys/api/escuelas/{idSolicitud}',[SolicitudController::class, 'getEscuelasDespacho']); 

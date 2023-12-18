@@ -59,7 +59,7 @@
                                     </td>
                                     <td>{{$i->nombre}}</td>
                                     <td>
-                                        {{$i->saldo}} <br>
+                                        {{$i->saldo}} Unidades<br>
                                         <small><strong>Unidad: </strong> {{ obtenerUnidadesMedidaInsumos(null, $i->id_unidad_medida) }}</small>
                                     </td>
                                     <td>{{obtenerCategoriaInsumos(null, $i->categoria)}}</td>

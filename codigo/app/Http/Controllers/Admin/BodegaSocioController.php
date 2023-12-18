@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Bodega, App\Models\BodegaIngreso, App\Models\BodegaIngresoDetalle, App\Models\PesoInsumo, App\Models\Insumo, App\Models\Institucion, App\Models\Bitacora;
+use App\Models\Bodega, App\Models\BodegaIngreso, App\Models\BodegaIngresoDetalle, App\Models\PesoInsumo, App\Models\Insumo, App\Models\Institucion,App\Models\Solicitud, App\Models\Bitacora;
 use Validator, Auth, Hash, Config, DB, Carbon\Carbon;
 
 class BodegaSocioController extends Controller
@@ -67,7 +67,7 @@ class BodegaSocioController extends Controller
             'bodegas' => $bodegas
         ];
         
-        return view('admin.bodega.bodega_socio.ingreso' ,$datos);
+        return view('admin.bodega.bodega_socio.movimientos.ingreso' ,$datos);
     }
 
     public function postInsumoIngresos(Request $request){
@@ -126,8 +126,16 @@ class BodegaSocioController extends Controller
         endif;
     }
 
-    public function getInsumoEgreso(){ 
+    public function getInsumoEgresos(){ 
+        $solicitudes = Solicitud::with(['entrega', 'detalles'])->get();
+        $insumos = Bodega::where('tipo_bodega', 1)->where('saldo', '>',0)->where('id_institucion', Auth::user()->id_institucion)->get();
+
+        $datos = [
+            'solicitudes' => $solicitudes,
+            'insumos' => $insumos
+        ];
         
+        return view('admin.bodega.bodega_socio.movimientos.egreso' ,$datos);
     }
 
     public function getInsumoEliminar($id){

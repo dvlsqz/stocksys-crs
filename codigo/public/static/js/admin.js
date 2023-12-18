@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
     btn_eliminar = document.getElementsByClassName('btn-eliminar');
     btn_detalle = document.getElementsByClassName('btn-detalle');
     var btn_generar_usuario = document.getElementById('btn_generar_usuario');
+    var btn_buscar_escuelas_despacho = document.getElementById('btn_buscar_escuelas_despacho');
 
     for(i=0; i < btn_eliminar.length; i++){
         btn_eliminar[i].addEventListener('click', delete_object);
@@ -29,6 +30,13 @@ document.addEventListener('DOMContentLoaded', function(){
             setGenerarUsuario();
         });
     } 
+
+    if(btn_buscar_escuelas_despacho){
+        btn_buscar_escuelas_despacho.addEventListener('click', function(e){
+            e.preventDefault();
+            obtenerEscuelas();
+        });
+    }
 
     $('#tabla').DataTable({
         "paging": true,
@@ -112,12 +120,22 @@ document.addEventListener('DOMContentLoaded', function(){
         allowClear: true
     });
 
+    $("#id_solicitud").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+
     $("#rol").select2({
         placeholder: "Seleccione una Opción",
         allowClear: true
     });
 
     $("#idinsumo").select2({
+        placeholder: "Seleccione una Opción",
+        allowClear: true
+    });
+    
+    $("#idEntrega").select2({
         placeholder: "Seleccione una Opción",
         allowClear: true
     });
@@ -214,6 +232,34 @@ function delete_object(e){
     }
 
 
+}
+
+function obtenerEscuelas(){
+    var id_solicitud = document.getElementById('id_solicitud').value;    
+
+    select = document.getElementById('id_escuela');
+    select.innerHTML = "";
+    //var url = base + '/agem/public/admin/agem/api/load/studies/'+exam;
+    var url = base + '/stocksys/api/escuelas/'+id_solicitud;
+    http.open('GET', url, true);
+    http.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    http.send();
+    http.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            var data = this.responseText;
+            data = JSON.parse(data);            
+
+            if('escuelas' in data){ 
+                for(i=0; i<data.escuelas.length; i++){
+                    select.innerHTML += "<option value=\""+data.escuelas[i].escuela.id+"\" selected>"+data.escuelas[i].escuela.codigo+" / "+data.escuelas[i].escuela.nombre+"</option>";
+                }
+
+            }
+
+            
+
+        }
+    }
 }
 
 

@@ -598,6 +598,16 @@ class SolicitudController extends Controller
 
     }
 
+    public function getEscuelasDespacho($id_solicitud){
+        $escuelas = SolicitudDetalles::with('escuela')->select('id_escuela')->where('id_solicitud', $id_solicitud)->groupBy('id_escuela')->get();
+
+        $datos = [
+            'escuelas' => $escuelas
+        ];
+
+        return response()->json($datos);
+    }
+
 
 
 
