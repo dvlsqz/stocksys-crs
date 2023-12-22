@@ -155,3 +155,4 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
 });
 
 Route::get('/stocksys/api/escuelas/{idSolicitud}',[SolicitudController::class, 'getEscuelasDespacho']); 
+Route::get('/stocksys/api/escuelas/pruebas/{idSolicitud}',[SolicitudController::class, 'getEscuelasPruebas']); 

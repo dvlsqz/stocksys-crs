@@ -20,21 +20,34 @@
 
                 <div class="card-body " style="text-align:center;">  
 
-                    @if(count($rutas) > 0)                                    
+                    @if(count($rutas) > 0)      
+                                               
                         @foreach($rutas as $r)
                             <p class="mtop16"> <b>{{$loop->iteration}}. {{$r->ruta_base->ubicacion->nombre.' - '.$r->nombre}} </b> </p>
                             <div class="row mtop16">
                                     <b style="color:blue;">Detalle de Ruta</b><br>
-                                    
+                                    @php($total_peso_ruta = 0)
                                     @foreach($r->detalles as $det)
                                             <p> 
-                                                <b>Escuela: </b> {{$det->escuela->codigo.' / '.$det->escuela->nombre}}
-                                                <b>Orden de Llegada:</b> {{$det->orden_llegada}}
+                                                <b>Escuela: </b>  {{$det->escuela->codigo.' / '.$det->escuela->nombre}} &nbsp
+                                                <b>Orden de Llegada:</b>  {{$det->orden_llegada}} &nbsp
+                                                @php($total_peso_escuela = 0)   
+                                                @foreach($detalle_escuelas as $det_esc)
+                                                    @if($det->escuela->id == $det_esc->escuela_id)
+                                                        @php($total_peso_escuela = $total_peso_escuela + ($det_esc->peso/453.59237)/100  ) 
+                                                    @endif
+                                                @endforeach
+                                                <b >Peso Total Escuela: </b> {{number_format(  $total_peso_escuela , 2, '.', ',' ) }}
+                                                @php($total_peso_ruta = $total_peso_ruta + $total_peso_escuela)
                                             </p>  
 
                                     @endforeach
                             </div>
+                            <p>
+                                <b style="color: red;" >Peso Total Ruta: </b> {{number_format(  $total_peso_ruta, 2, '.', ',' ) }}
+                            </p>
                             <hr>
+                            
                             
                         @endforeach
                         

@@ -171,20 +171,34 @@
                                             <tr>
                                                 <td><strong> ESCUELA</strong></td>
                                                 <td><strong> ORDEN LLEGADA</strong></td>
+                                                <td><strong> PESO QUINTALES</strong></td>
                                                 
                                             </tr>
                                         </thead>
+                                        @php($total_peso_ruta = 0)
                                         @foreach($s->detalles as $det)
                                             <tbody> 
                                                 <tr>
                                                     <th> <a href="#" data-action="eliminar" data-path="admin/solicitud_despacho_escuela_sub_ruta" data-object="{{ $det->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a>  {{ $det->escuela->codigo.' / '.$det->escuela->nombre }}</th>
                                                     <th>{{ $det->orden_llegada}}</th>
+                                                    @php($total_peso_escuela = 0)   
+                                                    @foreach($detalle_escuelas as $det_esc)
+                                                        @if($det->escuela->id == $det_esc->escuela_id)
+                                                            @php($total_peso_escuela = $total_peso_escuela + ($det_esc->peso/453.59237)/100  ) 
+                                                        @endif
+                                                    @endforeach
+                                                    <th> {{number_format(  $total_peso_escuela , 2, '.', ',' ) }}</th>
+                                                    @php($total_peso_ruta = $total_peso_ruta + $total_peso_escuela)
                                                 </tr>
-                                            </tbody>
+                                            </tbody>                                            
                                         @endforeach
+                                        <tbody>
+                                            <b style="color: blue;">Peso Total Quintales: </b> {{number_format(  $total_peso_ruta, 2, '.', ',' ) }}
+                                        </tbody>
                                     </table> 
                                     <hr>
                                 @endforeach
+
                             </div>
                         </div>
                     </div>

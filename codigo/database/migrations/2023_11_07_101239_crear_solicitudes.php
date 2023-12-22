@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('id_usuario');
             $table->string('observaciones', 500)->nullable();
             $table->string('nombre_archivo', 500)->nullable();
+            $table->integer('estado')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('no_unidades',13, 5);
             $table->double('unidad_medida',13, 5);
             $table->double('peso_total',13, 5);
+            $table->double('no_unidades_usadas',13, 5)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
