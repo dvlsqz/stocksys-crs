@@ -98,7 +98,19 @@
                                         @foreach($ruta_despacho->detalles as $det)
                                             <tr>
                                                 <td>{{ $det->escuela->codigo.' / '.$det->escuela->nombre}}</td>
-                                                <td>{{ $det->orden_llegada}}</td>
+                                                <td>
+                                                    {!! Form::open(['url' => '/admin/solicitud_despacho/sub_rutas/actualizar_orden']) !!}
+                                                        <div class="col-md-6">
+                                                            <div class="input-group"> 
+                                                                {!! Form::hidden('id_asignacion', $det->id, ['class'=>'form-control']) !!}
+                                                                {!! Form::number('orden', $det->orden_llegada, ['class'=>'form-control', 'min'=>'1']) !!}
+                                                                {{ Form::button('<i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>', ['class' => 'btn btn-success btn-sm', 'type' => 'submit']) }}
+                                                            </div>
+                                                        </div> 
+                                                        
+                                                    {!! Form::close() !!}  
+                                                
+                                                </td>
                                             </tr>
                                         @endforeach                                    
                                     </tbody>
@@ -179,15 +191,26 @@
                                         @foreach($s->detalles as $det)
                                             <tbody> 
                                                 <tr>
-                                                    <th> <a href="#" data-action="eliminar" data-path="admin/solicitud_despacho_escuela_sub_ruta" data-object="{{ $det->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a>  {{ $det->escuela->codigo.' / '.$det->escuela->nombre }}</th>
-                                                    <th>{{ $det->orden_llegada}}</th>
+                                                    <td> <a href="#" data-action="eliminar" data-path="admin/solicitud_despacho_escuela_sub_ruta" data-object="{{ $det->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a>  {{ $det->escuela->codigo.' / '.$det->escuela->nombre }}</td>
+                                                    <td>
+                                                        {!! Form::open(['url' => '/admin/solicitud_despacho/sub_rutas/actualizar_orden']) !!}
+                                                            <div class="col-md-6">
+                                                                <div class="input-group"> 
+                                                                    {!! Form::hidden('id_asignacion', $det->id, ['class'=>'form-control']) !!}
+                                                                    {!! Form::number('orden', $det->orden_llegada, ['class'=>'form-control', 'min'=>'1']) !!}
+                                                                    {{ Form::button('<i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>', ['class' => 'btn btn-success btn-sm', 'type' => 'submit']) }}
+                                                                </div>
+                                                            </div> 
+                                                        
+                                                        {!! Form::close() !!}  
+                                                    </td>
                                                     @php($total_peso_escuela = 0)   
                                                     @foreach($detalle_escuelas as $det_esc)
                                                         @if($det->escuela->id == $det_esc->escuela_id)
                                                             @php($total_peso_escuela = $total_peso_escuela + ($det_esc->peso/453.59237)/100  ) 
                                                         @endif
                                                     @endforeach
-                                                    <th> {{number_format(  $total_peso_escuela , 2, '.', ',' ) }}</th>
+                                                    <td> {{number_format(  $total_peso_escuela , 2, '.', ',' ) }}</td>
                                                     @php($total_peso_ruta = $total_peso_ruta + $total_peso_escuela)
                                                 </tr>
                                             </tbody>                                            

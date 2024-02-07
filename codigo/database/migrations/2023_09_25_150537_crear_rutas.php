@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('id_ubicacion');
             $table->string('observaciones', 500)->nullable(); 
             $table->integer('estado');
+            $table->integer('id_socio');
             $table->timestamps();
             $table->softDeletes();
         });

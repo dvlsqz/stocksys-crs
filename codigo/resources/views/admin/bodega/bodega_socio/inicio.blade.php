@@ -9,7 +9,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">  
-        <div class="col-md-3 d-flex">
+        <div class="col-md-3">
             <div class="card ">
 
                 <div class="card-header">
@@ -20,7 +20,9 @@
                     {!! Form::open(['url' => '/admin/bodega_socio/insumo/registrar', 'files' => true]) !!}
                         @include('admin.bodega.bodega_socio.formulario')
 
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_insumo_registrar'))
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @endif
                     {!! Form::close() !!}
                 </div>
 
@@ -52,9 +54,13 @@
                                     <td width="240px">
                                         <div class="opts">
                                             @if($i->categoria == 0)
-                                                <a href="{{ url('/admin/bodega_socio/insumo/'.$i->id.'/pesos') }}"  title="Pesos"><i class="fa-solid fa-scale-unbalanced-flip"></i></a>
+                                                @if(kvfj(Auth::user()->permisos, 'bodega_socio_insumo_pesos'))
+                                                    <a href="{{ url('/admin/bodega_socio/insumo/'.$i->id.'/pesos') }}"  title="Pesos"><i class="fa-solid fa-scale-unbalanced-flip"></i></a>
+                                                @endif
                                             @endif
-                                            <a href="#" data-action="eliminar" data-path="admin/bodega_socio/insumo" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'bodega_socio_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/bodega_socio/insumo" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{$i->nombre}}</td>
@@ -82,16 +88,28 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Controles de Solicitud</strong></h2>
+                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Controles de la Bodega</strong></h2>
                     
                 </div>
 
                 <div class="card-body">              
                     <div class="d-grid gap-2">
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/insumo/ingresos') }}" title="Ingresos"><i class="fas fa-plus-circle"></i> Ingresos</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/insumo/egresos') }}" title="Egresos"><i class="fas fa-minus-circle"></i> Egresos</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/raciones/1') }}" title="raciones"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/kits/1') }}" title="lits"><i class="fa-solid fa-boxes-stacked"></i> Kits</a>
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_solicitudes'))
+                            <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/solicitudes_bodega_principal') }}" title="Solicitudes Bodega Primaria"><i class="fa-solid fa-file"></i> Solicitudes a Bodega Primaria</a>
+                        @endif
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_ingresos'))
+                            <a  href="#" data-action="ingresos" data-path="admin/bodega_socio/insumo"  class="btn-eliminar btn btn-outline-primary" data-toogle="tooltrip" data-placement="top" title="Ingresos" ><i class="fas fa-plus-circle"></i> Ingresos</a>
+                        @endif
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_egresos'))
+                            <a  href="#" data-action="egresos" data-path="admin/bodega_socio/insumo"  class="btn-eliminar btn btn-outline-primary" data-toogle="tooltrip" data-placement="top" title="Egresos" ><i class="fas fa-minus-circle"></i> Egresos</a> 
+                            
+                        @endif
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_raciones'))
+                            <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/raciones/1') }}" title="raciones"><i class="fa-solid fa-bowl-rice"></i> Raciones</a>
+                        @endif
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_kits'))
+                            <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_socio/kits/1') }}" title="lits"><i class="fa-solid fa-boxes-stacked"></i> Kits</a>
+                        @endif
                     </div>
                 </div>
 

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('bodegas_ingresos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('fecha');
-            $table->integer('bodega_despacho')->nullable();
+            $table->integer('id_bodega_despacho')->nullable();
+            $table->string('procedente')->nullable();
             $table->integer('tipo_documento')->nullable();
-            $table->integer('no_documento')->nullable();
+            $table->string('no_documento',250)->nullable();
             $table->integer('tipo_bodega')->nullable();
             $table->integer('id_institucion')->nullable();            
             $table->timestamps();

@@ -12,7 +12,7 @@ class EntregaController extends Controller
 {
     public function getInicio(){
 
-        $entregas = Entrega::all();
+        $entregas = Entrega::where('id_socio',  Auth::user()->id_institucion)->get();
         $entrega = new Entrega;
 
         $datos = [
@@ -39,7 +39,7 @@ class EntregaController extends Controller
     	if($validator->fails()):
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
-            $correlativo = Entrega::where('year', $request->input('year'))->count();
+            $correlativo = Entrega::where('year', $request->input('year'))->withTrashed()->count();
 
             $e = new Entrega;
             $e->correlativo = $correlativo+1;
@@ -47,6 +47,7 @@ class EntregaController extends Controller
             $e->mes_final = $request->input('mes_final');
             $e->dias_a_cubrir = $request->input('dias_a_cubrir');
             $e->year = $request->input('year');
+            $e->id_socio = Auth::user()->id_institucion;
 
             if($e->save()):
                 $b = new Bitacora;

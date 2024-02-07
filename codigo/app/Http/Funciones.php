@@ -43,6 +43,38 @@
         endif;
     }
 
+    function obtenerDocumentosIngreso($modo, $id){
+        $documento = [
+            '1'=>'Guia de Transporte Terrestre',
+            '2'=>'Factura',
+            '3'=>'Recibo',
+            '4'=>'Otro',
+        ];
+
+        
+        if(!is_null($modo)):
+            return $documento;
+        else:
+            return $documento[$id];
+        endif;
+    }
+
+    function obtenerDocumentosEgreso($modo, $id){
+        $documento = [
+            '1'=>'Guia de Transporte Terrestre',
+            '2'=>'Factura',
+            '3'=>'Recibo',
+            '4'=>'Otro',
+        ];
+
+        
+        if(!is_null($modo)):
+            return $documento;
+        else:
+            return $documento[$id];
+        endif;
+    }
+
     function obtenerUnidadesMedidaInsumos($modo, $id){
         $ti = [
             '0' => 'Kilogramos por unidad (Caneca/Saco)',
@@ -157,9 +189,10 @@
             ],
             'ubicaciones' => [
                 'icon' => '<i class="fas fa-tags"></i>',
-                'title' => 'Modulo Ubicaciones',
+                'title' => 'Modulo Ubicaciones', 
                 'keys' => [
                     'ubicaciones' => 'Puede ver el listado de ubicaciones.',
+                    'ubicacion_importar' => 'Puede importar nuevas ubicaciones desde un archivo excel.',
                     'ubicacion_registrar' => 'Puede agregar nuevas ubicaciones.',
                     'ubicacion_editar' => 'Puede editar ubicaciones.',
                     'ubicacion_eliminar' => 'Puede eliminar ubicaciones.',
@@ -202,6 +235,7 @@
                 'keys' => [
                     'escuelas' => 'Puede ver el listado de escuelas.',
                     'escuela_registrar' => 'Puede agregar nuevas escuelas.',
+                    'escuela_importar' => 'Puede importar nuevas escuelas desde un archivo excel.',
                     'escuela_editar' => 'Puede editar escuelas.',
                     'escuela_eliminar' => 'Puede eliminar escuelas.'                           
                 ]
@@ -226,26 +260,17 @@
                     'entrega_eliminar' => 'Puede eliminar entregas.'                 
                 ]
             ],
-            'insumos' => [
-                'icon' => '<i class="fa-solid fa-boxes-stacked"></i>',
-                'title' => 'Modulo Insumos',
-                'keys' => [
-                    'insumos' => 'Puede ver el listado de insumos.',
-                    'insumo_registrar' => 'Puede agregar nuevos insumos.',
-                    'insumo_editar' => 'Puede editar insumos.',
-                    'insumo_eliminar' => 'Puede eliminar insumos.',
-                    'insumo_pesos' => 'Puede listar y editar pesos de los insumos.'                            
-                ]
-            ],
             'bodegas_principales' => [
                 'icon' => '<i class="fa-solid fa-warehouse"></i>',
                 'title' => 'Modulo Bodega Principal',
                 'keys' => [
                     'bodega_principal_insumos' => 'Puede ver el listado de insumos de la bodega principal.',
                     'bodega_principal_insumo_registrar' => 'Puede registrar insumos en la bodega principal.',
-                    'bodega_principal_ingresos' => 'Puede registrar ingresos a la bodega principal.',    
-                    'bodega_principal_egresos' => 'Puede registrar egresos a la bodega principal.',  
+                    'bodega_principal_insumo_pesos' => 'Puede ver y editar los pesos de los insumos de la bodega principal.',
                     'bodega_principal_eliminar' => 'Puede eliminar registros de la bodega principal.',
+                    'bodega_principal_ingresos' => 'Puede registrar ingresos a la bodega principal.',    
+                    'bodega_principal_egresos' => 'Puede registrar egresos a la bodega principal.',                      
+                    'bodega_principal_raciones' => 'Puede ver el listado de raciones.'
                 ]
             ],
             'bodegas_socios' => [
@@ -253,11 +278,12 @@
                 'title' => 'Modulo Bodegas Socios',
                 'keys' => [
                     'bodega_socio_insumos' => 'Puede ver el listado de insumos de la bodega socio.',
-                    'bodega_socio_insumo_registrar' => 'Puede registrar insumos en la bodega socio.',
-                    'bodega_socio_ingresos' => 'Puede registrar ingresos a la bodega socio.',    
-                    'bodega_socio_egresos' => 'Puede registrar egresos a la bodega socio.',  
+                    'bodega_socio_insumo_registrar' => 'Puede registrar insumos en la bodega socio.',                    
                     'bodega_socio_insumo_pesos' => 'Puede ver y editar los pesos de los insumos de la bodega socio.',
                     'bodega_socio_eliminar' => 'Puede eliminar registros de la bodega socio.',
+                    'bodega_socio_solicitudes' => 'Puede ver el listado y detalle de solicitudes a bodega primaria.',
+                    'bodega_socio_ingresos' => 'Puede registrar ingresos a la bodega socio.',    
+                    'bodega_socio_egresos' => 'Puede registrar egresos a la bodega socio.',  
                     'bodega_socio_raciones' => 'Puede ver el listado de raciones.',
                     'bodega_socio_racion_registrar' => 'Puede agregar nuevas raciones.',
                     'bodega_socio_racion_editar' => 'Puede editar raciones.',
@@ -267,7 +293,7 @@
                     'bodega_socio_kit_registrar' => 'Puede agregar nuevas kits.',
                     'bodega_socio_kit_editar' => 'Puede editar kits.',
                     'bodega_socio_kit_eliminar' => 'Puede eliminar kits.',
-                    'bodega_socio_kit_insumos' => 'Puede crear, editar y eliminar insumos que conforman las kits.',
+                    'bodega_socio_kit_insumos' => 'Puede crear, editar y eliminar insumos que conforman las kits.', 
                 ]
             ],
             'solicitudes' => [
@@ -278,16 +304,21 @@
                     'solicitud_registrar' => 'Puede agregar nuevas solicitudes.',
                     'solicitud_mostrar' => 'Puede ver los detalles de las solicitudes.',
                     'solicitud_eliminar' => 'Puede eliminar solicitudes.',  
-                    'solicitud_detalle_eliminar' => 'Puede eliminar detalles de solicitudes.',   
-                    'solicitud_detalle_editar' => 'Puede editar detalles de las solicitudes.', 
                     'solicitud_detalle_registrar' => 'Puede registrar detalles de las solicitudes.', 
-                    'solicitud_rutas' => 'Puede visualizar las rutas de las solicitudes',    
+                    'solicitud_detalle_editar' => 'Puede editar detalles de las solicitudes.', 
+                    'solicitud_detalle_eliminar' => 'Puede eliminar detalles de solicitudes.',                    
+                    'solicitud_rutas' => 'Puede visualizar las rutas de las solicitudes',   
+                    'solicitud_rutas_administrar' => 'Puede administrar las rutas de las solicitudes',   
+                    'solicitud_rutas_confirmadas' => 'Puede visualizar las rutas de las solicitudes ya confirmadas',
+                    'solicitud_solicitud_primaria' => 'Puede realizar solicitudes a bodega primaria',
+                    'solicitud_escuelas' => 'Puede visualizar las escuelas para boletas de despacho.',
                 ]
             ],
             'reportes' => [
                 'icon' => '<i class="fa-solid fa-box-archive"></i>',
                 'title' => 'Modulo Reportes',
                 'keys' => [
+                    'reportes' => 'Puede ver el listado de reportes del sistema.',
                     'bitacoras' => 'Puede ver el listado de bitacoras del sistema.',        
                 ]
             ],

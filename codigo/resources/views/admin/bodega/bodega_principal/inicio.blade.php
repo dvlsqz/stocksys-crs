@@ -20,7 +20,9 @@
                     {!! Form::open(['url' => '/admin/bodega_principal/insumo/registrar', 'files' => true]) !!}
                         @include('admin.bodega.bodega_principal.formulario')
 
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @if(kvfj(Auth::user()->permisos, 'bodega_principal_insumo_registrar'))
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @endif
                     {!! Form::close() !!}
                 </div>
 
@@ -51,14 +53,18 @@
                                     <td width="240px">
                                         <div class="opts">
                                             @if($i->categoria == 0)
-                                                <a href="{{ url('/admin/bodega_principal/insumo/'.$i->id.'/pesos') }}"  title="Pesos"><i class="fa-solid fa-scale-unbalanced-flip"></i></a>
+                                                @if(kvfj(Auth::user()->permisos, 'bodega_principal_insumo_pesos'))
+                                                    <a href="{{ url('/admin/bodega_principal/insumo/'.$i->id.'/pesos') }}"  title="Pesos"><i class="fa-solid fa-scale-unbalanced-flip"></i></a>
+                                                @endif
                                             @endif
-                                            <a href="#" data-action="eliminar" data-path="admin/bodega_principal/insumo" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'bodega_principal_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/bodega_principal/insumo" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{$i->nombre}}</td>
                                     <td>
-                                        {{$i->saldo}} <br>
+                                        {{$i->saldo}} Unidades <br>
                                         <small><strong>Unidad: </strong> {{ obtenerUnidadesMedidaInsumos(null, $i->id_unidad_medida) }}</small>
                                     </td>
                                     <td>{{obtenerCategoriaInsumos(null, $i->categoria)}}</td>
@@ -87,9 +93,15 @@
 
                 <div class="card-body">              
                     <div class="d-grid gap-2">
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_principal/insumo/ingresos') }}" title="Ingresos"><i class="fas fa-plus-circle"></i> Ingresos</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_principal/insumo/egresos') }}" title="Egresos"><i class="fas fa-minus-circle"></i> Egresos</a>
-                        <a class="btn btn-outline-primary" href="{{ url('/admin/raciones/1') }}" title="raciones"><i class="fas fa-plus-circle"></i> Raciones</a>
+                        @if(kvfj(Auth::user()->permisos, 'bodega_principal_ingresos'))
+                            <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_principal/insumo/ingresos') }}" title="Ingresos"><i class="fas fa-plus-circle"></i> Ingresos</a>
+                        @endif
+                        @if(kvfj(Auth::user()->permisos, 'bodega_principal_egresos'))
+                            <a class="btn btn-outline-primary" href="{{ url('/admin/bodega_principal/insumo/egresos') }}" title="Egresos"><i class="fas fa-minus-circle"></i> Egresos</a>
+                        @endif
+                        @if(kvfj(Auth::user()->permisos, 'bodega_principal_raciones'))
+                            <a class="btn btn-outline-primary" href="{{ url('/admin/raciones/1') }}" title="raciones"><i class="fas fa-plus-circle"></i> Raciones</a>
+                        @endif
                     </div>
                 </div>
 

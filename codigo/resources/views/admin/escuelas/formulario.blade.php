@@ -51,7 +51,7 @@
 <div class="row mtop16">
 
     <div class="col-md-6">
-        <label for="name"> <strong> Director: </strong></label>
+        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Director: </strong></label>
         <div class="input-group">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
             {!! Form::text('director', $escuela->director, ['class'=>'form-control']) !!}

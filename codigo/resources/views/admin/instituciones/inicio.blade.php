@@ -13,10 +13,12 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong>Listado de Instituciones</strong></h2>
-                    <ul>                       
-                        <li>
-                            <a href="{{ url('/admin/institucion/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
-                        </li>
+                    <ul>   
+                        @if(kvfj(Auth::user()->permisos, 'institucion_registrar'))                    
+                            <li>
+                                <a href="{{ url('/admin/institucion/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
 
@@ -34,8 +36,12 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/institucion/'.$i->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/institucion" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'institucion_editar'))
+                                                <a href="{{ url('/admin/institucion/'.$i->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'institucion_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/institucion" data-object="{{ $i->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{$i->nombre}}</td>

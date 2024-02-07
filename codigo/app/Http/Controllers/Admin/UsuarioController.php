@@ -47,7 +47,7 @@ class UsuarioController extends Controller
     }
 
     public function postUsuarioRegistrar(Request $request){
-        $rules = [
+        $reglas = [
             'p_nombre' => 'required',
             's_nombre' => 'required',
             'p_apellido' => 'required',
@@ -55,7 +55,7 @@ class UsuarioController extends Controller
             'id_institucion' => 'required',
             'usuario' => 'required'
         ];
-        $messages = [
+        $mensajes = [
             'p_nombre.required' => 'Se requiere ingrese el 1er nombre de la persona.',
             's_nombre.required' => 'Se requiere ingrese el 2do nombre de la persona.',
             'p_apellido.required' => 'Se requiere ingrese el 1er apellido de la persona.',
@@ -64,7 +64,7 @@ class UsuarioController extends Controller
             'usuario.required' => 'Se requiere genere el usuario de la persona.'
         ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $reglas, $mensajes);
         if($validator->fails()):
             return back()->withErrors($validator)->with('messages', '¡Se ha producido un error!.')->with('typealert', 'danger');
         else:           
@@ -113,29 +113,37 @@ class UsuarioController extends Controller
     }
 
     public function postUsuarioEditar(Request $request, $id){
-        $rules = [
+        $reglas = [
             'nombres' => 'required',
             'apellidos' => 'required',
             'id_institucion' => 'required'
         ];
-        $messages = [
+        $mensajes = [
             'nombres.required' => 'Se requiere ingrese los nombres de la persona.',
             'apellidos.required' => 'Se requiere ingrese los apellidos de la persona.',
             'id_institucion.required' => 'Se requiere seleccione la institución donde labora la persona.'
         ];
 
-        $validator = Validator::make($request->all(), $reglas, $meensajes);
+        $validator = Validator::make($request->all(), $reglas, $mensajes);
         if($validator->fails()):
             return back()->withErrors($validator)->with('messages', '¡Se ha producido un error!.')->with('typealert', 'danger');
         else:                  
-            $usuario = new Usuario;
-            $usuario->nombres = e($request->input('p_nombre')).' '.e($request->input('s_nombre'));
-            $usuario->apellidos = e($request->input('p_apellido')).' '.e($request->input('s_apellido'));
+            $usuario = Usuario::findOrFail($id);
+            if(empty($request->input('nombres'))):
+                $usuario->nombres = e($request->input('p_nombre')).' '.e($request->input('s_nombre'));
+            else:
+                $usuario->nombres = e($request->input('nombres'));
+            endif;
+            if(empty($request->input('apellidos'))):
+                $usuario->apellidos = e($request->input('p_apellido')).' '.e($request->input('s_apellido'));
+            else:
+                $usuario->apellidos = e($request->input('apellidos'));
+            endif;
+            
             $usuario->contacto = e($request->input('contacto'));
             $usuario->correo = e($request->input('correo'));
             $usuario->puesto = e($request->input('puesto'));
-            $usuario->id_institucion = $request->input('id_institucion');  
-            $usuario->usuario = e($request->input('usuario'));
+            $usuario->estado = e($request->input('estado_nuevo'));
 
             if($usuario->save()):
                 $b = new Bitacora;
@@ -175,18 +183,18 @@ class UsuarioController extends Controller
     }
 
     public function getUsuarioRestablecerContra($id){
+
         $contra_prede = Config::get('stocksys.contra_predeterminada').Carbon::now()->format('Y');
         $usuario = Usuario::findOrFail($id);
         $usuario->password = Hash::make($contra_prede); 
-
+        
         if($usuario->save()):
             $b = new Bitacora;
             $b->accion = 'Restablecimiento de contraseña del usuario: '.$usuario->usuario;
             $b->id_usuario = Auth::id();
             $b->save();
 
-            return back()->with('messages', '¡Contraseña restablecida con exito!.')
-                    ->with('typealert', 'info');
+            return back()->with('messages', '¡Contraseña restablecida con exito!.')->with('typealert', 'info');
         endif;
     }
 
@@ -201,8 +209,7 @@ class UsuarioController extends Controller
             $b->id_usuario = Auth::id();
             $b->save();
 
-            return back()->with('messages', '¡Pin restablecido con exito!.')
-                    ->with('typealert', 'info');
+            return back()->with('messages', '¡Pin restablecido con exito!.')->with('typealert', 'info');
         endif;
     }
 
@@ -271,6 +278,10 @@ class UsuarioController extends Controller
                 'usuario_rest_contra' => true,
                 'usuario_rest_pin' => true
 
+            ];
+        else:
+            $permisos_defecto = [
+                'panel_principal' => true
             ];
         endif;   
 

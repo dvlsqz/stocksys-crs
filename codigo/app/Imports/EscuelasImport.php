@@ -25,7 +25,8 @@ class EscuelasImport implements ToModel, WithHeadingRow, WithValidation
             'id_ubicacion' => $row['id_ubicacion'], 
             'no_total_beneficiarios' => $row['no_beneficiarios'], 
             'director' => $row['director'],   
-            'estado' => $row['estado'],          
+            'estado' => $row['estado'],    
+            'id_socio' => $row['id_socio'],      
         ]);
     }
 

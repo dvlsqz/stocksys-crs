@@ -14,13 +14,15 @@
 
                 <div class="card-header">
                     <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Registrar Ubicación</strong></h2>
-                </div>
+                </div> 
 
                 <div class="card-body">
                     {!! Form::open(['url' => '/admin/ubicacion/registrar', 'files' => true]) !!}
                         @include('admin.ubicaciones.formulario')
 
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @if(kvfj(Auth::user()->permisos, 'ubicacion_registrar'))
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @endif
                     {!! Form::close() !!}
                 </div>
 
@@ -49,9 +51,15 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/ubicacion/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/ubicacion/'.$u->id.'/listado/n1') }}"  title="Listado"><i class="fa-solid fa-list"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/ubicacion" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'ubicacion_editar'))
+                                                <a href="{{ url('/admin/ubicacion/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'ubicacion_n1'))
+                                                <a href="{{ url('/admin/ubicacion/'.$u->id.'/listado/n1') }}"  title="Listado"><i class="fa-solid fa-list"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'ubicacion_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/ubicacion" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{$u->nombre}}</td>
@@ -67,30 +75,32 @@
 
     </div>
 
-    <div class="row mtop16">
-        <div class="col-md-4">
-            <div class="card ">
+    @if(kvfj(Auth::user()->permisos, 'ubicacion_importar'))
+        <div class="row mtop16">
+            <div class="col-md-4">
+                <div class="card ">
 
-                <div class="card-header">
-                    <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Importar Ubicaciones</strong></h2>
+                    <div class="card-header">
+                        <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Importar Ubicaciones</strong></h2>
+                    </div>
+
+                    <div class="card-body">
+                        {!! Form::open(['url' => '/admin/ubicacion/importar', 'files' => true]) !!}
+                            <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Cargar Archivo: </strong></label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                {!! Form::file('ubicaciones') !!}
+                            </div>
+
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        {!! Form::close() !!}
+                    </div>
+
                 </div>
-
-                <div class="card-body">
-                    {!! Form::open(['url' => '/admin/ubicacion/importar', 'files' => true]) !!}
-                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Cargar Archivo: </strong></label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                            {!! Form::file('ubicaciones') !!}
-                        </div>
-
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
-                    {!! Form::close() !!}
-                </div>
-
+                
             </div>
-            
         </div>
-    </div>
+    @endif
 </div>
 
 

@@ -78,7 +78,18 @@
                                         {{$as->escuela->nombre}}<br>
                                         <small><strong>Codigo:</strong> {{$as->escuela->codigo}}</small> 
                                     </td>
-                                    <td>{{$as->orden_llegada}}</td>
+                                    <td>
+                                        {!! Form::open(['url' => '/admin/ruta/asignar_escuelas/actualizar_orden', 'files' => true]) !!}
+                                            <div class="col-md-6">
+                                                <div class="input-group"> 
+                                                    {!! Form::hidden('id_asignacion', $as->id, ['class'=>'form-control']) !!}
+                                                    {!! Form::number('orden', $as->orden_llegada, ['class'=>'form-control', 'min'=>'1']) !!}
+                                                    {{ Form::button('<i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>', ['class' => 'btn btn-success btn-sm', 'type' => 'submit']) }}
+                                                </div>
+                                            </div>         
+                                            
+                                        {!! Form::close() !!}                              
+                                    </td>
                                     <td>
                                         {{$as->escuela->no_total_beneficiarios}}
                                         @php($total += $as->escuela->no_total_beneficiarios) 

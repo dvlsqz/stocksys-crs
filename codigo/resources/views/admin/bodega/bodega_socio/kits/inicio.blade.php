@@ -20,7 +20,9 @@
                     {!! Form::open(['url' => '/admin/bodega_socio/kit/registrar', 'files' => true]) !!}
                         @include('admin.bodega.bodega_socio.kits.formulario')
 
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @if(kvfj(Auth::user()->permisos, 'bodega_socio_kit_registrar'))
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @endif
                     {!! Form::close() !!}
                 </div>
 
@@ -48,9 +50,15 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/bodega_socio/kit/'.$k->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/bodega_socio/kit/'.$k->id.'/insumos') }}"  title="Insumos"><i class="fa-solid fa-boxes-stacked"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/bodega_socio/kit" data-object="{{ $k->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'bodega_socio_kit_editar'))
+                                                <a href="{{ url('/admin/bodega_socio/kit/'.$k->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'bodega_socio_kit_insumos'))
+                                                <a href="{{ url('/admin/bodega_socio/kit/'.$k->id.'/insumos') }}"  title="Insumos"><i class="fa-solid fa-boxes-stacked"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'bodega_socio_kit_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/bodega_socio/kit" data-object="{{ $k->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>

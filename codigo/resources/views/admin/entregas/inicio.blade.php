@@ -20,7 +20,9 @@
                     {!! Form::open(['url' => '/admin/entrega/registrar', 'files' => true]) !!}
                         @include('admin.entregas.formulario')
 
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @if(kvfj(Auth::user()->permisos, 'entrega_registrar'))
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @endif
                     {!! Form::close() !!}
                 </div>
 
@@ -49,8 +51,12 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/entrega/'.$e->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/entrega" data-object="{{ $e->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'entrega_editar'))
+                                                <a href="{{ url('/admin/entrega/'.$e->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'entrega_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/entrega" data-object="{{ $e->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{ $e->correlativo.'-'.$e->year }}</td>

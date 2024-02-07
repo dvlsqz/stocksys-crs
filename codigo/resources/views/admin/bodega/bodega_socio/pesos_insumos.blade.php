@@ -46,7 +46,7 @@
                         @include('admin.bodega.bodega_socio.formulario_pesos')
 
                         {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
-                        <a href="{{ url('/admin/insumos') }}" class="btn btn-secondary mtop16">Regresar</a>
+                        <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-secondary mtop16">Regresar</a>
                     {!! Form::close() !!}
                 </div>
 

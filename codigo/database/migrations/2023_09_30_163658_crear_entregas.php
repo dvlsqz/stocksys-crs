@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('mes_final');
             $table->integer('dias_a_cubrir');
             $table->integer('year');
+            $table->integer('id_socio');
             $table->timestamps();
             $table->softDeletes();
         });

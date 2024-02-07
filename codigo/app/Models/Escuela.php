@@ -12,7 +12,7 @@ class Escuela extends Model
     use SoftDeletes;
 
     protected $table = 'escuelas';
-    protected $fillable = ['jornada', 'codigo','nombre', 'direccion', 'id_ubicacion', 'no_total_beneficiarios','director','estado'];
+    protected $fillable = ['jornada', 'codigo','nombre', 'direccion', 'id_ubicacion', 'no_total_beneficiarios','director','estado','id_socio'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function ubicacion(){

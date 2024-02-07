@@ -1,5 +1,5 @@
 @extends('admin.plantilla.master')
-@section('title','Inicio de Solicitud')
+@section('title','Rutas Confirmadas')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('/admin/escuelas') }}"><i class="fa-solid fa-route"></i> Solicitud de Despacho</a></li>
@@ -23,7 +23,7 @@
                     @if(count($rutas) > 0)      
                                                
                         @foreach($rutas as $r)
-                            <p class="mtop16"> <b>{{$loop->iteration}}. {{$r->ruta_base->ubicacion->nombre.' - '.$r->nombre}} </b> </p>
+                            <p class="mtop16"> <b>{{$loop->iteration}}. {{$r->ruta_base->ubicacion->nombre.' - '.$r->nombre}} </b>  </p>
                             <div class="row mtop16">
                                     <b style="color:blue;">Detalle de Ruta</b><br>
                                     @php($total_peso_ruta = 0)
@@ -43,9 +43,11 @@
 
                                     @endforeach
                             </div>
-                            <p>
-                                <b style="color: red;" >Peso Total Ruta: </b> {{number_format(  $total_peso_ruta, 2, '.', ',' ) }}
-                            </p>
+                                <p>
+                                    <b style="color: red;" >Peso Total Ruta: </b> {{number_format(  $total_peso_ruta, 2, '.', ',' ) }} 
+                                </p>
+                                <a href="{{ url('/admin/solicitud_despacho/'.$idSolicitud.'/ruta_confirmada/'.$r->id.'/boleta/impresion') }}" target="_blank" class="btn btn-sm btn-info"><i class="fa-solid fa-print"></i> Imprimir Boleta</a>
+                                <a href="{{ url('/admin/solicitud_despacho/ruta_confirmada/'.$r->id.'/informacion_transporte') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-truck-moving"></i> Datos Transporte</a>
                             <hr>
                             
                             

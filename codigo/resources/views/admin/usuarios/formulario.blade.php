@@ -150,7 +150,6 @@
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                 {!! Form::text('usuario', $usuario->usuario, ['class'=>'form-control', 'id' => 'frm_usuario', 'readonly']) !!}
-                <a href="#" class="btn btn-sm btn-primary " id="btn_generar_usuario" ><i class="fa-solid fa-clipboard-user"></i> Generar</a>
             </div>
         </div>
 

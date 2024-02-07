@@ -192,6 +192,12 @@ class UbicacionController extends Controller
     public function postUbicacionImportar(Request $request){
         Excel::import(new UbicacionesImport, request()->file('ubicaciones'));
         //return $ubicaciones;
+        $archivo = request()->file('ubicaciones');
+
+        $b = new Bitacora;
+        $b->accion = 'Importacion de ubicaciones con archivo: '.$archivo->getClientOriginalName();
+        $b->id_usuario = Auth::id();
+        $b->save();
 
         return back()->with('messages', '¡Ubicaciones importadas con exito!.')
                     ->with('typealert', 'primary');

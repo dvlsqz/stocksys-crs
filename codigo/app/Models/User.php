@@ -46,7 +46,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     public function institucion(){
-        return $this->hasOne(institucion::class,'id','id_institucion');
+        return $this->hasOne(Institucion::class,'id','id_institucion');
     }
 
 }

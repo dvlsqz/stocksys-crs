@@ -32,7 +32,7 @@ return new class extends Migration
             
         });
 
-        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT users ON');
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT users ON');
         DB::table('users')->insert(array(
             'id'=>'1',
             'nombres'=>'Ricardo Daniel',
@@ -42,7 +42,7 @@ return new class extends Migration
             'puesto'=>'Encargado de Desarrollo',
             'id_institucion'=>'1',
             'usuario'=>'ricardo.velasquez',
-            'password'=>'$2y$10$zXvXYnFeooqc6/DeU.Ful.Joy.G6Rm.2uALNtnvtJjKuIJiE9Beia',
+            'password'=>'$2y$10$NEK4ExERTEocC1ygE46ptOZTJeUv7V6ShSd5TPo90NbiKx/8.dcpi',
             'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
             'rol'=>'0',
             'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_asignar_escuelas":"true","ruta_eliminar":"true","entregas":"true","entrega_registrar":"true","entrega_editar":"true","entrega_eliminar":"true","insumos":"true","insumo_registrar":"true","insumo_editar":"true","insumo_eliminar":"true","insumo_pesos":"true","bodega_principal_insumos":"true","bodega_principal_insumo_registrar":"true","bodega_principal_ingresos":"true","bodega_principal_egresos":"true","bodega_principal_eliminar":"true","bodega_socio_insumos":"true","bodega_socio_insumo_registrar":"true","bodega_socio_ingresos":"true","bodega_socio_egresos":"true","bodega_socio_insumo_pesos":"true","bodega_socio_eliminar":"true","bodega_socio_raciones":"true","bodega_socio_racion_registrar":"true","bodega_socio_racion_editar":"true","bodega_socio_racion_eliminar":"true","bodega_socio_racion_alimentos":"true","bodega_socio_kits":"true","bodega_socio_kit_registrar":"true","bodega_socio_kit_editar":"true","bodega_socio_kit_eliminar":"true","bodega_socio_kit_insumos":"true","solicitudes":"true","solicitud_registrar":"true","solicitud_mostrar":"true","solicitud_eliminar":"true","solicitud_detalle_eliminar":"true","solicitud_detalle_editar":"true","solicitud_detalle_registrar":"true","solicitud_rutas":"true","bitacoras":"true"}',
@@ -60,7 +60,7 @@ return new class extends Migration
             'puesto'=>'Usuario de Prueba',
             'id_institucion'=>'2',
             'usuario'=>'usuario.prueba',
-            'password'=>'$2y$10$zXvXYnFeooqc6/DeU.Ful.Joy.G6Rm.2uALNtnvtJjKuIJiE9Beia',
+            'password'=>'$2y$10$NEK4ExERTEocC1ygE46ptOZTJeUv7V6ShSd5TPo90NbiKx/8.dcpi',
             'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
             'rol'=>'0',
             'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_asignar_escuelas":"true","ruta_eliminar":"true","entregas":"true","entrega_registrar":"true","entrega_editar":"true","entrega_eliminar":"true","insumos":"true","insumo_registrar":"true","insumo_editar":"true","insumo_eliminar":"true","insumo_pesos":"true","bodega_principal_insumos":"true","bodega_principal_insumo_registrar":"true","bodega_principal_ingresos":"true","bodega_principal_egresos":"true","bodega_principal_eliminar":"true","bodega_socio_insumos":"true","bodega_socio_insumo_registrar":"true","bodega_socio_ingresos":"true","bodega_socio_egresos":"true","bodega_socio_insumo_pesos":"true","bodega_socio_eliminar":"true","bodega_socio_raciones":"true","bodega_socio_racion_registrar":"true","bodega_socio_racion_editar":"true","bodega_socio_racion_eliminar":"true","bodega_socio_racion_alimentos":"true","bodega_socio_kits":"true","bodega_socio_kit_registrar":"true","bodega_socio_kit_editar":"true","bodega_socio_kit_eliminar":"true","bodega_socio_kit_insumos":"true","solicitudes":"true","solicitud_registrar":"true","solicitud_mostrar":"true","solicitud_eliminar":"true","solicitud_detalle_eliminar":"true","solicitud_detalle_editar":"true","solicitud_detalle_registrar":"true","solicitud_rutas":"true","bitacoras":"true"}',
@@ -68,7 +68,58 @@ return new class extends Migration
             "created_at" =>  \Carbon\Carbon::now(), 
             "updated_at" => \Carbon\Carbon::now(), 
         ));
-        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT users OFF');
+        DB::table('users')->insert(array(
+            'id'=>'3',
+            'nombres'=>'Otto Raul',
+            'apellidos'=>'Molina Dominguez',
+            'contacto'=>NULL,
+            'correo'=>NULL,
+            'puesto'=>NULL,
+            'id_institucion'=>'2',
+            'usuario'=>'otto.molina',
+            'password'=>'$2y$10$NEK4ExERTEocC1ygE46ptOZTJeUv7V6ShSd5TPo90NbiKx/8.dcpi',
+            'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
+            'rol'=>'0',
+            'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_asignar_escuelas":"true","ruta_eliminar":"true","entregas":"true","entrega_registrar":"true","entrega_editar":"true","entrega_eliminar":"true","insumos":"true","insumo_registrar":"true","insumo_editar":"true","insumo_eliminar":"true","insumo_pesos":"true","bodega_principal_insumos":"true","bodega_principal_insumo_registrar":"true","bodega_principal_ingresos":"true","bodega_principal_egresos":"true","bodega_principal_eliminar":"true","bodega_socio_insumos":"true","bodega_socio_insumo_registrar":"true","bodega_socio_ingresos":"true","bodega_socio_egresos":"true","bodega_socio_insumo_pesos":"true","bodega_socio_eliminar":"true","bodega_socio_raciones":"true","bodega_socio_racion_registrar":"true","bodega_socio_racion_editar":"true","bodega_socio_racion_eliminar":"true","bodega_socio_racion_alimentos":"true","bodega_socio_kits":"true","bodega_socio_kit_registrar":"true","bodega_socio_kit_editar":"true","bodega_socio_kit_eliminar":"true","bodega_socio_kit_insumos":"true","solicitudes":"true","solicitud_registrar":"true","solicitud_mostrar":"true","solicitud_eliminar":"true","solicitud_detalle_eliminar":"true","solicitud_detalle_editar":"true","solicitud_detalle_registrar":"true","solicitud_rutas":"true","bitacoras":"true"}',
+            'estado'=>'0',       
+            "created_at" =>  \Carbon\Carbon::now(), 
+            "updated_at" => \Carbon\Carbon::now(), 
+        ));
+        DB::table('users')->insert(array(
+            'id'=>'4',
+            'nombres'=>'Kilbert Haiser',
+            'apellidos'=>'Velasquez Gonzalez',
+            'contacto'=>NULL,
+            'correo'=>NULL,
+            'puesto'=>NULL,
+            'id_institucion'=>'2',
+            'usuario'=>'kilbert.velasquez',
+            'password'=>'$2y$10$NEK4ExERTEocC1ygE46ptOZTJeUv7V6ShSd5TPo90NbiKx/8.dcpi',
+            'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
+            'rol'=>'0',
+            'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_asignar_escuelas":"true","ruta_eliminar":"true","entregas":"true","entrega_registrar":"true","entrega_editar":"true","entrega_eliminar":"true","insumos":"true","insumo_registrar":"true","insumo_editar":"true","insumo_eliminar":"true","insumo_pesos":"true","bodega_principal_insumos":"true","bodega_principal_insumo_registrar":"true","bodega_principal_ingresos":"true","bodega_principal_egresos":"true","bodega_principal_eliminar":"true","bodega_socio_insumos":"true","bodega_socio_insumo_registrar":"true","bodega_socio_ingresos":"true","bodega_socio_egresos":"true","bodega_socio_insumo_pesos":"true","bodega_socio_eliminar":"true","bodega_socio_raciones":"true","bodega_socio_racion_registrar":"true","bodega_socio_racion_editar":"true","bodega_socio_racion_eliminar":"true","bodega_socio_racion_alimentos":"true","bodega_socio_kits":"true","bodega_socio_kit_registrar":"true","bodega_socio_kit_editar":"true","bodega_socio_kit_eliminar":"true","bodega_socio_kit_insumos":"true","solicitudes":"true","solicitud_registrar":"true","solicitud_mostrar":"true","solicitud_eliminar":"true","solicitud_detalle_eliminar":"true","solicitud_detalle_editar":"true","solicitud_detalle_registrar":"true","solicitud_rutas":"true","bitacoras":"true"}',
+            'estado'=>'0',       
+            "created_at" =>  \Carbon\Carbon::now(), 
+            "updated_at" => \Carbon\Carbon::now(), 
+        ));
+        DB::table('users')->insert(array(
+            'id'=>'5',
+            'nombres'=>'Javier Moises',
+            'apellidos'=>'Sapon Alvarado',
+            'contacto'=>NULL,
+            'correo'=>NULL,
+            'puesto'=>NULL,
+            'id_institucion'=>'2',
+            'usuario'=>'javier.sapon',
+            'password'=>'$2y$10$NEK4ExERTEocC1ygE46ptOZTJeUv7V6ShSd5TPo90NbiKx/8.dcpi',
+            'pin'=>'$2y$10$dn5Y0/OEPjqOMn3olJAaVuBKxE5m3USkHkghyj8P3OddHEwbzh1.i',            
+            'rol'=>'0',
+            'permisos'=>'{"panel_principal":"true","ubicaciones":"true","ubicacion_registrar":"true","ubicacion_editar":"true","ubicacion_eliminar":"true","ubicacion_n1":"true","ubicacion_registrar_n1":"true","ubicacion_editar_n1":"true","ubicacion_eliminar_n1":"true","ubicacion_n2":"true","ubicacion_registrar_n2":"true","ubicacion_editar_n2":"true","ubicacion_eliminar_n2":"true","instituciones":"true","institucion_registrar":"true","institucion_editar":"true","institucion_eliminar":"true","usuarios":"true","usuario_registrar":"true","usuario_editar":"true","usuario_eliminar":"true","usuario_permisos":"true","usuario_rest_contra":"true","usuario_rest_pin":"true","escuelas":"true","escuela_registrar":"true","escuela_editar":"true","escuela_eliminar":"true","rutas":"true","ruta_registrar":"true","ruta_asignar_escuelas":"true","ruta_eliminar":"true","entregas":"true","entrega_registrar":"true","entrega_editar":"true","entrega_eliminar":"true","insumos":"true","insumo_registrar":"true","insumo_editar":"true","insumo_eliminar":"true","insumo_pesos":"true","bodega_principal_insumos":"true","bodega_principal_insumo_registrar":"true","bodega_principal_ingresos":"true","bodega_principal_egresos":"true","bodega_principal_eliminar":"true","bodega_socio_insumos":"true","bodega_socio_insumo_registrar":"true","bodega_socio_ingresos":"true","bodega_socio_egresos":"true","bodega_socio_insumo_pesos":"true","bodega_socio_eliminar":"true","bodega_socio_raciones":"true","bodega_socio_racion_registrar":"true","bodega_socio_racion_editar":"true","bodega_socio_racion_eliminar":"true","bodega_socio_racion_alimentos":"true","bodega_socio_kits":"true","bodega_socio_kit_registrar":"true","bodega_socio_kit_editar":"true","bodega_socio_kit_eliminar":"true","bodega_socio_kit_insumos":"true","solicitudes":"true","solicitud_registrar":"true","solicitud_mostrar":"true","solicitud_eliminar":"true","solicitud_detalle_eliminar":"true","solicitud_detalle_editar":"true","solicitud_detalle_registrar":"true","solicitud_rutas":"true","bitacoras":"true"}',
+            'estado'=>'0',       
+            "created_at" =>  \Carbon\Carbon::now(), 
+            "updated_at" => \Carbon\Carbon::now(), 
+        ));
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT users OFF');
     }
 
     /**

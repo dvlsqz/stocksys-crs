@@ -33,7 +33,9 @@
 
                         {!! Form::hidden('id_principal', $id, ['class'=>'form-control']) !!}
 
-                        {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @if(kvfj(Auth::user()->permisos, 'ubicacion_registrar_n1'))
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-success mtop16']) !!}
+                        @endif
                     {!! Form::close() !!}
                 </div>
 
@@ -61,9 +63,15 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/ubicacion/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/ubicacion/'.$u->id.'/listado/n2') }}"  title="Listado"><i class="fa-solid fa-list"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/ubicacion" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'ubicacion_editar_n1'))
+                                                <a href="{{ url('/admin/ubicacion/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'ubicacion_n2'))
+                                                <a href="{{ url('/admin/ubicacion/'.$u->id.'/listado/n2') }}"  title="Listado"><i class="fa-solid fa-list"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'ubicacion_eliminar_n1'))
+                                                <a href="#" data-action="eliminar" data-path="admin/ubicacion" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{$u->nombre}}</td>

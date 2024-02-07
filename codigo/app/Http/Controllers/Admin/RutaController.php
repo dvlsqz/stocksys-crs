@@ -11,7 +11,7 @@ use Validator, Auth, Hash, Config, Carbon\Carbon;
 class RutaController extends Controller
 {
     public function getInicio(){
-        $rutas = Ruta::with(['ubicacion'])->get();
+        $rutas = Ruta::with(['ubicacion'])->where('id_socio',  Auth::user()->id_institucion)->get();
         $ruta = new Ruta;
         $ubicaciones = Ubicacion::with('ubicacion_superior')->where('nivel', 3)->get();
 
@@ -36,7 +36,7 @@ class RutaController extends Controller
     	if($validator->fails()):
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
-            $correlativo = Ruta::where('id_ubicacion', $request->input('id_ubicacion'))->count();
+            $correlativo = Ruta::where('id_ubicacion', $request->input('id_ubicacion'))->where('id_socio',Auth::user()->id_institucion)->count();
 
             //return $correlativo+1;
 
@@ -45,6 +45,7 @@ class RutaController extends Controller
             $r->id_ubicacion = $request->input('id_ubicacion');
             $r->observaciones = e($request->input('observaciones'));
             $r->estado = '0';
+            $r->id_socio = Auth::user()->id_institucion;
 
 
             if($r->save()):
@@ -107,6 +108,31 @@ class RutaController extends Controller
 
                 return back()->with('messages', '¡Asignación realizada con exito!.')
                     ->with('typealert', 'success');
+    		endif;
+        endif;
+    }
+
+    public function postActualizarOrdenLlegada(Request $request){
+        $reglas = [
+
+    	];
+    	$mensajes = [
+
+    	];
+
+        $validator = Validator::make($request->all(), $reglas, $mensajes);
+    	if($validator->fails()):
+    		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
+        else: 
+            
+
+            $as = RutaEscuela::findOrFail($request->input('id_asignacion'));
+            $as->orden_llegada = e($request->input('orden'));
+
+            if($as->save()):
+
+                return back()->with('messages', '¡Actualizacion de orden de llegada con exito!.')
+                    ->with('typealert', 'info');
     		endif;
         endif;
     }

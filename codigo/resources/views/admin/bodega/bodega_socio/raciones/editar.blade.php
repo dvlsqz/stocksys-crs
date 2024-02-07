@@ -20,7 +20,7 @@
 
                 <div class="card-body">
                     {!! Form::open(['url' => '/admin/bodega_socio/racion/'.$racion->id.'/editar', 'files' => true]) !!}
-                        @include('admin.bodega.bodega_socio..formulario')                        
+                        @include('admin.bodega.bodega_socio.raciones.formulario')                        
 
                         {!! Form::submit('Editar', ['class'=>'btn btn-info mtop16']) !!}
                         <a href="{{ url('/admin/raciones') }}" class="btn btn-secondary mtop16">Regresar</a>

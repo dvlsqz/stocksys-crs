@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\KitController;
 use App\Http\Controllers\Admin\BodegaSocioController;
 use App\Http\Controllers\Admin\BodegaPrincipalController;
 use App\Http\Controllers\Admin\SolicitudController;
+use App\Http\Controllers\Admin\ReporteController;
 use App\Http\Controllers\Admin\BitacoraController;
 use App\Http\Controllers\Admin\PruebasController;
 
@@ -48,8 +49,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/usuario/{id}/eliminar', [UsuarioController::class, 'getUsuarioEliminar'])->name('usuario_eliminar');
     Route::get('/usuario/{id}/permisos', [UsuarioController::class, 'getUsuarioPermisos'])->name('usuario_permisos');
     Route::post('/usuario/{id}/permisos', [UsuarioController::class, 'postUsuarioPermisos'])->name('usuario_permisos');
-    Route::get('/usuario/{id}/rest-contra', [UsuarioController::class, 'getUsuarioRestablecerContra'])->name('usuario_restablecer_contrasena');
-    Route::get('/usuario/{id}/rest-pin', [UsuarioController::class, 'getUsuarioRestablecerPin'])->name('usuario_restablecer_pin');
+    Route::get('/usuario/{id}/rest-contra', [UsuarioController::class, 'getUsuarioRestablecerContra'])->name('usuario_rest_contra');
+    Route::get('/usuario/{id}/rest-pin', [UsuarioController::class, 'getUsuarioRestablecerPin'])->name('usuario_rest_pin'); 
     Route::get('/usuario/{id}/suspender', [UsuarioController::class, 'getUsuarioSuspender'])->name('usuario_suspender');
 
     //Modulo de escuelas
@@ -67,6 +68,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/ruta/{id}/eliminar', [RutaController::class, 'getRutaEliminar'])->name('ruta_eliminar');
     Route::get('/ruta/{id}/asignar_escuelas', [RutaController::class, 'getRutaAsignarEscuelas'])->name('ruta_asignar_escuelas');
     Route::post('/ruta/asignar_escuelas', [RutaController::class, 'postRutaAsignarEscuelas'])->name('ruta_asignar_escuelas');
+    Route::post('/ruta/asignar_escuelas/actualizar_orden', [RutaController::class, 'postActualizarOrdenLlegada'])->name('ruta_asignar_escuelas');
     Route::get('/ruta_asignaciones/{id}/eliminar', [RutaController::class, 'getRutaEliminarEscuelas'])->name('ruta_asignar_escuelas');
 
     //Modulo de Entregas
@@ -79,14 +81,19 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     //Modulo de Bodega - Bodega Socio
     Route::get('/bodega_socio/insumos', [BodegaSocioController::class, 'getInsumos'])->name('bodega_socio_insumos');
     Route::post('/bodega_socio/insumo/registrar', [BodegaSocioController::class, 'postInsumoRegistrar'])->name('bodega_socio_insumo_registrar');
-    Route::get('/bodega_socio/insumo/ingresos', [BodegaSocioController::class, 'getInsumoIngresos'])->name('bodega_socio_ingresos');
-    Route::post('/bodega_socio/insumo/ingresos', [BodegaSocioController::class, 'postInsumoIngresos'])->name('bodega_socio_ingresos');
-    Route::get('/bodega_socio/insumo/egresos', [BodegaSocioController::class, 'getInsumoEgresos'])->name('bodega_socio_egresos');
-    Route::post('/bodega_socio/insumo/egresos', [BodegaSocioController::class, 'postInsumoEgresos'])->name('bodega_socio_egresos');
+    Route::get('/bodega_socio/insumo/ingresos/alimentos', [BodegaSocioController::class, 'getInsumoIngresosAlimentos'])->name('bodega_socio_ingresos');
+    Route::post('/bodega_socio/insumo/ingresos/alimentos', [BodegaSocioController::class, 'postInsumoIngresosAlimentos'])->name('bodega_socio_ingresos');
+    Route::get('/bodega_socio/insumo/ingresos/otros_insumos', [BodegaSocioController::class, 'getInsumoIngresosOtros'])->name('bodega_socio_ingresos');
+    Route::post('/bodega_socio/insumo/ingresos/otros_insumos', [BodegaSocioController::class, 'postInsumoIngresosOtros'])->name('bodega_socio_ingresos');
+    Route::get('/bodega_socio/insumo/egresos/alimentos', [BodegaSocioController::class, 'getInsumoEgresosAlimentos'])->name('bodega_socio_egresos');
+    Route::post('/bodega_socio/insumo/egresos/alimentos', [BodegaSocioController::class, 'postInsumoEgresosAlimentos'])->name('bodega_socio_egresos');
+    Route::get('/bodega_socio/insumo/egresos/otros_insumos', [BodegaSocioController::class, 'getInsumoEgresosOtros'])->name('bodega_socio_egresos');
+    Route::post('/bodega_socio/insumo/egresos/otros_insumos', [BodegaSocioController::class, 'postInsumoEgresosOtros'])->name('bodega_socio_egresos');
     Route::get('/bodega_socio/insumo/{id}/pesos', [BodegaSocioController::class, 'getInsumoPesos'])->name('bodega_socio_insumo_pesos');
     Route::post('/bodega_socio/insumo/pesos', [BodegaSocioController::class, 'postInsumoPesos'])->name('bodega_socio_insumo_pesos');
-    Route::get('/bodega_socio/insumo/{id}/editar', [BodegaSocioController::class, 'getInsumoEditar'])->name('bodega_socio_editar');
+    Route::get('/bodega_socio/insumo/{id}/editar', [BodegaSocioController::class, 'getInsumoEditar'])->name('bodega_socio_editar'); 
     Route::get('/bodega_socio/insumo/{id}/eliminar', [BodegaSocioController::class, 'getInsumoEliminar'])->name('bodega_socio_eliminar');     
+    Route::get('/bodega_socio/solicitudes_bodega_principal', [BodegaSocioController::class, 'getSolicitudesBodegaPrimaria'])->name('bodega_socio_solicitudes');     
     //Raciones bodega de socios 
     Route::get('/bodega_socio/raciones/{bodega}', [RacionController::class, 'getInicio'])->name('bodega_socio_raciones');
     Route::post('/bodega_socio/racion/registrar', [RacionController::class, 'postRacionRegistrar'])->name('bodega_socio_racion_registrar');    
@@ -134,15 +141,26 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/solicitud_despacho/detalles/{id}/editar', [SolicitudController::class, 'postSolicitudDetallesEditar'])->name('solicitud_detalle_editar');
     Route::get('/solicitud_despacho/{id}/rutas', [SolicitudController::class, 'getSolicitudRutas'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho/{id}/rutas_confirmadas', [SolicitudController::class, 'getSolicitudRutasConfirmadas'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho/ruta_confirmada/{id}/informacion_transporte', [SolicitudController::class, 'getSolicitudRutasConfirmadasTransporte'])->name('solicitud_rutas');
+    Route::post('/solicitud_despacho/ruta_confirmada/informacion_transporte', [SolicitudController::class, 'postSolicitudRutasConfirmadasTransporte'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho/{id}/ruta/{idRuta}', [SolicitudController::class, 'getSolicitudRutaDetalle'])->name('solicitud_rutas');
     Route::post('/solicitud_despacho/confirmar_ruta/sin_division', [SolicitudController::class,'postSolicitudRutaConfirmar'])->name('solicitud_rutas');
+    Route::post('/solicitud_despacho/sub_rutas/actualizar_orden', [SolicitudController::class,'postActualizarOrdenLlegadaSubRutas'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho_ruta_confirmada/{id}/eliminar', [SolicitudController::class,'getSolicitudRutaConfirmadaEliminar'])->name('solicitud_rutas');    
     Route::post('/solicitud_despacho/crear_subruta', [SolicitudController::class,'postSolicitudCrearSubRuta'])->name('solicitud_rutas');
     Route::post('/solicitud_despacho/asignar_escuela_sub_ruta', [SolicitudController::class,'postSolicitudAsignarEscuelaSubRuta'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho_escuela_sub_ruta/{id}/eliminar', [SolicitudController::class,'getSolicitudEscuelaSubRutaEliminar'])->name('solicitud_rutas');
     Route::get('/solicitud_despacho_sub_ruta/{id}/eliminar', [SolicitudController::class,'getSolicitudSubRutaEliminar'])->name('solicitud_rutas');   
+    Route::get('/solicitud_despacho/{id}/solicitud_bodega_primaria', [SolicitudController::class, 'getSolicitudABodegaPrimaria'])->name('solicitud_rutas');
+    Route::post('/solicitud_despacho/solicitud_bodega_primaria', [SolicitudController::class, 'postSolicitudABodegaPrimaria'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho/{id}/escuelas', [SolicitudController::class, 'getSolicitudEscuelas'])->name('solicitud_escuelas');
+    Route::get('/solicitud_despacho/{id}/escuela/{idEscuela}', [SolicitudController::class, 'getSolicitudEscuelaDespacho'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho/{idSolicitud}/escuela/{idEscuela}/despacho/{id}/impresion', [SolicitudController::class, 'getSolicitudEscuelaDespachoPDF'])->name('solicitud_rutas');
+    Route::get('/solicitud_despacho/{idSolicitud}/ruta_confirmada/{idRuta}/boleta/impresion', [SolicitudController::class, 'getSolicitudRutaConfirmadaPDF'])->name('solicitud_rutas');
     
-    
+    //Modulo de Reportes
+    Route::get('/reportes', [ReporteController::class, 'getInicio'])->name('reportes');
+    Route::post('/reporte/informe_mensual', [ReporteController::class, 'postInformeMensualExport'])->name('reportes');
 
     //Reporte de Bitacoras
     Route::get('/bitacoras', [BitacoraController::class, 'getInicio'])->name('bitacoras');
@@ -155,4 +173,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
 });
 
 Route::get('/stocksys/api/escuelas/{idSolicitud}',[SolicitudController::class, 'getEscuelasDespacho']); 
+Route::get('/stocksys/api/escuelas/pesos/solicitud/{idSolicitud}/{idEscuela}',[SolicitudController::class, 'getEscuelasPesosDespacho']); 
 Route::get('/stocksys/api/escuelas/pruebas/{idSolicitud}',[SolicitudController::class, 'getEscuelasPruebas']); 
+Route::get('/stocksys/api/bodega_socio/insumo/pl_disponibles/{idAlimento}',[BodegaSocioController::class, 'getPlDisponiblesAlimento']); 
+Route::get('/stocksys/api/bodega_socio/insumo/disponibles/{idInsumo}',[BodegaSocioController::class, 'getSaldoDisponiblesInsumo']); 
+Route::get('/stocksys/api/bodega_socio/insumo/pl/saldo_disponible/{pl}',[BodegaSocioController::class, 'getPlSaldoDisponibleAlimento']);
+Route::get('/stocksys/api/bodega_socio/solicitud_id/{id_solicitud}/escuela/{id_escuela}/raciones',[BodegaSocioController::class, 'getRacionesEscuelaSolicitud']);   
+Route::get('/stocksys/api/solicitudes/socios/{idSocio}',[BodegaPrincipalController::class, 'getSociosSolicitudes']);  
+Route::get('/stocksys/api/bodega_principal/insumo/pl_disponibles/{idAlimento}',[BodegaPrincipalController::class, 'getPlDisponiblesInsumo']); 
+Route::get('/stocksys/api/bodega_principal/insumo/pl/saldo_disponible/{pl}',[BodegaPrincipalController::class, 'getPlSaldoDisponibleInsumo']);  

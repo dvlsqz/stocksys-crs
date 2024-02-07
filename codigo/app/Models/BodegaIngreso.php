@@ -14,4 +14,7 @@ class BodegaIngreso extends Model
     protected $table = 'bodegas_ingresos';
     protected $hidden = ['created_at', 'updated_at'];
 
+    public function detalles(){
+        return $this->hasMany(BodegaIngresoDetalle::class, 'id_ingreso', 'id');
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Escuela, App\Models\Ubicacion, App\Models\Bitacora;
+use App\Models\Escuela, App\Models\Ubicacion, App\Models\Bitacora, App\Models\RutaEscuela;
 use Validator, Auth, Hash, Config, Carbon\Carbon;
 use App\Imports\EscuelasImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class EscuelaController extends Controller
 {
     public function getInicio(){
-        $escuelas = Escuela::with(['ubicacion', 'ruta_asignada'])->get();
+        $escuelas = Escuela::with(['ubicacion', 'ruta_asignada'])->where('id_socio',  Auth::user()->id_institucion)->get();
 
         $datos = [
             'escuelas' => $escuelas
@@ -158,14 +158,22 @@ class EscuelaController extends Controller
     public function getEscuelaEliminar($id){
         $escuela = Escuela::findOrFail($id);
 
-        if($escuela->delete()):
-            $b = new Bitacora;
-            $b->accion = 'Eliminación de la escuela: '.$escuela->nombre;
-            $b->id_usuario = Auth::id();
-            $b->save();
+        $asignada = RutaEscuela::where('id_escuela',$id)->count();
 
-            return back()->with('messages', '¡Escuela eliminada con exito!.')
-                    ->with('typealert', 'warning');
+
+        if($asignada > 0):
+            return back()->with('messages', '¡Escuela no se puede eliminar, dado que esta asignada a una ruta!.')
+                        ->with('typealert', 'danger');
+        else:
+            if($escuela->delete()):
+                $b = new Bitacora;
+                $b->accion = 'Eliminación de la escuela: '.$escuela->nombre;
+                $b->id_usuario = Auth::id();
+                $b->save();
+
+                return back()->with('messages', '¡Escuela eliminada con exito!.')
+                        ->with('typealert', 'warning');
+            endif;
         endif;
     }
 
@@ -182,6 +190,13 @@ class EscuelaController extends Controller
                     ->with('typealert', 'info');*/
         //$prueba = Excel::toArray(new EscuelasImport, request()->file('escuelas'));
         Excel::import(new EscuelasImport, request()->file('escuelas'));
+        $archivo = request()->file('escuelas');
+
+        $b = new Bitacora;
+        $b->accion = 'Importacion de escuelas con archivo: '.$archivo->getClientOriginalName();
+        $b->id_usuario = Auth::id();
+        $b->save();
+
         return back()->with('messages', '¡Escuelas importadas con exito!.')
                     ->with('typealert', 'primary');
         

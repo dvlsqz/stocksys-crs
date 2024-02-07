@@ -1,6 +1,6 @@
 <?php
 return [
-    'nombre' => 'StockSys',
+    'nombre' => 'StocksSys',
     'contra_predeterminada' => 'Ssys.',
     'pin_predeterminado' => '123456',
 ]

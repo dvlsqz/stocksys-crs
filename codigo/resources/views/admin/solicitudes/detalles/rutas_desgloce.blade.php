@@ -19,10 +19,11 @@
         </div>       
     </div>
 
-
-    <div class="row mtop16" style="text-align:center;">                 
-        @include('admin.solicitudes.detalles.vista_desgloce.administracion_ruta')
-    </div>
+    @if(kvfj(Auth::user()->permisos, 'solicitud_rutas_administrar'))
+        <div class="row mtop16" style="text-align:center;">                 
+            @include('admin.solicitudes.detalles.vista_desgloce.administracion_ruta')
+        </div>
+    @endif
 </div>
 
 @endsection

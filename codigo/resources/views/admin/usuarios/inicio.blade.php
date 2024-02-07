@@ -13,10 +13,12 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><strong><i class="fa-solid fa-users"></i> Listado de Usuarios</strong></h2>
-                    <ul>                       
-                        <li>
-                            <a href="{{ url('/admin/usuario/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar Usuario</a>
-                        </li>
+                    <ul>    
+                        @if(kvfj(Auth::user()->permisos, 'usuario_registrar'))                   
+                            <li>
+                                <a href="{{ url('/admin/usuario/registrar') }}" ><i class="fas fa-plus-circle"></i> Registrar Usuario</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
 
@@ -36,11 +38,21 @@
                                 <tr>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="{{ url('/admin/usuario/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/admin/usuario/'.$u->id.'/permisos') }}"  title="Permsisos"><i class="fa-solid fa-user-shield"></i></a>
-                                            <a href="#" data-action="rest-contra" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Restablecer Contraseña" ><i class="fa-solid fa-user-lock"></i></a>
-                                            <a href="#" data-action="rest-pin" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Restablecer Pin de Autorizaciones" ><i class="fa-solid fa-key"></i></a>
-                                            <a href="#" data-action="eliminar" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @if(kvfj(Auth::user()->permisos, 'usuario_editar'))
+                                                <a href="{{ url('/admin/usuario/'.$u->id.'/editar') }}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'usuario_permisos'))
+                                                <a href="{{ url('/admin/usuario/'.$u->id.'/permisos') }}"  title="Permsisos"><i class="fa-solid fa-user-shield"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'usuario_rest_contra'))
+                                                <a href="#" data-action="rest-contra" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Restablecer Contraseña" ><i class="fa-solid fa-user-lock"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'usuario_rest_pin'))
+                                                <a href="#" data-action="rest-pin" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Restablecer Pin de Autorizaciones" ><i class="fa-solid fa-key"></i></a>
+                                            @endif
+                                            @if(kvfj(Auth::user()->permisos, 'usuario_eliminar'))
+                                                <a href="#" data-action="eliminar" data-path="admin/usuario" data-object="{{ $u->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Eliminar" ><i class="fa-solid fa-trash-can"></i></a> 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>

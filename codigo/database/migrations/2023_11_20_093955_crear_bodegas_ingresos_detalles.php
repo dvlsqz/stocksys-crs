@@ -15,11 +15,14 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('id_ingreso');
             $table->integer('id_insumo');
-            $table->integer('pl');
-            $table->double('no_unidades',13, 5);
-            $table->double('unidad_medida',13, 5);
-            $table->double('peso_total',13, 5);
+            $table->integer('pl')->nullable();
+            $table->date('bubd')->nullable();
+            $table->double('no_unidades',13, 5)->nullable();
+            $table->double('unidad_medida',13, 5)->nullable();
+            $table->double('peso_total',13, 5)->nullable();
             $table->double('no_unidades_usadas',13, 5)->nullable();
+            $table->integer('presentacion')->nullable();
+            $table->string('observaciones',500)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
