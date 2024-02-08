@@ -345,11 +345,15 @@ class BodegaSocioController extends Controller
     }
 
     public function getInsumoPesos($id){
-        $pesos_existen = PesoInsumo::where('id_insumo',$id)->count();
-        if($pesos_existen == 0):
+
+        
+        /*$pesos = PesoInsumo::where('id_insumo',3)->first();
+        return $pesos;*/
+        $pesos_existen = PesoInsumo::where('id_insumo',$id)->get();
+        if(!isset($pesos_existen)):
             $pesos = new PesoInsumo;
         else:
-            $pesos = PesoInsumo::findOrFail($id);
+            $pesos = PesoInsumo::where('id_insumo',$id)->first();
         endif;
         $insumo = Bodega::findOrFail($id); 
 
@@ -358,6 +362,10 @@ class BodegaSocioController extends Controller
             'pesos' => $pesos,
             'insumo' => $insumo
         ];
+
+        
+
+        
 
         return view('admin.bodega.bodega_socio.pesos_insumos',$datos);
     }
@@ -396,7 +404,7 @@ class BodegaSocioController extends Controller
                     $b->id_usuario = Auth::id();
                     $b->save();
 
-                    return back()->with('messages', '¡Pesos de insumo creados y guardados con exito!.')
+                    return redirect('/admin/bodega_socio/insumos')->with('messages', '¡Pesos de insumo creados y guardados con exito!.')
                     ->with('typealert', 'success');
                 endif;
             endif;
@@ -472,7 +480,7 @@ class BodegaSocioController extends Controller
                     $b->id_usuario = Auth::id();
                     $b->save();
 
-                    return back()->with('messages', '¡Información actualizada y guardada con exito!.')
+                    return redirect('/admin/bodega_socio/insumos')->with('messages', '¡Información actualizada y guardada con exito!.')
                     ->with('typealert', 'info');
                 endif;
             endif;

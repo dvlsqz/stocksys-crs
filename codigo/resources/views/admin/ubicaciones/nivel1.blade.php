@@ -55,6 +55,7 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
+                                <td><strong> ID </strong></td>
                                 <td><strong> NOMBRE </strong></td>
                                 <td><strong> NIVEL </strong></td>
                         </thead>
@@ -74,6 +75,7 @@
                                             @endif
                                         </div>
                                     </td>
+                                    <td>{{$u->id}}</td>
                                     <td>{{$u->nombre}}</td>
                                     <td>{{$u->nivel}}</td>
                                 </tr>

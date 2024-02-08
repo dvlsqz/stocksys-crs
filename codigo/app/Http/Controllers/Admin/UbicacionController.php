@@ -172,6 +172,7 @@ class UbicacionController extends Controller
         else: 
             $u = new Ubicacion;
             $u->nombre = e($request->input('nombre'));
+            $u->nomenclatura = e($request->input('nomenclatura'));
             $u->nivel = $request->input('nivel');
             $u->id_principal = $request->input('id_principal');
 

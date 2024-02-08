@@ -27,6 +27,12 @@
                             {!! Form::text('nombre', null, ['class'=>'form-control']) !!}
                         </div>
 
+                        <label for="name" class="mtop16"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nomenclatura: </strong></label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                            {!! Form::text('nomenclatura', null, ['class'=>'form-control']) !!}
+                        </div>
+
                         <label for="unit_id"  class="mtop16"><strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Nivel / Tipo:</strong></label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
@@ -57,6 +63,7 @@
                         <thead>
                             <tr>
                                 <td><strong> OPCIONES </strong></td>
+                                <td><strong> ID </strong></td>
                                 <td><strong> NOMBRE </strong></td>
                                 <td><strong> NIVEL </strong></td>
                         </thead>
@@ -73,7 +80,8 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td>{{$u->nombre}}</td>
+                                    <td>{{$u->id}}</td>
+                                    <td>{{$u->nombre.' - '.$u->nomenclatura}}</td>
                                     <td>{{$u->nivel}}</td>
                                 </tr>
                             @endforeach
