@@ -84,17 +84,20 @@
                 </tr>
             </thead>
             <tbody style="border: 1px solid black;">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    @foreach($alimentos as $a)                        
-                        <td>{{$a->nombre}}</td>
+                
+                    @foreach($ruta->detalles as $det)  
+                        <tr>
+                            <td> {{$det->escuela->codigo}} </td>
+                            <td> {{$det->escuela->nombre}} </td>
+                            <td></td> 
+                            @foreach($alimentos as $a)                        
+                                <td>{{$a->nombre}}</td>
+                            @endforeach
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     @endforeach
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
 
             </tbody>
             <tfoot style="background-color: #96D4D4; border: 1px solid black; border-collapse: collapse;">

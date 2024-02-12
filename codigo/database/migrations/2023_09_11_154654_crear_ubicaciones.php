@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::unprepared('SELECT 1; SET IDENTITY_INSERT ubicaciones ON');
+        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT ubicaciones ON');
         DB::table('ubicaciones')->insert(array(
             'id'=>'1',
             'nombre'=>'Guatemala',
@@ -44,7 +44,7 @@ return new class extends Migration
             'nivel'=>'3',
             'id_principal'=>'2'           
         ));
-        DB::unprepared('SELECT 1; SET IDENTITY_INSERT ubicaciones OFF');
+        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT ubicaciones OFF');
     }
 
     /**

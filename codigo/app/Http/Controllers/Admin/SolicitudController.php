@@ -774,7 +774,7 @@ class SolicitudController extends Controller
     public function getSolicitudRutaConfirmadaPDF($idSolicitud, $idRuta){     
         
         $idSolicitud = $idSolicitud;
-        $ruta = RutaSolicitud::with('ruta_base')->where('id',$idRuta)->first();
+        $ruta = RutaSolicitud::with(['ruta_base', 'detalles'])->where('id',$idRuta)->first();
         $detalle_escuelas = DB::table('solicitud_detalles')
             ->select(
                 DB::raw('escuelas.id as escuela_id'),
@@ -782,18 +782,20 @@ class SolicitudController extends Controller
                 DB::raw('( ( SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) + SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) + SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_de_docentes_y_voluntarios)  ) ) as peso')
             )
             ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-            ->join(DB::RAW("(SELECT id_racion, SUM(cantidad) as peso FROM alimentos_raciones GROUP BY id_racion) as alimentos_racion"), function($j){
+            ->join('rutas_solicitudes_despachos', function($join) use($idRuta, $idSolicitud){
+                $join->on('rutas_solicitudes_despachos.id_solicitud_despacho','=',$idSolicitud);
+            })
+            ->join(DB::RAW("(SELECT id_racion, id_alimento, cantidad as peso FROM alimentos_raciones GROUP BY id_racion, id_alimento) as alimentos_racion"), function($j){
                 $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos");
             })
             ->where('solicitud_detalles.id_solicitud', $idSolicitud)            
             ->where('solicitud_detalles.deleted_at', null)
-            ->whereIn('solicitud_detalles.tipo_de_actividad_alimentos', [1,2,3])
             ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos','alimentos_racion.peso')
             ->get();
         $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->get();
         $solicitud = Solicitud::with(['entrega', 'usuario'])->where('id', $idSolicitud)->first();
         
-
+        return $detalle_escuelas;
         $datos = [
             'ruta' => $ruta,
             'idSolicitud' => $idSolicitud,
