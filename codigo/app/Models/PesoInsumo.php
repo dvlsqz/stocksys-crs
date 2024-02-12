@@ -26,4 +26,8 @@ class PesoInsumo extends Model
         'tonelada_metrica_kg' => 'decimal:2',
         'unidades_x_tm' => 'decimal:9',
     ];
+
+    public function alimento(){
+        return $this->hasOne(Bodega::class,'id','id_insumo');
+    }
 }

@@ -44,8 +44,31 @@ class BodegaSocioController extends Controller
             $b->tipo_bodega = 1;   
             $b->id_institucion = Auth::user()->id_institucion;
             $b->observaciones = e($request->input('observaciones'));
+            $b->save();
+           
 
             $insumo = $b->nombre;
+            if($request->input('categoria') == 0):
+                $p = new PesoInsumo;
+                $p->id_insumo = $b->id;
+                $p->gramos_x_libra = 0;
+                $p->gramos_x_kg = 0;
+                $p->libras_x_kg = 0;
+                $p->kg_x_unidad = 0;
+                $p->gramos_x_unidad = 0;
+                $p->libras_x_unidad = 0;
+                $p->quintales_x_unidad = 0;
+                $p->peso_bruto_quintales = 0;
+                $p->tonelada_metrica_kg = 0;
+                $p->unidades_x_tm = 0;
+
+                if($p->save()):
+                    $b = new Bitacora;
+                    $b->accion = 'Registro de pesos del insumo: '.$insumo;
+                    $b->id_usuario = Auth::id();
+                    $b->save();
+                endif;
+            endif;
 
             if($b->save()):
                 $b = new Bitacora;
@@ -348,24 +371,15 @@ class BodegaSocioController extends Controller
 
         
         /*$pesos = PesoInsumo::where('id_insumo',3)->first();
-        return $pesos;*/
-        $pesos_existen = PesoInsumo::where('id_insumo',$id)->get();
-        if(!isset($pesos_existen)):
-            $pesos = new PesoInsumo;
-        else:
-            $pesos = PesoInsumo::where('id_insumo',$id)->first();
-        endif;
+        return $pesos;*/    
+        $pesos = PesoInsumo::with('alimento')->where('id_insumo',$id)->first();
+        
         $insumo = Bodega::findOrFail($id); 
 
         $datos = [
             'id' => $id,
-            'pesos' => $pesos,
-            'insumo' => $insumo
-        ];
-
-        
-
-        
+            'pesos' => $pesos
+        ];          
 
         return view('admin.bodega.bodega_socio.pesos_insumos',$datos);
     }
@@ -382,107 +396,79 @@ class BodegaSocioController extends Controller
     	if($validator->fails()):
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
-            $datos_ant = PesoInsumo::where('id_insumo',$request->input('id_alimento'))->count();
-            if($datos_ant == 0):
-                $i = Bodega::findOrFail($request->input('id_alimento'));
-                $p = new PesoInsumo;
-                $p->id_insumo = $request->input('id_alimento');
-                $p->gramos_x_libra = $request->input('gramos_x_libra');
-                $p->gramos_x_kg = $request->input('gramos_x_kg');
-                $p->libras_x_kg = $request->input('libras_x_kg');
-                $p->kg_x_unidad = $request->input('kg_x_unidad');
-                $p->gramos_x_unidad = $request->input('gramos_x_unidad');
-                $p->libras_x_unidad = $request->input('libras_x_unidad');
-                $p->quintales_x_unidad = $request->input('quintales_x_unidad');
-                $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
-                $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
-                $p->unidades_x_tm = $request->input('unidades_x_tm');
-                $insumo = $i->nombre;
-                if($p->save()):
-                    $b = new Bitacora;
-                    $b->accion = 'Registro de peso de insumo: '.$insumo;
-                    $b->id_usuario = Auth::id();
-                    $b->save();
+            
+            $i = Bodega::findOrFail($request->input('id_alimento'));
+            $p = PesoInsumo::where('id_insumo',$request->input('id_alimento'))->first();
 
-                    return redirect('/admin/bodega_socio/insumos')->with('messages', '¡Pesos de insumo creados y guardados con exito!.')
-                    ->with('typealert', 'success');
-                endif;
+            if(empty($request->input('gramos_x_libra'))):
+                $p->gramos_x_libra = $request->input('gramos_x_libra_ant');
+            else:
+                $p->gramos_x_libra = $request->input('gramos_x_libra');
+            endif;
+            
+            if(empty($request->input('gramos_x_kg'))):
+                $p->gramos_x_kg = $request->input('gramos_x_kg_ant');
+            else:
+                $p->gramos_x_kg = $request->input('gramos_x_kg');
             endif;
 
-            if($datos_ant == 1):
-                $i = Bodega::findOrFail($request->input('id_alimento'));
-                $p = PesoInsumo::findOrFail($request->input('id_alimento'));
+            if(empty($request->input('libras_x_kg'))):
+                $p->libras_x_kg  = $request->input('libras_x_kg_ant');
+            else:
+                $p->libras_x_kg  = $request->input('libras_x_kg');
+            endif;
 
-                if(empty($request->input('gramos_x_libra'))):
-                    $p->gramos_x_libra = $request->input('gramos_x_libra_ant');
-                else:
-                    $p->gramos_x_libra = $request->input('gramos_x_libra');
-                endif;
-                
-                if(empty($request->input('gramos_x_kg'))):
-                    $p->gramos_x_kg = $request->input('gramos_x_kg_ant');
-                else:
-                    $p->gramos_x_kg = $request->input('gramos_x_kg');
-                endif;
+            if(empty($request->input('kg_x_unidad'))):
+                $p->kg_x_unidad = $request->input('kg_x_unidad_ant');
+            else:
+                $p->kg_x_unidad = $request->input('kg_x_unidad');
+            endif;
 
-                if(empty($request->input('libras_x_kg'))):
-                    $p->libras_x_kg  = $request->input('libras_x_kg_ant');
-                else:
-                    $p->libras_x_kg  = $request->input('libras_x_kg');
-                endif;
+            if(empty($request->input('gramos_x_unidad'))):
+                $p->gramos_x_unidad = $request->input('gramos_x_unidad_ant');
+            else:
+                $p->gramos_x_unidad = $request->input('gramos_x_unidad');
+            endif;
 
-                if(empty($request->input('kg_x_unidad'))):
-                    $p->kg_x_unidad = $request->input('kg_x_unidad_ant');
-                else:
-                    $p->kg_x_unidad = $request->input('kg_x_unidad');
-                endif;
+            if(empty($request->input('libras_x_unidad'))):
+                $p->libras_x_unidad = $request->input('libras_x_unidad_ant');
+            else:
+                $p->libras_x_unidad = $request->input('libras_x_unidad');
+            endif;
 
-                if(empty($request->input('gramos_x_unidad'))):
-                    $p->gramos_x_unidad = $request->input('gramos_x_unidad_ant');
-                else:
-                    $p->gramos_x_unidad = $request->input('gramos_x_unidad');
-                endif;
+            if(empty($request->input('quintales_x_unidad'))):
+                $p->quintales_x_unidad = $request->input('quintales_x_unidad_ant');
+            else:
+                $p->quintales_x_unidad = $request->input('quintales_x_unidad');
+            endif;
 
-                if(empty($request->input('libras_x_unidad'))):
-                    $p->libras_x_unidad = $request->input('libras_x_unidad_ant');
-                else:
-                    $p->libras_x_unidad = $request->input('libras_x_unidad');
-                endif;
+            if(empty($request->input('peso_bruto_quintales'))):
+                $p->peso_bruto_quintales = $request->input('peso_bruto_quintales_ant');
+            else:
+                $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
+            endif;
 
-                if(empty($request->input('quintales_x_unidad'))):
-                    $p->quintales_x_unidad = $request->input('quintales_x_unidad_ant');
-                else:
-                    $p->quintales_x_unidad = $request->input('quintales_x_unidad');
-                endif;
+            if(empty($request->input('tonelada_metrica_kg'))):
+                $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg_ant');
+            else:
+                $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
+            endif;
+            
+            if(empty($request->input('unidades_x_tm'))):
+                $p->unidades_x_tm = $request->input('unidades_x_tm_ant');
+            else:
+                $p->unidades_x_tm = $request->input('unidades_x_tm');
+            endif;
 
-                if(empty($request->input('peso_bruto_quintales'))):
-                    $p->peso_bruto_quintales = $request->input('peso_bruto_quintales_ant');
-                else:
-                    $p->peso_bruto_quintales = $request->input('peso_bruto_quintales');
-                endif;
+            $insumo = $i->nombre;
+            if($p->save()):
+                $b = new Bitacora;
+                $b->accion = 'Actualizacion de pesos de insumo: '.$insumo;
+                $b->id_usuario = Auth::id();
+                $b->save();
 
-                if(empty($request->input('tonelada_metrica_kg'))):
-                    $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg_ant');
-                else:
-                    $p->tonelada_metrica_kg = $request->input('tonelada_metrica_kg');
-                endif;
-                
-                if(empty($request->input('unidades_x_tm'))):
-                    $p->unidades_x_tm = $request->input('unidades_x_tm_ant');
-                else:
-                    $p->unidades_x_tm = $request->input('unidades_x_tm');
-                endif;
-
-                $insumo = $i->nombre;
-                if($p->save()):
-                    $b = new Bitacora;
-                    $b->accion = 'Registro de peso de insumo: '.$insumo;
-                    $b->id_usuario = Auth::id();
-                    $b->save();
-
-                    return redirect('/admin/bodega_socio/insumos')->with('messages', '¡Información actualizada y guardada con exito!.')
-                    ->with('typealert', 'info');
-                endif;
+                return back()->with('messages', '¡Información actualizada y guardada con exito!.')
+                ->with('typealert', 'info');
             endif;
             
         endif;
