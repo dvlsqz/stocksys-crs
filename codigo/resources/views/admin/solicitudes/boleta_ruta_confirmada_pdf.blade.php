@@ -69,7 +69,7 @@
     </p>
 
     <div>
-        <table style="">
+        <table style="text-align:center;">
             <thead style="background-color: #96D4D4; border: 1px solid black; border-collapse: collapse;">
                 <tr>
                     <td>CODIGO</td>
@@ -83,18 +83,18 @@
                     <td>BOL.</td>
                 </tr>
             </thead>
-            <tbody style="border: 1px solid black;">
+            <tbody style="border: 1px solid black; font-size: 10px;">
                 
-                    @foreach($ruta->detalles as $det)  
+                    @foreach($detalle_escuelas as $det)  
                         <tr>
-                            <td> {{$det->escuela->codigo}} </td>
-                            <td> {{$det->escuela->nombre}} </td>
-                            <td></td> 
+                            <td> {{$det->escuela_codigo}} </td>
+                            <td> {{$det->escuela_nombre}} </td>
+                            <td> {{$det->participantes}} </td> 
                             @foreach($alimentos as $a)                        
                                 <td>{{$a->nombre}}</td>
                             @endforeach
                             <td></td>
-                            <td></td>
+                            <td>{{$det->racion}} </td>
                             <td></td>
                         </tr>
                     @endforeach

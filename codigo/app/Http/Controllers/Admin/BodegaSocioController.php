@@ -352,6 +352,27 @@ class BodegaSocioController extends Controller
         endif;
     }
 
+    public function getMovimientosIngresos(){ 
+        $ingresos = BodegaIngreso::where('id_institucion',Auth::user()->id_institucion)->get();
+
+        $datos = [
+            'ingresos' => $ingresos
+        ];
+        
+        return view('admin.bodega.bodega_socio.movimientos.historial_ingresos' ,$datos);
+    }
+
+    public function getMovimientosEgresos(){ 
+        $egresos = BodegaEgreso::where('id_institucion',Auth::user()->id_institucion)->get();
+
+        $datos = [
+            'egresos' => $egresos
+        ];
+        
+        return view('admin.bodega.bodega_socio.movimientos.historial_egresos' ,$datos);
+    }
+    
+
     public function getInsumoEliminar($id){
         $insumo = Bodega::findOrFail($id);
         //$detalles = SolicitudDetalles::where('id_solicitud',$id)->delete();

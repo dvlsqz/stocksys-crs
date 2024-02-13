@@ -15,12 +15,13 @@ document.addEventListener('DOMContentLoaded', function(){
     var btn_generar_usuario = document.getElementById('btn_generar_usuario');
     var btn_buscar_escuelas_despacho = document.getElementById('btn_buscar_escuelas_despacho');
     var btn_buscar_socios_solicitudes_despacho = document.getElementById('btn_buscar_socios_solicitudes_despacho');
+    var btn_historial_detalles = document.getElementById('btn_historial_detalles');
 
     if(route == 'bodega_socio_egresos'){
         plsSociosInsumosDisponibles();
         //var msg_det_escuelas = document.getElementById('div-msg-det-escuelas');
         //msg_det_escuelas.hidden = false;
-        //var res_det_escuelas = document.getElementById('div-res-det-escuelas');
+        //var res_det_escuelas = document.getElementById('div-res-det-escuelas'); 
         //res_det_escuelas.hidden = true;
     }
 
@@ -345,6 +346,33 @@ function delete_object(e){
                 window.location.href =url1+'/otros_insumos';
             }
         });
+    }else if(action == "movimientos"){
+        title = "¿Que tipo de movimientos desea visualizar?";
+        text = ""
+        icon = "warning";
+    
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: true,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Ingresos",
+            denyButtonText: "Egresos",
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#85c1e9',
+            denyButtonColor: '  #85929e',
+            cancelButtonColor: '#CC2D04',
+        }).then((result) =>{
+            if (result.isConfirmed) {
+                //console.log(url1+'/alimentos');
+                window.location.href =url1+'/ingresos';
+            } else if (result.isDenied) {
+                //console.log(url1+'/otros_insumos');
+                window.location.href =url1+'/egresos';
+            }
+        });
     }
 
 
@@ -613,5 +641,6 @@ function plsPrincipalInsumosDisponibles(){
     
 
 }
+
 
 

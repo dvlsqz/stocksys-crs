@@ -777,13 +777,16 @@ class SolicitudController extends Controller
         $ruta = RutaSolicitud::with(['ruta_base', 'detalles'])->where('id',$idRuta)->first();
         $detalle_escuelas = DB::table('solicitud_detalles')
             ->select(
-                DB::raw('escuelas.id as escuela_id'),
-                DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion'),
+                DB::raw('escuelas.codigo as escuela_codigo'),
+                DB::raw('escuelas.nombre as escuela_nombre'),
+                DB::raw('raciones.nombre as racion'),
+                DB::raw('SUM(Distinct solicitud_detalles.total_de_personas) as participantes'),
                 DB::raw('( ( SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) + SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) + SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_de_docentes_y_voluntarios)  ) ) as peso')
             )
             ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
             ->join('rutas_solicitudes_despachos', function($join) use($idRuta, $idSolicitud){
-                $join->on('rutas_solicitudes_despachos.id_solicitud_despacho','=',$idSolicitud);
+                $join->where('rutas_solicitudes_despachos.id_solicitud_despacho','=',$idSolicitud);
             })
             ->join(DB::RAW("(SELECT id_racion, id_alimento, cantidad as peso FROM alimentos_raciones GROUP BY id_racion, id_alimento) as alimentos_racion"), function($j){
                 $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos");
@@ -795,7 +798,7 @@ class SolicitudController extends Controller
         $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->get();
         $solicitud = Solicitud::with(['entrega', 'usuario'])->where('id', $idSolicitud)->first();
         
-        return $detalle_escuelas;
+        //return $detalle_escuelas;
         $datos = [
             'ruta' => $ruta,
             'idSolicitud' => $idSolicitud,

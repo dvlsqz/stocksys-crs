@@ -284,6 +284,7 @@
                     'bodega_socio_solicitudes' => 'Puede ver el listado y detalle de solicitudes a bodega primaria.',
                     'bodega_socio_ingresos' => 'Puede registrar ingresos a la bodega socio.',    
                     'bodega_socio_egresos' => 'Puede registrar egresos a la bodega socio.',  
+                    'bodega_socio_movimientos' => 'Puede ver el historial de movimientos de la bodega.',
                     'bodega_socio_raciones' => 'Puede ver el listado de raciones.',
                     'bodega_socio_racion_registrar' => 'Puede agregar nuevas raciones.',
                     'bodega_socio_racion_editar' => 'Puede editar raciones.',
@@ -293,7 +294,7 @@
                     'bodega_socio_kit_registrar' => 'Puede agregar nuevas kits.',
                     'bodega_socio_kit_editar' => 'Puede editar kits.',
                     'bodega_socio_kit_eliminar' => 'Puede eliminar kits.',
-                    'bodega_socio_kit_insumos' => 'Puede crear, editar y eliminar insumos que conforman las kits.', 
+                    'bodega_socio_kit_insumos' => 'Puede crear, editar y eliminar insumos que conforman las kits.',  
                 ]
             ],
             'solicitudes' => [
