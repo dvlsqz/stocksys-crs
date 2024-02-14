@@ -89,10 +89,21 @@
                         <tr>
                             <td> {{$det->escuela_codigo}} </td>
                             <td> {{$det->escuela_nombre}} </td>
-                            <td> {{$det->participantes}} </td> 
-                            @foreach($alimentos as $a)                        
-                                <td>{{$a->nombre}}</td>
-                            @endforeach
+                            <td>  </td> 
+                              
+                                @for ($i = 0; $i < count($detalle_alimentos); $i++)
+                                    @foreach($alimentos as $a)
+                                        @if($det->escuela_id == $detalle_alimentos[$i]->escuela_id && $det->idracion == $detalle_alimentos[$i]->idracion)  
+                                                                        
+                                            @if($a->id == $detalle_alimentos[$i]->idinsumo)    
+                                                <td>{{$detalle_alimentos[$i]->unidades}}</td>          
+                                                                                          
+                                            @endif                                            
+                                                                                                    
+                                        @endif    
+                                    @endforeach  
+                                @endfor 
+                            
                             <td></td>
                             <td>{{$det->racion}} </td>
                             <td></td>

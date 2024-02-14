@@ -775,7 +775,7 @@ class SolicitudController extends Controller
         
         $idSolicitud = $idSolicitud;
         $ruta = RutaSolicitud::with(['ruta_base', 'detalles'])->where('id',$idRuta)->first();
-        $detalle_escuelas = DB::table('solicitud_detalles')
+        /*$detalle_escuelas = DB::table('solicitud_detalles')
             ->select(
                 DB::raw('escuelas.codigo as escuela_codigo'),
                 DB::raw('escuelas.nombre as escuela_nombre'),
@@ -794,15 +794,53 @@ class SolicitudController extends Controller
             ->where('solicitud_detalles.id_solicitud', $idSolicitud)            
             ->where('solicitud_detalles.deleted_at', null)
             ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos','alimentos_racion.peso')
+            ->get();*/
+        $detalle_escuelas = DB::table('rutas_solicitudes_despachos as r')   
+            ->select(
+                'e.id as escuela_id',
+                'e.codigo as escuela_codigo',
+                'e.nombre as escuela_nombre',
+                'ra.id as idracion',
+                'ra.nombre as racion'
+            )         
+            ->join('rutas_solicitudes_despachos_detalles as rdet', 'rdet.id_ruta_despacho', 'r.id')
+            ->join('escuelas as e', 'e.id', 'rdet.id_escuela')
+            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'rdet.id_escuela')
+            ->join('raciones as ra', 'ra.id', 'be.tipo_racion')
+            ->where('r.id', $idRuta)
+            ->where('r.id_solicitud_despacho', $idSolicitud)       
+            ->orderby('e.id', 'ASC')  
             ->get();
+        
+
+        $detalle_alimentos = DB::table('rutas_solicitudes_despachos as r')   
+            ->select(
+                'e.id as escuela_id',               
+                'bedet.id_insumo as idinsumo',
+                'bedet.no_unidades as unidades',
+                'ra.id as idracion'
+            )         
+            ->join('rutas_solicitudes_despachos_detalles as rdet', 'rdet.id_ruta_despacho', 'r.id')
+            ->join('escuelas as e', 'e.id', 'rdet.id_escuela')
+            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'rdet.id_escuela')
+            ->join('bodegas_egresos_detalles as bedet', 'bedet.id_egreso', 'be.id')
+            ->join('raciones as ra', 'ra.id', 'be.tipo_racion')
+            ->where('r.id', $idRuta)
+            ->where('r.id_solicitud_despacho', $idSolicitud)
+            ->orderby('e.id', 'ASC')      
+            ->get();
+
+        //return $detalle_alimentos;
+
         $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->get();
         $solicitud = Solicitud::with(['entrega', 'usuario'])->where('id', $idSolicitud)->first();
         
-        //return $detalle_escuelas;
+        
         $datos = [
             'ruta' => $ruta,
             'idSolicitud' => $idSolicitud,
             'detalle_escuelas' => $detalle_escuelas,
+            'detalle_alimentos' => $detalle_alimentos,
             'alimentos' => $alimentos,
             'solicitud' => $solicitud
         ];
