@@ -61,7 +61,7 @@
 
     function obtenerDocumentosEgreso($modo, $id){
         $documento = [
-            '1'=>'Guia de Transporte Terrestre',
+            '1'=>'Boleta de Despacho',
             '2'=>'Factura',
             '3'=>'Recibo',
             '4'=>'Otro',

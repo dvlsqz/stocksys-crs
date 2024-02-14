@@ -362,6 +362,18 @@ class BodegaSocioController extends Controller
         return view('admin.bodega.bodega_socio.movimientos.historial_ingresos' ,$datos);
     }
 
+    public function getMovimientosIngresoDetalle($id){ 
+        $ingresos = BodegaIngreso::where('id_institucion',Auth::user()->id_institucion)->get();
+        $detalles = BodegaIngresoDetalle::where('id_ingreso', $id)->get();
+
+        $datos = [
+            'ingresos' => $ingresos,
+            'detalles' => $detalles
+        ];
+        
+        return view('admin.bodega.bodega_socio.movimientos.historial_ingresos_detalles' ,$datos);
+    }
+
     public function getMovimientosEgresos(){ 
         $egresos = BodegaEgreso::where('id_institucion',Auth::user()->id_institucion)->get();
 
@@ -370,6 +382,18 @@ class BodegaSocioController extends Controller
         ];
         
         return view('admin.bodega.bodega_socio.movimientos.historial_egresos' ,$datos);
+    }
+
+    public function getMovimientosEgresoDetalle($id){ 
+        $egresos = BodegaEgreso::where('id_institucion',Auth::user()->id_institucion)->get();
+        $detalles = BodegaEgresoDetalle::where('id_egreso', $id)->get();
+
+        $datos = [
+            'egresos' => $egresos,
+            'detalles' => $detalles
+        ];
+        
+        return view('admin.bodega.bodega_socio.movimientos.historial_egresos_detalles' ,$datos);
     }
     
 

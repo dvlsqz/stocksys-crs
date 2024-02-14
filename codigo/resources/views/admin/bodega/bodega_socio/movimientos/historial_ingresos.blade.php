@@ -44,7 +44,8 @@
                                     <td>{{ obtenerDocumentosIngreso(null, $i->tipo_documento).' - No. '.$i->no_documento }}</td>
                                     <td width="240px">
                                         <div class="opts">
-                                            <a href="#" class="btn btn-outline-info" id="btn_historial_detalles" data-action="{{ $i->id }}" data-toogle="tooltrip" data-placement="top" title="Buscar" ><i class="fa-solid fa-eye"></i> Ver Detalles </a>
+                                            <a class="btn btn-outline-info" href="{{ url('/admin/bodega_socio/insumo/movimientos/ingresos/detalles/'.$i->id) }}" ><i class="fa-solid fa-eye"></i> Ver Detalles</a>
+                                            
                                         </div>
                                     </td>
                                 </tr>
@@ -61,11 +62,11 @@
             <div class="card ">
 
                 <div class="card-header">
-                    <h2 class="card-title"><strong><i class="fa-solid fa-people-carry-box"></i> Detalles de Movimientos</strong></h2>
+                    <h2 class="card-title"><strong><i class="fa-solid fa-people-carry-box"></i> Detalle del Ingreso</strong></h2>
                 </div>
 
-                <div class="card-body">
-                    
+                <div class="card-body" style="text-align:center;">
+                    <b style="color: red;">Seleccione un ingreso, para visualizar su detalle o contenido.</b>
                 </div>
 
             </div>                

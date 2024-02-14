@@ -91,7 +91,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/bodega_socio/insumo/egresos/otros_insumos', [BodegaSocioController::class, 'postInsumoEgresosOtros'])->name('bodega_socio_egresos');
     Route::get('/bodega_socio/insumo/movimientos/ingresos', [BodegaSocioController::class, 'getMovimientosIngresos'])->name('bodega_socio_movimientos');
     Route::get('/bodega_socio/insumo/movimientos/egresos', [BodegaSocioController::class, 'getMovimientosEgresos'])->name('bodega_socio_movimientos');
-    Route::get('/bodega_socio/insumo/movimientos/{tipo}/detalle/{id}', [BodegaSocioController::class, 'getMovimientosDetalles'])->name('bodega_socio_movimientos');
+    Route::get('/bodega_socio/insumo/movimientos/ingresos/detalles/{id}', [BodegaSocioController::class, 'getMovimientosIngresoDetalle'])->name('bodega_socio_movimientos');
+    Route::get('/bodega_socio/insumo/movimientos/egresos/detalles/{id}', [BodegaSocioController::class, 'getMovimientosEgresoDetalle'])->name('bodega_socio_movimientos');
     Route::get('/bodega_socio/insumo/{id}/pesos', [BodegaSocioController::class, 'getInsumoPesos'])->name('bodega_socio_insumo_pesos');
     Route::post('/bodega_socio/insumo/pesos', [BodegaSocioController::class, 'postInsumoPesos'])->name('bodega_socio_insumo_pesos');
     Route::get('/bodega_socio/insumo/{id}/editar', [BodegaSocioController::class, 'getInsumoEditar'])->name('bodega_socio_editar'); 

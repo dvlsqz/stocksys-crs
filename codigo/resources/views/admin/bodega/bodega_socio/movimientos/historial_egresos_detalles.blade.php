@@ -70,7 +70,24 @@
                 </div>
 
                 <div class="card-body" style="text-align:center;">
-                    <b style="color: red;">Seleccione un egreso, para visualizar su detalle o contenido.</b>
+                    <table id="tabla" class="table table-striped table-hover mtop16">
+                        <thead>
+                            <tr>
+                                <td><strong> INSUMO </strong></td>
+                                <td><strong> PL</strong></td>
+                                <td><strong> NO UNIDADES </strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($detalles as $det)
+                                <tr>
+                                    <td>{{$det->insumo->nombre}}</td>
+                                    <td>{{$det->pl}}</td>
+                                    <td>{{$det->no_unidades}}</td>
+                                </tr>
+                            @endforeach                            
+                        </tbody>
+                    </table>
                 </div>
 
             </div>                
