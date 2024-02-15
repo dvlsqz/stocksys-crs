@@ -816,19 +816,23 @@ class SolicitudController extends Controller
         $detalle_alimentos = DB::table('rutas_solicitudes_despachos as r')   
             ->select(
                 'e.id as escuela_id',               
-                'bedet.id_insumo as idinsumo',
-                'bedet.no_unidades as unidades',
+                'bodegas_egresos_detalles.id_insumo',
+                'bodegas_egresos_detalles.no_unidades',
                 'ra.id as idracion'
             )         
             ->join('rutas_solicitudes_despachos_detalles as rdet', 'rdet.id_ruta_despacho', 'r.id')
             ->join('escuelas as e', 'e.id', 'rdet.id_escuela')
             ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'rdet.id_escuela')
-            ->join('bodegas_egresos_detalles as bedet', 'bedet.id_egreso', 'be.id')
+            ->join(DB::RAW("(SELECT id_egreso, id_insumo, no_unidades  FROM bodegas_egresos_detalles) as bodegas_egresos_detalles"), function($j){
+                $j->on("bodegas_egresos_detalles.id_egreso","=","be.id");
+            })
             ->join('raciones as ra', 'ra.id', 'be.tipo_racion')
             ->where('r.id', $idRuta)
             ->where('r.id_solicitud_despacho', $idSolicitud)
             ->orderby('e.id', 'ASC')      
             ->get();
+
+
 
         //return $detalle_alimentos;
 

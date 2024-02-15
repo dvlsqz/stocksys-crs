@@ -91,18 +91,21 @@
                             <td> {{$det->escuela_nombre}} </td>
                             <td>  </td> 
                               
-                                @for ($i = 0; $i < count($detalle_alimentos); $i++)
-                                    @foreach($alimentos as $a)
-                                        @if($det->escuela_id == $detalle_alimentos[$i]->escuela_id && $det->idracion == $detalle_alimentos[$i]->idracion)  
+                            
+                                @foreach($alimentos as $a)
+                                    @foreach($detalle_alimentos as $deta)
+                                        @if($det->escuela_id == $deta->escuela_id && $det->idracion == $deta->idracion)  
                                                                         
-                                            @if($a->id == $detalle_alimentos[$i]->idinsumo)    
-                                                <td>{{$detalle_alimentos[$i]->unidades}}</td>          
-                                                                                          
-                                            @endif                                            
+                                            @if($a->id == $deta->id_insumo )
+                                                @if(!$loop->last )    
+                                                    <td>{{$deta->no_unidades}}</td>          
+                                                                                           
+                                                @endif       
+                                            @endif                                     
                                                                                                     
                                         @endif    
-                                    @endforeach  
-                                @endfor 
+                                    @endforeach
+                                @endforeach 
                             
                             <td></td>
                             <td>{{$det->racion}} </td>
