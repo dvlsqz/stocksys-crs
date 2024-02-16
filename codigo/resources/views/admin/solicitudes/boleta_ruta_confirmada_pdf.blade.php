@@ -93,18 +93,11 @@
                               
                             
                                 @foreach($alimentos as $a)
-                                    @foreach($detalle_alimentos as $deta)
-                                        @if($det->escuela_id == $deta->escuela_id && $det->idracion == $deta->idracion)  
-                                                                        
-                                            @if($a->id == $deta->id_insumo )
-                                                @if(!$loop->last )    
-                                                    <td>{{$deta->no_unidades}}</td>          
-                                                                                           
-                                                @endif       
-                                            @endif                                     
-                                                                                                    
-                                        @endif    
+
+                                    @foreach ($detalles as $key => $value)
+                                        <td>{{ $key }}: {{ $value }}</td>
                                     @endforeach
+                                    
                                 @endforeach 
                             
                             <td></td>

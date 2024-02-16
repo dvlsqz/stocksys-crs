@@ -800,8 +800,10 @@ class SolicitudController extends Controller
                 'e.id as escuela_id',
                 'e.codigo as escuela_codigo',
                 'e.nombre as escuela_nombre',
+                'be.id as egreso',
                 'ra.id as idracion',
-                'ra.nombre as racion'
+                'ra.nombre as racion',
+
             )         
             ->join('rutas_solicitudes_despachos_detalles as rdet', 'rdet.id_ruta_despacho', 'r.id')
             ->join('escuelas as e', 'e.id', 'rdet.id_escuela')
@@ -813,24 +815,28 @@ class SolicitudController extends Controller
             ->get();
         
 
-        $detalle_alimentos = DB::table('rutas_solicitudes_despachos as r')   
-            ->select(
-                'e.id as escuela_id',               
-                'bodegas_egresos_detalles.id_insumo',
-                'bodegas_egresos_detalles.no_unidades',
-                'ra.id as idracion'
-            )         
-            ->join('rutas_solicitudes_despachos_detalles as rdet', 'rdet.id_ruta_despacho', 'r.id')
-            ->join('escuelas as e', 'e.id', 'rdet.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'rdet.id_escuela')
-            ->join(DB::RAW("(SELECT id_egreso, id_insumo, no_unidades  FROM bodegas_egresos_detalles) as bodegas_egresos_detalles"), function($j){
-                $j->on("bodegas_egresos_detalles.id_egreso","=","be.id");
-            })
-            ->join('raciones as ra', 'ra.id', 'be.tipo_racion')
-            ->where('r.id', $idRuta)
-            ->where('r.id_solicitud_despacho', $idSolicitud)
-            ->orderby('e.id', 'ASC')      
-            ->get();
+        
+        /*foreach($detalle_escuelas as $det):
+            $detalles = BodegaEgresoDetalle::where('id_egreso', $det->egreso)->get();
+            $detalle_escuelas->push(['detalles' => $detalles]);
+        endforeach;*/
+
+        $detalles = $detalle_escuelas->map(function ($detalle_escuelas){
+            $detalles_alimentos = BodegaEgresoDetalle::where('id_egreso', $detalle_escuelas->egreso)->get();
+            return collect([
+                'escuela_id' => $detalle_escuelas->escuela_id,
+                'idracion' => $detalle_escuelas->idracion,
+                'detalles_alimentos' => $detalles_alimentos->map(function ($detalles_alimentos){
+                    return [
+                        'id_insumo' => $detalles_alimentos->id_insumo,
+                        'pl' => $detalles_alimentos->pl,
+                        'no_unidades' => $detalles_alimentos->no_unidades,
+                    ];
+                }),
+            ]);
+        });
+
+        //return $detalles;
 
 
 
@@ -844,7 +850,7 @@ class SolicitudController extends Controller
             'ruta' => $ruta,
             'idSolicitud' => $idSolicitud,
             'detalle_escuelas' => $detalle_escuelas,
-            'detalle_alimentos' => $detalle_alimentos,
+            'detalles' => $detalles,
             'alimentos' => $alimentos,
             'solicitud' => $solicitud
         ];
