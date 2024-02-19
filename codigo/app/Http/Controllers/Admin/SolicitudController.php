@@ -676,7 +676,7 @@ class SolicitudController extends Controller
 
     public function getSolicitudSubRutaEliminar($id){
         $ruta = RutaSolicitud::findOrFail($id);
-        $detalles = RutaSolicitudDetalles::where('id_ruta_despacho',$id)->delete();
+        $detalles = RutaSolicitudDetalles::where('id_ruta_despacho',$id)->delete(); 
 
         $nombre = $ruta->nombre;
         $solicitud = $ruta->id_solicitud;
@@ -775,26 +775,7 @@ class SolicitudController extends Controller
         
         $idSolicitud = $idSolicitud;
         $ruta = RutaSolicitud::with(['ruta_base', 'detalles'])->where('id',$idRuta)->first();
-        /*$detalle_escuelas = DB::table('solicitud_detalles')
-            ->select(
-                DB::raw('escuelas.codigo as escuela_codigo'),
-                DB::raw('escuelas.nombre as escuela_nombre'),
-                DB::raw('raciones.nombre as racion'),
-                DB::raw('SUM(Distinct solicitud_detalles.total_de_personas) as participantes'),
-                DB::raw('( ( SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) + SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) + SUM(Distinct solicitud_detalles.dias_de_solicitud) * alimentos_racion.peso * SUM(Distinct solicitud_detalles.total_de_docentes_y_voluntarios)  ) ) as peso')
-            )
-            ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
-            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
-            ->join('rutas_solicitudes_despachos', function($join) use($idRuta, $idSolicitud){
-                $join->where('rutas_solicitudes_despachos.id_solicitud_despacho','=',$idSolicitud);
-            })
-            ->join(DB::RAW("(SELECT id_racion, id_alimento, cantidad as peso FROM alimentos_raciones GROUP BY id_racion, id_alimento) as alimentos_racion"), function($j){
-                $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos");
-            })
-            ->where('solicitud_detalles.id_solicitud', $idSolicitud)            
-            ->where('solicitud_detalles.deleted_at', null)
-            ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos','alimentos_racion.peso')
-            ->get();*/
+        
         $detalle_escuelas = DB::table('rutas_solicitudes_despachos as r')   
             ->select(
                 'e.id as escuela_id',
@@ -814,29 +795,30 @@ class SolicitudController extends Controller
             ->orderby('e.id', 'ASC')  
             ->get();
         
-
-        
-        /*foreach($detalle_escuelas as $det):
-            $detalles = BodegaEgresoDetalle::where('id_egreso', $det->egreso)->get();
-            $detalle_escuelas->push(['detalles' => $detalles]);
-        endforeach;*/
-
         $detalles = $detalle_escuelas->map(function ($detalle_escuelas){
-            $detalles_alimentos = BodegaEgresoDetalle::where('id_egreso', $detalle_escuelas->egreso)->get();
+            $detalles_alimentos = DB::table('bodegas_egresos_detalles as det')   
+            ->select(
+                'det.id_insumo',DB::raw('SUM(det.no_unidades) as no_unidades')
+
+            )      
+            ->where('det.id_egreso', $detalle_escuelas->egreso)
+            ->groupBy('det.id_insumo') 
+            ->get();
+
+
             return collect([
                 'escuela_id' => $detalle_escuelas->escuela_id,
                 'idracion' => $detalle_escuelas->idracion,
                 'detalles_alimentos' => $detalles_alimentos->map(function ($detalles_alimentos){
                     return [
                         'id_insumo' => $detalles_alimentos->id_insumo,
-                        'pl' => $detalles_alimentos->pl,
                         'no_unidades' => $detalles_alimentos->no_unidades,
                     ];
                 }),
             ]);
         });
 
-        //return $detalles;
+        //return $detalle_escuelas;
 
 
 
@@ -1173,6 +1155,7 @@ class SolicitudController extends Controller
                 $s->fecha = Carbon::now()->format('Y-m-d');
                 $s->id_bodega_primaria = $request->input('id_bodega_primaria');
                 $s->id_socio_solicitante = Auth::user()->id_institucion;
+                $s->id_institucion = Auth::user()->id_institucion;
                 $s->save();
 
                 $idinsumo=$request->get('idinsumo');

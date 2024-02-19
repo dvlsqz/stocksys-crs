@@ -97,7 +97,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/bodega_socio/insumo/pesos', [BodegaSocioController::class, 'postInsumoPesos'])->name('bodega_socio_insumo_pesos');
     Route::get('/bodega_socio/insumo/{id}/editar', [BodegaSocioController::class, 'getInsumoEditar'])->name('bodega_socio_editar'); 
     Route::get('/bodega_socio/insumo/{id}/eliminar', [BodegaSocioController::class, 'getInsumoEliminar'])->name('bodega_socio_eliminar');     
-    Route::get('/bodega_socio/solicitudes_bodega_principal', [BodegaSocioController::class, 'getSolicitudesBodegaPrimaria'])->name('bodega_socio_solicitudes');     
+    Route::get('/bodega_socio/solicitudes_bodega_principal', [BodegaSocioController::class, 'getSolicitudesBodegaPrimaria'])->name('bodega_socio_solicitudes');   
+    Route::get('/bodega_socio/solicitudes_bodega_principal/{id}/imprimir', [BodegaSocioController::class, 'getSolicitudesBodegaPrimariaPDF'])->name('bodega_socio_solicitudes');    
     //Raciones bodega de socios 
     Route::get('/bodega_socio/raciones/{bodega}', [RacionController::class, 'getInicio'])->name('bodega_socio_raciones');
     Route::post('/bodega_socio/racion/registrar', [RacionController::class, 'postRacionRegistrar'])->name('bodega_socio_racion_registrar');    
@@ -129,7 +130,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::post('/bodega_principal/insumo/pesos', [BodegaPrincipalController::class, 'postInsumoPesos'])->name('bodega_principal_insumo_pesos');
     Route::get('/bodega_principal/insumo/{id}/editar', [BodegaPrincipalController::class, 'getInsumoEditar'])->name('bodega_principal_editar');
     Route::get('/bodega_principal/insumo/{id}/eliminar', [BodegaPrincipalController::class, 'getInsumoEliminar'])->name('bodega_principal_eliminar');
-    
+    Route::get('/bodega_principal/solicitudes_socios', [BodegaPrincipalController::class, 'getSolicitudesSocios'])->name('bodega_principal_solicitudes');
+    Route::get('/bodega_principal/solicitudes_socios/{id}/detalles', [BodegaPrincipalController::class, 'getSolicitudeSocioDetalles'])->name('bodega_principal_solicitudes');
+    Route::get('/bodega_principal/insumo/movimientos/ingresos', [BodegaPrincipalController::class, 'getMovimientosIngresos'])->name('bodega_principal_movimientos');
+    Route::get('/bodega_principal/insumo/movimientos/egresos', [BodegaPrincipalController::class, 'getMovimientosEgresos'])->name('bodega_principal_movimientos');
+    Route::get('/bodega_principal/insumo/movimientos/ingresos/detalles/{id}', [BodegaPrincipalController::class, 'getMovimientosIngresoDetalle'])->name('bodega_principal_movimientos');
+    Route::get('/bodega_principal/insumo/movimientos/egresos/detalles/{id}', [BodegaPrincipalController::class, 'getMovimientosEgresoDetalle'])->name('bodega_principal_movimientos');
 
 
     //Modulo de Solicitudes    

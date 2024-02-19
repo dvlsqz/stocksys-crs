@@ -270,7 +270,8 @@
                     'bodega_principal_eliminar' => 'Puede eliminar registros de la bodega principal.',
                     'bodega_principal_ingresos' => 'Puede registrar ingresos a la bodega principal.',    
                     'bodega_principal_egresos' => 'Puede registrar egresos a la bodega principal.',                      
-                    'bodega_principal_raciones' => 'Puede ver el listado de raciones.'
+                    'bodega_principal_solicitudes' => 'Puede ver el listado de solicitudes de socios.',
+                    'bodega_principal_movimientos' => 'Puede ver el historial de movimientos de la bodega.',
                 ]
             ],
             'bodegas_socios' => [

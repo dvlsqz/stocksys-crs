@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Bodega, App\Models\BodegaIngreso, App\Models\BodegaIngresoDetalle, App\Models\BodegaEgreso, App\Models\BodegaEgresoDetalle;
 use App\Models\PesoInsumo, App\Models\Insumo, App\Models\Institucion,App\Models\Solicitud, App\Models\SolicitudDetalles, App\Models\Bitacora, App\Models\SolicitudBodegaPrimaria;
 use Validator, Auth, Hash, Config, DB, Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BodegaSocioController extends Controller
 {
@@ -528,6 +529,20 @@ class BodegaSocioController extends Controller
 
         return view('admin.bodega.bodega_socio.solicitudes_insumos', $datos);
     }
+
+    public function getSolicitudesBodegaPrimariaPDF($id){
+        $solicitud = SolicitudBodegaPrimaria::findOrFail($id);
+        
+        $datos = [
+            'solicitud' => $solicitud
+        ];
+
+        $pdf = Pdf::loadView('admin.bodega.bodega_socio.solicitud_insumos_pdf', $datos)->setPaper('letter');
+     
+        return $pdf->stream();
+    }
+
+    
 
     public function getPlDisponiblesAlimento($id){
         $pls = BodegaIngresoDetalle::select('pl')

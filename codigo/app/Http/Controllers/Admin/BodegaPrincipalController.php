@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Bodega, App\Models\BodegaIngreso, App\Models\BodegaIngresoDetalle, App\Models\BodegaEgreso, App\Models\BodegaEgresoDetalle,App\Models\PesoInsumo, App\Models\Insumo, App\Models\Institucion;
-use App\Models\Bitacora, App\Models\SolicitudBodegaPrimaria;
+use App\Models\Bitacora, App\Models\SolicitudBodegaPrimaria, App\Models\SolicitudBodegaPrimariaDetalle;
 use Validator, Auth, Hash, Config, DB, Carbon\Carbon; 
 
 class BodegaPrincipalController extends Controller
@@ -197,6 +197,50 @@ class BodegaPrincipalController extends Controller
         endif;
     }
 
+    public function getMovimientosIngresos(){ 
+        $ingresos = BodegaIngreso::where('id_institucion',Auth::user()->id_institucion)->get();
+
+        $datos = [
+            'ingresos' => $ingresos
+        ];
+        
+        return view('admin.bodega.bodega_principal.movimientos.historial_ingresos' ,$datos);
+    }
+
+    public function getMovimientosIngresoDetalle($id){ 
+        $ingresos = BodegaIngreso::where('id_institucion',Auth::user()->id_institucion)->get();
+        $detalles = BodegaIngresoDetalle::where('id_ingreso', $id)->get();
+
+        $datos = [
+            'ingresos' => $ingresos,
+            'detalles' => $detalles
+        ];
+        
+        return view('admin.bodega.bodega_principal.movimientos.historial_ingresos_detalles' ,$datos);
+    }
+
+    public function getMovimientosEgresos(){ 
+        $egresos = BodegaEgreso::where('id_institucion',Auth::user()->id_institucion)->get();
+
+        $datos = [
+            'egresos' => $egresos
+        ];
+        
+        return view('admin.bodega.bodega_principal.movimientos.historial_egresos' ,$datos);
+    }
+
+    public function getMovimientosEgresoDetalle($id){ 
+        $egresos = BodegaEgreso::where('id_institucion',Auth::user()->id_institucion)->get();
+        $detalles = BodegaEgresoDetalle::where('id_egreso', $id)->get();
+
+        $datos = [
+            'egresos' => $egresos,
+            'detalles' => $detalles
+        ];
+        
+        return view('admin.bodega.bodega_principal.movimientos.historial_egresos_detalles' ,$datos);
+    }
+
     public function getSociosSolicitudes($idSocio){
         $solicitudes = SolicitudBodegaPrimaria::where('id_socio_solicitante', $idSocio)->get();
 
@@ -232,5 +276,29 @@ class BodegaPrincipalController extends Controller
             'saldo' => $saldo
         ];
         return response()->json($datos);
+    }
+
+    public function getSolicitudesSocios(){
+        $solicitudes = SolicitudBodegaPrimaria::where('id_bodega_primaria',Auth::user()->id_institucion )->get();
+        
+        $datos = [
+            'solicitudes' => $solicitudes 
+        ];
+
+        return view('admin.bodega.bodega_principal.solicitudes_socios', $datos);
+    }
+
+    public function getSolicitudeSocioDetalles($id){
+        $solicitudes = SolicitudBodegaPrimaria::where('id_bodega_primaria',Auth::user()->id_institucion )->get();
+        $solicitud = SolicitudBodegaPrimaria::findOrFail($id);
+        $detalles = SolicitudBodegaPrimariaDetalle::where('id_solicitud_bodega_primaria', $id)->get();
+        
+        $datos = [
+            'solicitudes' => $solicitudes,
+            'solicitud' => $solicitud,
+            'detalles' => $detalles 
+        ];
+
+        return view('admin.bodega.bodega_principal.solicitudes_socios_detalles', $datos);
     }
 }
