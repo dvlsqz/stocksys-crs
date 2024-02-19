@@ -818,13 +818,11 @@ class SolicitudController extends Controller
             ]);
         });
 
+        $deta[] = $detalles;
+
         //return $detalle_escuelas;
 
-
-
-        //return $detalle_alimentos;
-
-        $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->get();
+        $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->orderBy('id', 'Asc')->get();
         $solicitud = Solicitud::with(['entrega', 'usuario'])->where('id', $idSolicitud)->first();
         
         

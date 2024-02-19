@@ -76,7 +76,7 @@
                     <td>ESCUELA</td>
                     <td>Part.</td>
                     @foreach($alimentos as $a)
-                        <td>{{$a->nombre}}</td>
+                        <td>{{$a->id.'-'.$a->nombre}}</td>
                     @endforeach
                     <td>Quintales/escuela</td>
                     <td>TIPO</td>
@@ -84,7 +84,7 @@
                 </tr>
             </thead>
             <tbody style="border: 1px solid black; font-size: 10px;">
-                
+
                     @foreach($detalle_escuelas as $det)  
                         <tr>
                             <td> {{$det->escuela_codigo}} </td>
@@ -92,28 +92,19 @@
                             <td>  </td> 
                               
                             
-                            @foreach($alimentos as $a)
+                            
                                 
-                                    @php($d = 0)
-                                    @for($i =0; $i < count($detalles); $i++)                                        
-                                        @if($detalles[$d]["escuela_id"] == $det->escuela_id )
-                                           
-                                            @if($detalles[$d]["idracion"] == $det->idracion )
-                                           
-                                                @php($e = 0)
-                                                @for($i =0; $i< count($detalles[$d]["detalles_alimentos"]); $i++)
-                                                    
-                                                        @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)
-                                                            <td>{{$detalles[$d]["detalles_alimentos"][$e]["no_unidades"]}}</td>
-                                                            
-                                                        @endif  
-
-                                                    
-                                                                                        
-                                                    
-                                                @endfor
-
-                                                @if(count($detalles[$d]["detalles_alimentos"]) < $loop->count && $detalles[$d]["idracion"] == $det->idracion && $loop->last)
+                            @php($d = 0)
+                            @for($i =0; $i < count($detalles); $i++)                    
+                                @if($det->escuela_id  == $detalles[$d]["escuela_id"] && $det->idracion  == $detalles[$d]["idracion"]  )
+                                    @foreach($alimentos as $a)
+                                        @php($e = 0)
+                                        @for($j =0; $j< count($detalles[$d]["detalles_alimentos"]); $j++)
+                                            @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)
+                                                <td>{{$detalles[$d]["detalles_alimentos"][$e]["no_unidades"]}}</td>
+                                                
+                                            @endif  
+                                            @if(count($detalles[$d]["detalles_alimentos"]) < $loop->count && $detalles[$d]["idracion"] == $det->idracion && $loop->last)
                                                             @switch(count($detalles[$d]["detalles_alimentos"]))
                                                                 @case(1)
                                                                     @php($f = $e)
@@ -134,28 +125,32 @@
                                                             @endswitch
                                                             
                                                             @while(++$f < $loop->count)
-                                                                <td>0 = {{$f.'-'.$loop->count}}</td>
+                                                                <td>0 </td>
 
                                                             @endwhile
 
                                                 @endif
-                                                
-
-                                            
-                                            
+                                            @php($e++)
+                                        @endfor
 
                                         
-                                           @endif
-                                            
+                                    @endforeach
+                                    
+                                    
+                                @endif 
 
-                                            
-                                            
+                                    
+                                    
 
-                                        
-                                        @endif
-                                        @php($d++)
-                                    @endfor
-                            @endforeach   
+                                
+                                    
+
+                                    
+                                    
+
+                                
+                                @php($d++)
+                            @endfor  
                             
                             <td></td>
                             <td>{{$det->racion}} </td>
