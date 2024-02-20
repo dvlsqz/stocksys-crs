@@ -107,25 +107,25 @@
                                             @if(count($detalles[$d]["detalles_alimentos"]) < $loop->count && $detalles[$d]["idracion"] == $det->idracion && $loop->last)
                                                             @switch(count($detalles[$d]["detalles_alimentos"]))
                                                                 @case(1)
-                                                                    @php($f = $e)
+                                                                    @php($f = 0)
                                                                 @break
 
                                                                 @case(2)
-                                                                    @php($f = $e+1)
-                                                                @break
-
-                                                                @case(3)
-                                                                    @php($f = $e+2)
+                                                                    @php($f = 1)
                                                                 @break
 
                                                                 @case(4)
-                                                                    @php($f = $e+3)
+                                                                    @php($f = 3)
+                                                                @break
+
+                                                                
                                                                 @break
 
                                                             @endswitch
                                                             
                                                             @while(++$f < $loop->count)
-                                                                <td>0 </td>
+                                                                <td>0 -
+                                                                    {{$f}} </td>
 
                                                             @endwhile
 
