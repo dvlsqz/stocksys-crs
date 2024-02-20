@@ -10,6 +10,7 @@ use App\Models\Ruta, App\Models\RutaEscuela,  App\Models\RutaSolicitud,  App\Mod
 use App\Models\AlimentoRacion, App\Models\Usuario, App\Models\Bitacora, App\Models\SolicitudBodegaPrimaria, App\Models\SolicitudBodegaPrimariaDetalle;
 use DB, Validator, Auth, Hash, Config, Carbon\Carbon, Illuminate\Support\Arr;
 use App\Imports\SolicitudDetallesImport;
+use App\Exports\GuiaTerrestreExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -773,7 +774,7 @@ class SolicitudController extends Controller
 
     public function getSolicitudRutaConfirmadaPDF($idSolicitud, $idRuta){     
         
-        $idSolicitud = $idSolicitud;
+        /*$idSolicitud = $idSolicitud;
         $ruta = RutaSolicitud::with(['ruta_base', 'detalles'])->where('id',$idRuta)->first();
         
         $detalle_escuelas = DB::table('rutas_solicitudes_despachos as r')   
@@ -837,7 +838,14 @@ class SolicitudController extends Controller
 
         $pdf = Pdf::loadView('admin.solicitudes.boleta_ruta_confirmada_pdf', $datos)->setPaper('letter');
      
-        return $pdf->stream();
+        return $pdf->stream();*/
+
+        $data = [
+            'idSolicitud' => $idSolicitud,
+            'idRuta' => $idRuta
+        ];
+
+        return Excel::download(new GuiaTerrestreExport($data), 'Guia Terrestre .xlsx');
           
     }
 

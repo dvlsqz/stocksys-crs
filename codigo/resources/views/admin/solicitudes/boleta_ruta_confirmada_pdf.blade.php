@@ -96,48 +96,29 @@
                                 
                             @php($d = 0)
                             @for($i =0; $i < count($detalles); $i++)                    
-                                @if($det->escuela_id  == $detalles[$d]["escuela_id"] && $det->idracion  == $detalles[$d]["idracion"]  )
-                                    @foreach($alimentos as $a)
-                                        @php($e = 0)
-                                        @for($j =0; $j< count($detalles[$d]["detalles_alimentos"]); $j++)
-                                            @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)
-                                                <td>{{$detalles[$d]["detalles_alimentos"][$e]["no_unidades"]}}</td>
-                                                
-                                            @endif  
-                                            @if(count($detalles[$d]["detalles_alimentos"]) < $loop->count && $detalles[$d]["idracion"] == $det->idracion && $loop->last)
-                                                            @switch(count($detalles[$d]["detalles_alimentos"]))
-                                                                @case(1)
-                                                                    @php($f = 0)
-                                                                @break
+                                
+                            @if($det->escuela_id  == $detalles[$d]["escuela_id"] && $det->idracion  == $detalles[$d]["idracion"]  )
+                                    
+                                @foreach($alimentos as $a)
+                                    @php($e = 0)
+                                    
+                                    @for($j =0; $j< count($detalles[$d]["detalles_alimentos"]); $j++)
+                                        @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)
+                                            <td>{{$detalles[$d]["detalles_alimentos"][$e]["no_unidades"] }}</td>                                                
+                                        @endif                                             
+                                        @php($e++)
+                                    @endfor
 
-                                                                @case(2)
-                                                                    @php($f = 1)
-                                                                @break
-
-                                                                @case(4)
-                                                                    @php($f = 3)
-                                                                @break
-
-                                                                
-                                                                @break
-
-                                                            @endswitch
-                                                            
-                                                            @while(++$f < $loop->count)
-                                                                <td>0 -
-                                                                    {{$f}} </td>
-
-                                                            @endwhile
-
-                                                @endif
-                                            @php($e++)
-                                        @endfor
-
+                                    @if(count($detalles[$d]["detalles_alimentos"]) < $loop->count && $detalles[$d]["idracion"] == $det->idracion && $loop->last)
+                                        @php($f = $e)
+                                        @while(++$f <= $loop->count)
+                                            <td>0</td>
+                                        @endwhile
+                                    @endif                                            
                                         
-                                    @endforeach
+                                @endforeach                                    
                                     
-                                    
-                                @endif 
+                            @endif 
 
                                     
                                     
@@ -164,7 +145,7 @@
                     <td colspan="2">Total de unidades a enviar</td>
                     <td></td>
                     @foreach($alimentos as $a)                        
-                        <td>{{$a->nombre}}</td>
+                        <td></td>
                     @endforeach
                     <td></td>
                     <td></td>
@@ -175,7 +156,7 @@
     </div>
     <br>
 
-    <div style="display: flex; justify-content: center;">
+    <div style="display: inline-block; justify-item: center;">
         <table style="">
             <thead style=" border: 1px solid black; border-collapse: collapse;">
                 <tr>
@@ -191,7 +172,7 @@
                 <tr>
                     <td>ENTEROS</td>
                     @foreach($alimentos as $a)                        
-                        <td>{{$a->nombre}}</td>
+                        <td></td>
                     @endforeach
                     <td></td>
                     
@@ -199,7 +180,7 @@
                 <tr>
                 <td>PORCIONADOS</td>
                     @foreach($alimentos as $a)                        
-                        <td>{{$a->nombre}}</td>
+                        <td></td>
                     @endforeach
                     <td></td>
                     
