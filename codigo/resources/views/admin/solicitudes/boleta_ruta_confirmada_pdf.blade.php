@@ -57,7 +57,7 @@
             <b>Dirección de emisión: </b> <br>
             <b>Municipio de destino:</b> {{$ruta->ruta_base->ubicacion->nombre}}<br>
             <b>Placa del vehículo: </b> {{ $ruta->placa_vehiculo }} <br>
-            <b>Tipo de vehículo: </b> {{ $ruta->tipo_vehiculo }}<br>  
+            <b>Tipo de vehículo: </b> {{ $ruta->tipo_vehiculo }}<br>   
         </div>
     </div>
     <br>

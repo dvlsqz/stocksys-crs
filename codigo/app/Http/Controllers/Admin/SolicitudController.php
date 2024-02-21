@@ -774,7 +774,7 @@ class SolicitudController extends Controller
 
     public function getSolicitudRutaConfirmadaPDF($idSolicitud, $idRuta){     
         
-        /*$idSolicitud = $idSolicitud;
+        $idSolicitud = $idSolicitud;
         $ruta = RutaSolicitud::with(['ruta_base', 'detalles'])->where('id',$idRuta)->first();
         
         $detalle_escuelas = DB::table('rutas_solicitudes_despachos as r')   
@@ -838,14 +838,16 @@ class SolicitudController extends Controller
 
         $pdf = Pdf::loadView('admin.solicitudes.boleta_ruta_confirmada_pdf', $datos)->setPaper('letter');
      
-        return $pdf->stream();*/
+        return $pdf->stream();
 
-        $data = [
+        /*$data = [
             'idSolicitud' => $idSolicitud,
             'idRuta' => $idRuta
         ];
 
         return Excel::download(new GuiaTerrestreExport($data), 'Guia Terrestre .xlsx');
+        return Excel::download(new GuiaTerrestreExport($data), 'Guia Terrestre .pdf', \Maatwebsite\Excel\Excel::DOMPDF);*/
+
           
     }
 
