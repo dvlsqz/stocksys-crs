@@ -9,7 +9,22 @@
         border: 1px solid black;
         border-collapse: collapse;
         }
+
+        #footer {
+            position: fixed;
+            left: 20px;
+            bottom: 0;
+            text-align: center;
+        }
+
+        .page-number:after { content: counter(page); }
+
+    
+
+
     </style>
+    
+
 
 </head>
 <body>
@@ -76,7 +91,7 @@
                     <td>ESCUELA</td>
                     <td>Part.</td>
                     @foreach($alimentos as $a)
-                        <td>{{$a->id.'-'.$a->nombre}}</td>
+                        <td>{{$a->nombre}}</td>
                     @endforeach
                     <td>Quintales/escuela</td>
                     <td>TIPO</td>
@@ -109,12 +124,7 @@
                                         @php($e++)
                                     @endfor
 
-                                    @if(count($detalles[$d]["detalles_alimentos"]) < $loop->count && $detalles[$d]["idracion"] == $det->idracion && $loop->last)
-                                        @php($f = $e)
-                                        @while(++$f <= $loop->count)
-                                            <td>0</td>
-                                        @endwhile
-                                    @endif                                            
+                                                                  
                                         
                                 @endforeach                                    
                                     
@@ -144,8 +154,12 @@
                 <tr>
                     <td colspan="2">Total de unidades a enviar</td>
                     <td></td>
-                    @foreach($alimentos as $a)                        
-                        <td></td>
+                    @foreach($alimentos as $a)       
+                        @foreach($totales_alimentos as $t)
+                        @if($a->id == $t->insumo)                 
+                            <td>{{$t->total_insumo}}</td>
+                        @endif
+                        @endforeach
                     @endforeach
                     <td></td>
                     <td></td>
@@ -188,6 +202,10 @@
 
             </tbody>
         </table>
+    </div>
+
+    <div id="footer">
+        <span class="page-number">Pagina <script type="text/php">echo $PAGE_NUM</script></span>
     </div>
 
 

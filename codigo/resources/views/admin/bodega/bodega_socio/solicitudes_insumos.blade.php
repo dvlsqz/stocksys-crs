@@ -33,7 +33,7 @@
                                 <tr>
                                     <td>{{$s->fecha}}</td>
                                     <td>{{$s->bodega_primaria->nombre}} </td>
-                                    <td>{{$s->estado}}</td>
+                                    <td>{{obtenerEstadoSolicitud(null,$s->estado)}}</td>
                                                                        
                                     <td> <a href="{{ url('/admin/bodega_socio/solicitudes_bodega_principal/'.$s->id.'/imprimir') }}" target="_blank" class="btn btn-sm btn-info"><i class="fa-solid fa-print"></i> Imprimir Hoja</a></td>
                                     

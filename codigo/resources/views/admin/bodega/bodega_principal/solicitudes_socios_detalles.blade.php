@@ -26,17 +26,27 @@
                                 <td><strong> SOCIO </strong></td>
                                 <td><strong> ESTADO</strong></td>
                                 <td><strong> VER</strong></td>
+                                <td><strong> OPCIONES</strong></td>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($solicitudes as $s)
                                 <tr>
                                     <td>{{$s->fecha}}</td>
-                                    <td>{{$s->id_socio_solicitante}} </td>
-                                    <td>{{$s->estado}}</td>
+                                    <td>{{$s->socio->nombre}} </td>
+                                    <td>{{obtenerEstadoSolicitud(null,$s->estado)}}</td>
                                     <td width="240px">
                                         <div class="opts">
                                             <a class="btn btn-outline-info" href="{{ url('/admin/bodega_principal/solicitudes_socios/'.$s->id.'/detalles') }}" ><i class="fa-solid fa-eye"></i> Ver Detalles</a>
+                                            
+                                        </div>
+                                    </td>
+                                    <td width="240px">
+                                        <div class="opts">
+                                            @if($s->estado == 1)
+                                                <a href="#" data-action="aceptar" data-path="admin/bodega_principal/solicitudes_socios" data-object="{{ $s->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Aceptar" ><i class="fa-regular fa-circle-check"></i></a> 
+                                                <a href="#" data-action="rechazar" data-path="admin/bodega_principal/solicitudes_socios" data-object="{{ $s->id }}" class="btn-eliminar" data-toogle="tooltrip" data-placement="top" title="Rechazar" ><i class="fa-regular fa-circle-xmark"></i></a> 
+                                            @endif   
                                             
                                         </div>
                                     </td>

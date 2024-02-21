@@ -245,6 +245,7 @@ class BodegaSocioController extends Controller
     	if($validator->fails()):
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
+            $alimentos = Bodega::whereNotIn('id', $request->get('idinsumo'))->where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->orderBy('id', 'Asc')->get();
             DB::beginTransaction();
 
                 $be = new BodegaEgreso;
@@ -273,6 +274,15 @@ class BodegaSocioController extends Controller
                     $detalle->save();
                     $cont=$cont+1;
                 }
+
+                foreach($alimentos as $a):
+                    $detalle=new BodegaEgresoDetalle();
+                    $detalle->id_egreso = $be->id;
+                    $detalle->id_insumo = $a->id;
+                    $detalle->pl = 0;
+                    $detalle->no_unidades = 0;
+                    $detalle->save();
+                endforeach;
 
             DB::commit();
 
@@ -312,6 +322,7 @@ class BodegaSocioController extends Controller
     	if($validator->fails()):
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
+            
             DB::beginTransaction();
 
                 $be = new BodegaEgreso;
@@ -329,15 +340,23 @@ class BodegaSocioController extends Controller
                 $idinsumo=$request->get('idinsumo');
                 $no_unidades=$request->get('no_unidades');
                 $cont=0;
+                
+                while ($cont<count($idinsumo)):
+                    
 
-                while ($cont<count($idinsumo)) {
                     $detalle=new BodegaEgresoDetalle();
                     $detalle->id_egreso = $be->id;
                     $detalle->id_insumo = $idinsumo[$cont];
                     $detalle->no_unidades = $no_unidades[$cont];
                     $detalle->save();
+                    
                     $cont=$cont+1;
-                }
+                endwhile;
+
+                
+                
+
+                
 
             DB::commit();
 

@@ -373,6 +373,47 @@ function delete_object(e){
                 window.location.href =url1+'/egresos';
             }
         });
+    }else if(action == "aceptar"){
+        title = "¿Esta seguro de aceptar la solicitud de insumo de socios?";
+        text = "Si acepta podra utilizar la solicitud para realizar despachos al socio ";
+        icon = "warning";
+    
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#22B81C',
+            cancelButtonColor: '#CC2D04',
+        }).then((result) =>{
+            if (result.isConfirmed) {
+                //console.log(url);
+                window.location.href = url;
+            }
+        });
+    }
+    else if(action == "rechazar"){
+        title = "¿Esta seguro de rechazar la solicitud de insumo de socios?";
+        text = "Si rechaza no podra utilizar la solicitud para realizar despachos al socio ";
+        icon = "warning";
+    
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: true,
+            confirmButtonText: 'Rechazar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#22B81C',
+            cancelButtonColor: '#CC2D04',
+        }).then((result) =>{
+            if (result.isConfirmed) {
+                //console.log(url);
+                window.location.href = url;
+            }
+        });
     }
 
 
@@ -464,7 +505,7 @@ function obtenerSociosSolicitudes(){
 
             if('solicitudes' in data){ 
                 for(i=0; i<data.solicitudes.length; i++){
-                    select.innerHTML += "<option value=\""+data.solicitudes[i].id+"\" selected>"+data.solicitudes[i].fecha+"</option>";
+                    select.innerHTML += "<option value=\""+data.solicitudes[i].id+"\" selected>"+"No."+data.solicitudes[i].id+"- Fecha: "+data.solicitudes[i].fecha+"</option>";
                 }
 
             }

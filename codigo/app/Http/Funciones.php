@@ -75,6 +75,21 @@
         endif;
     }
 
+    function obtenerEstadoSolicitud($modo, $id){
+        $estado = [
+            '1'=>'Registrada y Enviada Digitalmente',
+            '2'=>'Aceptada',
+            '3'=>'Rechazada'
+        ];
+
+        
+        if(!is_null($modo)):
+            return $estado;
+        else:
+            return $estado[$id];
+        endif;
+    }
+
     function obtenerUnidadesMedidaInsumos($modo, $id){
         $ti = [
             '0' => 'Kilogramos por unidad (Caneca/Saco)',

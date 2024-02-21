@@ -132,6 +132,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'UserStatus', 'Perm
     Route::get('/bodega_principal/insumo/{id}/eliminar', [BodegaPrincipalController::class, 'getInsumoEliminar'])->name('bodega_principal_eliminar');
     Route::get('/bodega_principal/solicitudes_socios', [BodegaPrincipalController::class, 'getSolicitudesSocios'])->name('bodega_principal_solicitudes');
     Route::get('/bodega_principal/solicitudes_socios/{id}/detalles', [BodegaPrincipalController::class, 'getSolicitudeSocioDetalles'])->name('bodega_principal_solicitudes');
+    Route::get('/bodega_principal/solicitudes_socios/{id}/aceptar', [BodegaPrincipalController::class, 'getAceptarSolicitudSocio'])->name('bodega_principal_solicitudes');
+    Route::get('/bodega_principal/solicitudes_socios/{id}/rechazar', [BodegaPrincipalController::class, 'getRechazarSolicitudSocio'])->name('bodega_principal_solicitudes');
     Route::get('/bodega_principal/insumo/movimientos/ingresos', [BodegaPrincipalController::class, 'getMovimientosIngresos'])->name('bodega_principal_movimientos');
     Route::get('/bodega_principal/insumo/movimientos/egresos', [BodegaPrincipalController::class, 'getMovimientosEgresos'])->name('bodega_principal_movimientos');
     Route::get('/bodega_principal/insumo/movimientos/ingresos/detalles/{id}', [BodegaPrincipalController::class, 'getMovimientosIngresoDetalle'])->name('bodega_principal_movimientos');

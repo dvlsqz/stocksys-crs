@@ -795,6 +795,22 @@ class SolicitudController extends Controller
             ->where('r.id_solicitud_despacho', $idSolicitud)       
             ->orderby('e.id', 'ASC')  
             ->get();
+
+        $totales_alimentos = DB::table('rutas_solicitudes_despachos as r')   
+            ->select(
+                'bdet.id_insumo as insumo',
+                DB::RAW('SUM(bdet.no_unidades) as total_insumo')
+            )         
+            ->join('rutas_solicitudes_despachos_detalles as rdet', 'rdet.id_ruta_despacho', 'r.id')
+            ->join('escuelas as e', 'e.id', 'rdet.id_escuela')
+            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'rdet.id_escuela')
+            ->join('bodegas_egresos_detalles as bdet', 'bdet.id_egreso', 'be.id')
+            ->where('r.id', $idRuta)
+            ->where('r.id_solicitud_despacho', $idSolicitud)       
+            ->groupBy('bdet.id_insumo')  
+            ->get();
+
+        
         
         $detalles = $detalle_escuelas->map(function ($detalle_escuelas){
             $detalles_alimentos = DB::table('bodegas_egresos_detalles as det')   
@@ -833,6 +849,7 @@ class SolicitudController extends Controller
             'detalle_escuelas' => $detalle_escuelas,
             'detalles' => $detalles,
             'alimentos' => $alimentos,
+            'totales_alimentos' => $totales_alimentos,
             'solicitud' => $solicitud
         ];
 
@@ -1163,6 +1180,7 @@ class SolicitudController extends Controller
                 $s->fecha = Carbon::now()->format('Y-m-d');
                 $s->id_bodega_primaria = $request->input('id_bodega_primaria');
                 $s->id_socio_solicitante = Auth::user()->id_institucion;
+                $s->estado = 1;
                 $s->id_institucion = Auth::user()->id_institucion;
                 $s->save();
 
@@ -1175,8 +1193,8 @@ class SolicitudController extends Controller
                     $detalle=new SolicitudBodegaPrimariaDetalle();
                     $detalle->id_solicitud_bodega_primaria = $s->id;
                     $detalle->id_insumo_bodega_socio = $idinsumo[$cont];
-                    $insumoBodegaSocioNombre = Bodega::where('id',$idinsumo[$cont])->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->first();                    
-                    $insumoIDBPrimaria = Bodega::where('nombre',$insumoBodegaSocioNombre->nombre)->where('tipo_bodega',0)->where('id_institucion', Auth::user()->id_institucion)->first();
+                    $insumoBodegaSocioNombre = Bodega::where('id',$idinsumo[$cont])->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->first();                
+                    $insumoIDBPrimaria = Bodega::where('nombre',$insumoBodegaSocioNombre->nombre)->where('tipo_bodega',0)->where('id_institucion', $s->id_bodega_primaria)->first();
                     $detalle->id_insumo_bodega_primaria = $insumoIDBPrimaria->id;
                     $detalle->no_unidades = $cantidad[$cont];
                     $detalle->id_unidad_medida = $idmedida[$cont];

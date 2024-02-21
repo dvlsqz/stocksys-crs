@@ -242,7 +242,7 @@ class BodegaPrincipalController extends Controller
     }
 
     public function getSociosSolicitudes($idSocio){
-        $solicitudes = SolicitudBodegaPrimaria::where('id_socio_solicitante', $idSocio)->get();
+        $solicitudes = SolicitudBodegaPrimaria::where('id_socio_solicitante', $idSocio)->where('estado', 2)->get();
 
         $datos = [
             'solicitudes' => $solicitudes
@@ -300,5 +300,36 @@ class BodegaPrincipalController extends Controller
         ];
 
         return view('admin.bodega.bodega_principal.solicitudes_socios_detalles', $datos);
+    }
+
+    public function getAceptarSolicitudSocio($id){
+        $solicitud = SolicitudBodegaPrimaria::findOrFail($id);
+        $solicitud->estado = 2;
+
+        if($solicitud->save()):
+            $b = new Bitacora;
+            $b->accion = 'Actualizacion de estado \'Aceptar\' de solicitud de insumos de socio No. '.$solicitud->id;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Solicitud actualizada con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
+        
+    }
+
+    public function getRechazarSolicitudSocio($id){
+        $solicitud = SolicitudBodegaPrimaria::findOrFail($id);
+        $solicitud->estado = 3;
+
+        if($solicitud->save()):
+            $b = new Bitacora;
+            $b->accion = 'Actualizacion de estado \'Rechazar\' de solicitud de insumos de socio No. '.$solicitud->id;
+            $b->id_usuario = Auth::id();
+            $b->save();
+
+            return back()->with('messages', '¡Solicitud actualizada con exito!.')
+                    ->with('typealert', 'warning');
+        endif;
     }
 }
