@@ -101,6 +101,7 @@
             <tbody style="border: 1px solid black; font-size: 10px;">
 
                     @foreach($detalle_escuelas as $det)  
+
                         <tr>
                             <td> {{$det->escuela_codigo}} </td>
                             <td> {{$det->escuela_nombre}} </td>
@@ -111,15 +112,21 @@
                                 
                             @php($d = 0)
                             @for($i =0; $i < count($detalles); $i++)                    
-                                
+                            
                             @if($det->escuela_id  == $detalles[$d]["escuela_id"] && $det->idracion  == $detalles[$d]["idracion"]  )
-                                    
+                            @php($total_quintales = 0)
                                 @foreach($alimentos as $a)
                                     @php($e = 0)
                                     
                                     @for($j =0; $j< count($detalles[$d]["detalles_alimentos"]); $j++)
                                         @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)
-                                            <td>{{$detalles[$d]["detalles_alimentos"][$e]["no_unidades"] }}</td>                                                
+                                            <td>{{$detalles[$d]["detalles_alimentos"][$e]["no_unidades"] }}</td>       
+                                            
+                                            @if($a->nombre == "Arroz" || $a->nombre == "arroz")
+                                                @php($total_quintales = $total_quintales + ($detalles[$d]["detalles_alimentos"][$e]["no_unidades"]))    
+                                            @else
+                                                @php($total_quintales = $total_quintales + $detalles[$d]["detalles_alimentos"][$e]["no_unidades"])    
+                                            @endif                                
                                         @endif                                             
                                         @php($e++)
                                     @endfor
@@ -143,7 +150,7 @@
                                 @php($d++)
                             @endfor  
                             
-                            <td></td>
+                            <td style="background-color: #96D4D4;">{{ $total_quintales }}</td>
                             <td>{{$det->racion}} </td>
                             <td></td>
                         </tr>
@@ -155,13 +162,25 @@
                     <td colspan="2">Total de unidades a enviar</td>
                     <td></td>
                     @foreach($alimentos as $a)       
+                    @php($totales = 0)
                         @foreach($totales_alimentos as $t)
+                        
                         @if($a->id == $t->insumo)                 
-                            <td>{{$t->total_insumo}}</td>
+                            <td>{{$t->total_insumo}}</td>    
+                                                 
+                            
                         @endif
+
+                        @if($a->nombre == "Arroz" || $a->nombre == "arroz")
+                            @php($totales = $totales + ($t->total_insumo))
+                        @else
+                            @php($totales = $totales + $t->total_insumo)
+                        @endif  
+                        
+                        
                         @endforeach
                     @endforeach
-                    <td></td>
+                    <td>{{ $totales }}</td>
                     <td></td>
                     <td></td>
                 </tr>

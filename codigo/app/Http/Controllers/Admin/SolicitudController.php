@@ -698,6 +698,9 @@ class SolicitudController extends Controller
     public function getSolicitudRutasConfirmadas($id){
         $idSolicitud = $id;
         $rutas = RutaSolicitud::with('ruta_base')->where('id_solicitud_despacho',$id)->get();
+        $raciones = Racion::select('id')->where('id_institucion', Auth::user()->id_institucion)->get();
+
+        
         $detalle_escuelas = DB::table('solicitud_detalles')
             ->select(
                 DB::raw('escuelas.id as escuela_id'),
@@ -706,16 +709,16 @@ class SolicitudController extends Controller
             )
             ->join('escuelas', 'escuelas.id', 'solicitud_detalles.id_escuela')
             ->join(DB::RAW("(SELECT id_racion, SUM(cantidad) as peso FROM alimentos_raciones GROUP BY id_racion) as alimentos_racion"), function($j){
-                $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos");
+                $j->on("alimentos_racion.id_racion","=","solicitud_detalles.tipo_de_actividad_alimentos"); 
             })
-            ->where('solicitud_detalles.id_solicitud', $id)            
-            ->where('solicitud_detalles.deleted_at', null)
-            ->whereIn('solicitud_detalles.tipo_de_actividad_alimentos', [1,2,3])
+            ->where('solicitud_detalles.id_solicitud', $id) 
+            ->whereIn('solicitud_detalles.tipo_de_actividad_alimentos', $raciones)
             ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos','alimentos_racion.peso')
             ->get();
 
 
-        
+
+        //return $detalle_escuelas;
 
         $datos = [
             'rutas' => $rutas,
@@ -837,7 +840,7 @@ class SolicitudController extends Controller
 
         $deta[] = $detalles;
 
-        //return $detalle_escuelas;
+
 
         $alimentos = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->orderBy('id', 'Asc')->get();
         $solicitud = Solicitud::with(['entrega', 'usuario'])->where('id', $idSolicitud)->first();
@@ -849,7 +852,7 @@ class SolicitudController extends Controller
             'detalle_escuelas' => $detalle_escuelas,
             'detalles' => $detalles,
             'alimentos' => $alimentos,
-            'totales_alimentos' => $totales_alimentos,
+            'totales_alimentos' => $totales_alimentos, 
             'solicitud' => $solicitud
         ];
 
@@ -857,13 +860,6 @@ class SolicitudController extends Controller
      
         return $pdf->stream();
 
-        /*$data = [
-            'idSolicitud' => $idSolicitud,
-            'idRuta' => $idRuta
-        ];
-
-        return Excel::download(new GuiaTerrestreExport($data), 'Guia Terrestre .xlsx');
-        return Excel::download(new GuiaTerrestreExport($data), 'Guia Terrestre .pdf', \Maatwebsite\Excel\Excel::DOMPDF);*/
 
           
     }
