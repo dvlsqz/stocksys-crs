@@ -786,6 +786,7 @@ class SolicitudController extends Controller
                 'e.codigo as escuela_codigo',
                 'e.nombre as escuela_nombre',
                 'be.id as egreso',
+                'be.participantes as participantes',
                 'ra.id as idracion',
                 'ra.nombre as racion',
 
@@ -890,7 +891,7 @@ class SolicitudController extends Controller
     }
 
     public function getEscuelasDespacho($id_solicitud){
-        $escuelas = SolicitudDetalles::with('escuela')->select('id_escuela')->where('id_solicitud', $id_solicitud)->groupBy('id_escuela')->get();
+        $escuelas = SolicitudDetalles::with('escuela')->select('id_escuela')->where('id_solicitud', $id_solicitud)->groupBy('id_escuela')->orderBy('id_escuela')->get();
 
         $datos = [
             'escuelas' => $escuelas
@@ -1139,6 +1140,8 @@ class SolicitudController extends Controller
             ->get();
 
         $bodegas = Institucion::where('nivel', 2)->pluck('nombre','id');
+
+        $raciones = Racion::select('id','tipo_alimentos')->where('id_institucion', Auth::user()->id_institucion)->get();
         
 
         $datos = [
@@ -1153,6 +1156,7 @@ class SolicitudController extends Controller
             'det_escuelas_v_d' => $det_escuelas_v_d,
             'alimentos' => $alimentos,
             'bodegas' => $bodegas,
+            'raciones' => $raciones,
         ];
 
         return view('admin.solicitudes.solicitud_bodega',$datos);
@@ -1171,7 +1175,15 @@ class SolicitudController extends Controller
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
             DB::beginTransaction();
-
+                $tipo_alimentacion = $request->input('tipo_racion');
+                $total_raciones = SolicitudDetalles::select(DB::RAW('SUM(DISTINCT dias_de_solicitud) * SUM(total_de_personas) as total'))->where('tipo_de_actividad_alimentos', $tipo_alimentacion)->get();
+                $total_estudiantes = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_estudiantes');
+                $total_raciones_estudiantes = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_raciones_de_estudiantes');
+                $total_docentes_voluntarios = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_docentes_y_voluntarios');
+                $total_raciones_docentes_voluntarios = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_raciones_de_docentes_y_voluntarios');
+                $total_personas = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_personas');
+                $total_raciones = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_raciones');
+                return $total_raciones;
                 $s = new SolicitudBodegaPrimaria;
                 $s->fecha = Carbon::now()->format('Y-m-d');
                 $s->id_bodega_primaria = $request->input('id_bodega_primaria');

@@ -248,6 +248,13 @@ class BodegaSocioController extends Controller
             $alimentos = Bodega::whereNotIn('id', $request->get('idinsumo'))->where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->orderBy('id', 'Asc')->get();
             DB::beginTransaction();
 
+                $participantes = SolicitudDetalles::select(DB::RAW('SUM(total_de_personas) as total'))->where('id_solicitud', $request->input('id_solicitud'))
+                    ->where('id_escuela', $request->input('id_escuela'))
+                    ->where('tipo_de_actividad_alimentos', $request->input('tipo_racion'))
+                    ->first();
+                
+                //return $participantes;
+
                 $be = new BodegaEgreso;
                 $be->fecha = $request->input('fecha_egreso');
                 $be->tipo_documento = $request->input('tipo_documento');
@@ -256,6 +263,7 @@ class BodegaSocioController extends Controller
                 $be->id_escuela_despacho = $request->input('id_escuela');
                 $be->tipo_racion = $request->input('tipo_racion');
                 $be->destino = $request->input('destino');
+                $be->participantes = $participantes->total;
                 $be->tipo_bodega = 1;
                 $be->id_institucion = Auth::user()->id_institucion;
                 $be->save();

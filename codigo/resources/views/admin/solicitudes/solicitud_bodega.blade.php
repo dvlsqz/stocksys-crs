@@ -211,6 +211,19 @@
                                 </div>
 
                                 <div class="col-md-12 mtop16">
+                                    <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Tipo de Ración: </strong></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>
+                                        <select name="tipo_racion" id="tipo_racion" style="width: 92%" >
+                                            @foreach($raciones as $r)
+                                                <option value=""></option>
+                                                <option value="{{ $r->id }}">{{ $r->tipo_alimentos }}</option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mtop16">
                                     <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Insumo: </strong></label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-layer-group"></i></span>

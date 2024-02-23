@@ -99,13 +99,16 @@
                 </tr>
             </thead>
             <tbody style="border: 1px solid black; font-size: 10px;">
-
+                    @php($total_participantes = 0)
                     @foreach($detalle_escuelas as $det)  
 
                         <tr>
                             <td> {{$det->escuela_codigo}} </td>
                             <td> {{$det->escuela_nombre}} </td>
-                            <td>  </td> 
+                            <td> 
+                                {{$det->participantes}}
+                                @php($total_participantes = $total_participantes + $det->participantes)
+                            </td> 
                               
                             
                             
@@ -160,7 +163,7 @@
             <tfoot style="background-color: #96D4D4; border: 1px solid black; border-collapse: collapse;">
                 <tr>
                     <td colspan="2">Total de unidades a enviar</td>
-                    <td></td>
+                    <td>{{ $total_participantes }}</td>
                     @foreach($alimentos as $a)       
                     @php($totales = 0)
                         @foreach($totales_alimentos as $t)
