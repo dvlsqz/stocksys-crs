@@ -2,98 +2,85 @@
 <head>
     <style>
         @page {
+            size: 140mm 216mm landscape;
+            height: 216mm;
+            width: 140mm;
             margin: 0;
-            padding: 0;
-            size: Letter landscape;
         }
+
         @media print {
-  html, body {
-    width: 8.5in;
-            height: 5.5in;
-  }
-}
+            @page {
+                size: 140mm 216mm;
+            }
+        }
+
+
+        html {
+            width: 140mm;
+            height: 216mm;
+            margin: 0;
+        }
 
         body {
-            overflow: auto;
-            position: relative;
+            width: 140mm;
+            height: 216mm;
             margin: 0;
             padding: 0;
-            border: 0;
-            display: flex;
-        }
-        .page {
-            overflow: hidden;
-            position: relative;
-            width: 8.5in;
-            height: 5.5in;
-            page-break-after: auto;
-        }
-        .widget {
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            width: calc(8.5in / 2);
-            height: 5.5in;
-        }
-        .widgetScaled {
-            opacity: 0.6;
-            position: absolute;
-            left: calc(8.5in / 2);
-            top: 0px;
-            width: calc(8.5in * 2);
-            height: calc(5.5in * 2);
-            transform-origin: 0px 0px;
-            transform: scale(1);
-        }
-        .title {
-            font-size: 96px;
+            width: 100%;
         }
     </style>
 </head>
-<body>
-<div class="page">
-@foreach($despachos as $d)
-        <div style="float: right; margin-top: 80px; margin-right: -50px;  width: 250px; height: 10px; font-size: 12px;" >
-            {{ $d->escuela->codigo}}           
-        </div>
-        <div style="float: right; margin-top: 95px; margin-right: -275px;  width: 250px; height: 10px; font-size: 12px;" >
-            {{ $d->racion->nombre}}           
-        </div>
-        <div style="float: right; margin-top: 127px; margin-right: -130px;  width: 100px; height: 10px; font-size: 12px;" >
-            {{ obtenerMeses(null, $d->solicitud->entrega->mes_inicial).' - '.obtenerMeses(null, $d->solicitud->entrega->mes_final).' '.$d->solicitud->entrega->year}}           
-        </div>
-        <div style="float: left; margin-top: 127px; margin-left: 175px;  width: 250px; height: 10px; font-size: 12px;" >
+<body style="background-image: url('/static/imagenes/crs_1.png'); ">
+    @foreach($despachos as $d)
+        
+
+        <div style="position: relative; top: 31.8mm; left: 48mm;  width: 250px; height: 10px; font-size: 12px;" >
             {{ $d->escuela->nombre}}           
         </div>
-        <div style="float: left; margin-top: 145px; margin-left: -300px;  width: 250px; height: 10px; font-size: 12px;" >
+
+        <div style="position: relative; top: 33.8mm; left: 35.6mm;  width: 250px; height: 10px; font-size: 12px;" >
             {{ $d->escuela->director }}  
         </div>
-        <div style="float: right; margin-top: 175px; margin-right: -225px;  width: 250px; height: 10px; font-size: 12px;" >
+
+        <div style="position: relative; top: 21.3mm; left: 153.2mm;  width: 250px; height: 10px; font-size: 12px;" >
+            {{ $d->escuela->codigo}}           
+        </div>
+
+        <div style="position: relative; top: 21.2mm; left: 156mm;  width: 250px; height: 10px; font-size: 12px;">
+            {{ $d->racion->nombre}}           
+        </div>
+
+        <div style="position: relative; top: 34mm; left: 156mm;  width: 250px; height: 10px; font-size: 12px;" >
             {{ $d->escuela->ubicacion->nombre}}           
         </div>
-        <div style="float: right; margin-top: 195px; margin-right: -225px;  width: 250px; height: 10px; font-size: 12px;" >
+
+        <div style="position: relative; top: 38mm; left: 150mm;  width: 250px; height: 10px; font-size: 12px;"  >
             {{ $d->escuela->ruta_asignada->ruta->ubicacion->nomenclatura.'0'.$d->escuela->ruta_asignada->ruta->correlativo }}           
         </div>
 
-        <div style="float: left; margin-top: 270px; margin-left: -250px;  width: 500px; height: 10px; font-size: 12px;" >
-            @foreach($d->detalles as $det)
+        @foreach($d->detalles as $det)
+            <div style="position: relative; top: 47mm; left: 17mm;  width: 250px; height: 10px; font-size: 12px;" >
+                {{ $det->alimento_bodega_socio->nombre}} 
+            </div>
                 
-                    {{ $det->alimento_bodega_socio->nombre}} 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ $det->pl}}  
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ $det->no_unidades}}     
-                    <br>       
-                
-            @endforeach        
+            <div style="position: relative; top: 47mm; left: 90mm;  width: 250px; height: 10px; font-size: 12px;" >  
+                {{ $det->pl}}  
+            </div>
+
+            <div style="position: relative; top: 47mm; left: 171mm;  width: 250px; height: 10px; font-size: 12px;" >
+                {{ $det->no_unidades}}    
+            </div> 
+            
+        @endforeach        
+
+        <div style="position: relative; top: 101mm; left: 150mm;  width: 250px; height: 10px; font-size: 12px;"  >
+            {{ $d->escuela->ruta_asignada->ruta->ubicacion->nomenclatura.'0'.$d->escuela->ruta_asignada->ruta->correlativo }}           
         </div>
+        
+        
     @endforeach
+    
    
-</div>
+
 </body>
 </html>

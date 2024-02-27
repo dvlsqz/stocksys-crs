@@ -332,8 +332,7 @@ class SolicitudController extends Controller
         $ancho = 612; //8 1/2 
         $largo = 396; //5 1/2 
         $customPaper = array(0,0,$largo,$ancho);
-        $pdf = Pdf::loadView('admin.solicitudes.boletas_despacho.pdf', $datos)
-        ->setPaper(array(0,0,612.00,396.00), 'portrait')->setWarnings(true);
+        $pdf = Pdf::loadView('admin.solicitudes.boletas_despacho.pdf', $datos);
      
         return $pdf->stream();
         
