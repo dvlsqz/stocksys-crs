@@ -143,8 +143,7 @@
         $ob = [
             '0' => 'Estudiantes',
             '1' => 'Lideres',
-            '2' => 'Voluntarios',
-            '3' => 'Docentes',
+            '2' => 'Docentes y Voluntarios',
         ];
 
         if(!is_null($modo)):

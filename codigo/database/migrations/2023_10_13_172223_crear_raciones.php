@@ -22,7 +22,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT raciones ON');
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT raciones ON');
         DB::table('raciones')->insert(array(
             'id'=>'1',
             'nombre'=>'Escolar',
@@ -49,7 +49,7 @@ return new class extends Migration
             'tipo_bodega'=>'1' ,
             'id_institucion'=>'1'          
         ));
-        //DB::unprepared('SELECT 1; SET IDENTITY_INSERT raciones OFF');
+        DB::unprepared('SELECT 1; SET IDENTITY_INSERT raciones OFF');
     }
 
     /**

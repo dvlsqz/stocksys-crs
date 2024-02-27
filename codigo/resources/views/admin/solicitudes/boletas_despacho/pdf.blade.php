@@ -1,16 +1,58 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        @page {
+            margin: 0;
+            padding: 0;
+            size: Letter landscape;
+        }
+        @media print {
+  html, body {
+    width: 8.5in;
+            height: 5.5in;
+  }
+}
 
+        body {
+            overflow: auto;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            display: flex;
+        }
+        .page {
+            overflow: hidden;
+            position: relative;
+            width: 8.5in;
+            height: 5.5in;
+            page-break-after: auto;
+        }
+        .widget {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: calc(8.5in / 2);
+            height: 5.5in;
+        }
+        .widgetScaled {
+            opacity: 0.6;
+            position: absolute;
+            left: calc(8.5in / 2);
+            top: 0px;
+            width: calc(8.5in * 2);
+            height: calc(5.5in * 2);
+            transform-origin: 0px 0px;
+            transform: scale(1);
+        }
+        .title {
+            font-size: 96px;
+        }
+    </style>
 </head>
-<!--
-<body style="background-image: url({{ url('/static/imagenes/medidas_boleta.jpg') }} );   background-repeat: no-repeat; background-attachment: fixed;  background-size: 100% 100%;  background-position: center center; margin-top: -34;">
--->
 <body>
-    @foreach($despachos as $d)
+<div class="page">
+@foreach($despachos as $d)
         <div style="float: right; margin-top: 80px; margin-right: -50px;  width: 250px; height: 10px; font-size: 12px;" >
             {{ $d->escuela->codigo}}           
         </div>
@@ -51,7 +93,7 @@
             @endforeach        
         </div>
     @endforeach
-
-
+   
+</div>
 </body>
 </html>

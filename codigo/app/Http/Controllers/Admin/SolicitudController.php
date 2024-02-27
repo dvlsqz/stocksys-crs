@@ -13,6 +13,8 @@ use App\Imports\SolicitudDetallesImport;
 use App\Exports\GuiaTerrestreExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Elibyy\TCPDF\Facades\TCPDF;
+
 
 class SolicitudController extends Controller
 {
@@ -327,9 +329,28 @@ class SolicitudController extends Controller
             'despachos' => $despachos 
         ];
 
-        $pdf = Pdf::loadView('admin.solicitudes.boletas_despacho.pdf', $datos);
+        $ancho = 612; //8 1/2 
+        $largo = 396; //5 1/2 
+        $customPaper = array(0,0,$largo,$ancho);
+        $pdf = Pdf::loadView('admin.solicitudes.boletas_despacho.pdf', $datos)
+        ->setPaper(array(0,0,612.00,396.00), 'portrait')->setWarnings(true);
      
         return $pdf->stream();
+        
+        /*$filename = 'boleta despacho.pdf';
+    	$view = \View::make('admin.solicitudes.boletas_despacho.pdf', $datos);
+        $html = $view->render();
+        $ancho = 612; //8 1/2 
+        $largo = 396; //5 1/2 
+    	$pageLayout = array($ancho, $largo); //  or array($height, $width) 
+        $pdf = new TCPDF('l', 'pt', $pageLayout, true, 'UTF-8', false);
+        $pdf::SetTitle($filename);
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+
+        $pdf::Output(public_path($filename), 'F');
+
+        return response()->download(public_path($filename));*/
           
     }
 
@@ -1157,6 +1178,7 @@ class SolicitudController extends Controller
             'alimentos' => $alimentos,
             'bodegas' => $bodegas,
             'raciones' => $raciones,
+            'solicitud' => $solicitud
         ];
 
         return view('admin.solicitudes.solicitud_bodega',$datos);
@@ -1175,18 +1197,34 @@ class SolicitudController extends Controller
     		return back()->withErrors($validator)->with('messages', 'Se ha producido un error.')->with('typealert', 'danger');
         else: 
             DB::beginTransaction();
-                $tipo_alimentacion = $request->input('tipo_racion');
-                $total_raciones = SolicitudDetalles::select(DB::RAW('SUM(DISTINCT dias_de_solicitud) * SUM(total_de_personas) as total'))->where('tipo_de_actividad_alimentos', $tipo_alimentacion)->get();
-                $total_estudiantes = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_estudiantes');
-                $total_raciones_estudiantes = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_raciones_de_estudiantes');
-                $total_docentes_voluntarios = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_docentes_y_voluntarios');
-                $total_raciones_docentes_voluntarios = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_raciones_de_docentes_y_voluntarios');
-                $total_personas = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_personas');
-                $total_raciones = SolicitudDetalles::where('id_solicitud', $id)->sum('total_de_raciones');
-                return $total_raciones;
+                $tipo_alimentacion = $request->input('tipo_racion');                
+                $racion = Racion::select('tipo_alimentos')->where('id',$tipo_alimentacion)->first();
+
+                switch($racion->tipo_alimentos):
+                    case 'solicitud_comida_escolar':
+                        $total_beneficiarios = SolicitudDetalles::where('id_solicitud', $request->input('idSolicitud'))->sum('total_de_estudiantes');
+                        $total_raciones = SolicitudDetalles::where('id_solicitud', $request->input('idSolicitud'))->sum('total_de_raciones_de_estudiantes');
+
+                    break;
+
+                    case 'solicitud_racion_psc':
+                        $total_beneficiarios = SolicitudDetalles::where('id_solicitud', $request->input('idSolicitud'))->sum('total_de_docentes_y_voluntarios');
+                        $total_raciones = SolicitudDetalles::where('id_solicitud', $request->input('idSolicitud'))->sum('total_de_raciones_de_docentes_y_voluntarios');
+                    break;
+
+                    case 'lideres_de_alimentacion_escolar':
+                        $total_beneficiarios = SolicitudDetalles::where('id_solicitud', $request->input('idSolicitud'))->sum('total_de_personas');
+                        $total_raciones = SolicitudDetalles::where('id_solicitud', $request->input('idSolicitud'))->sum('total_de_raciones');
+                    break;
+
+
+                endswitch;
+
                 $s = new SolicitudBodegaPrimaria;
                 $s->fecha = Carbon::now()->format('Y-m-d');
                 $s->id_bodega_primaria = $request->input('id_bodega_primaria');
+                $s->beneficiarios = $total_beneficiarios;
+                $s->raciones_solicitadas = $total_raciones;
                 $s->id_socio_solicitante = Auth::user()->id_institucion;
                 $s->estado = 1;
                 $s->id_institucion = Auth::user()->id_institucion;
@@ -1203,6 +1241,7 @@ class SolicitudController extends Controller
                     $detalle->id_insumo_bodega_socio = $idinsumo[$cont];
                     $insumoBodegaSocioNombre = Bodega::where('id',$idinsumo[$cont])->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->first();                
                     $insumoIDBPrimaria = Bodega::where('nombre',$insumoBodegaSocioNombre->nombre)->where('tipo_bodega',0)->where('id_institucion', $s->id_bodega_primaria)->first();
+                    $detalle->tipo_racion = $tipo_alimentacion;
                     $detalle->id_insumo_bodega_primaria = $insumoIDBPrimaria->id;
                     $detalle->no_unidades = $cantidad[$cont];
                     $detalle->id_unidad_medida = $idmedida[$cont];

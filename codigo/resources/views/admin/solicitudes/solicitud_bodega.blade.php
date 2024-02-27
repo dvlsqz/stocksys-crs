@@ -202,6 +202,7 @@
                             
                         
                             {!! Form::open(['url' => '/admin/solicitud_despacho/solicitud_bodega_primaria', 'files' => true]) !!}
+                                {!! Form::hidden('idSolicitud', $solicitud, ['class'=>'form-control']) !!}
                                 <div class="col-md-12 mtop16">
                                     <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Solicitar A: </strong></label>
                                     <div class="input-group">

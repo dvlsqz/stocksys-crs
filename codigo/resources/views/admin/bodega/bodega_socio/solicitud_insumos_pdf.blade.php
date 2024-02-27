@@ -25,8 +25,8 @@
     <div style="display: flex;">
         <div style="text-align: left; width: 33%; display: inline-block; float:left;">
             <b>Bodega: </b> <br>
-            <b>Raciones Solicitadas: </b> <br>
-            <b>Beneficiarios a Atender: </b> <br>
+            <b>Raciones Solicitadas: </b> {{ number_format($solicitud->raciones_solicitadas, 0, '.', ',' ) }} <br>
+            <b>Beneficiarios a Atender: </b> {{ number_format($solicitud->beneficiarios, 0, '.', ',' ) }} <br>
         </div>
 
         <div style="text-align: center; width: 33%; display: inline-block; float:left">
@@ -74,7 +74,7 @@
                 @foreach($solicitud->detalles as $det)
                 <tr>
                     <td>{{$det->alimento_bodega_socio->nombre}}</td>
-                    <td></td>
+                    <td>{{$det->racion->tipo_alimentos }}</td>
                     <td></td>
                     <td>{{$det->no_unidades}}</td>
                     <td></td>

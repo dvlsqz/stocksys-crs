@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('solicitudes_bodegas_primarias_detalles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_solicitud_bodega_primaria');
+            $table->integer('tipo_racion');
             $table->integer('id_insumo_bodega_primaria');
             $table->integer('id_insumo_bodega_socio');
             $table->double('no_unidades',13, 5);

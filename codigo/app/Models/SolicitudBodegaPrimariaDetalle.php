@@ -22,4 +22,8 @@ class SolicitudBodegaPrimariaDetalle extends Model
         return $this->hasOne(Bodega::class,'id','id_insumo_bodega_socio');
     }
 
+    public function racion(){
+        return $this->hasOne(Racion::class,'id','tipo_racion');
+    }
+
 }
