@@ -807,6 +807,7 @@ class SolicitudController extends Controller
                 'e.nombre as escuela_nombre',
                 'be.id as egreso',
                 'be.participantes as participantes',
+                'be.no_documento as boletas',
                 'ra.id as idracion',
                 'ra.nombre as racion',
 
