@@ -85,7 +85,7 @@
 
     <div>
         <table style="text-align:center;">
-            <thead style="background-color: #96D4D4; border: 1px solid black; border-collapse: collapse;">
+            <thead style="background-color: #bfbfbf; border: 1px solid black; border-collapse: collapse;">
                 <tr>
                     <td>CODIGO</td>
                     <td>ESCUELA</td>
@@ -141,14 +141,14 @@
                                 @php($d++)
                             @endfor  
                             
-                            <td style="background-color: #96D4D4;">{{ number_format($total_quintales, 2, '.', ',' ) }}</td>
+                            <td style="background-color: #bfbfbf;">{{ number_format($total_quintales, 2, '.', ',' ) }}</td>
                             <td>{{$det->racion}} </td>
                             <td>{{$det->boleta}}</td>
                         </tr>
                     @endforeach
 
             </tbody>
-            <tfoot style="background-color: #96D4D4; border: 1px solid black; border-collapse: collapse;">
+            <tfoot style="background-color: #bfbfbf; border: 1px solid black; border-collapse: collapse;">
                 <tr>
                     <td colspan="2">Total de unidades a enviar</td>
                     <td>{{ $total_participantes }}</td>
@@ -176,7 +176,7 @@
     </div>
     <br>
 
-    <div style="display: inline-block; justify-item: center;">
+    <div style="position: absolute; left: 20%">
         <table style="">
             <thead style=" border: 1px solid black; border-collapse: collapse;">
                 <tr>
@@ -192,37 +192,75 @@
                 <tr>
                     <td>ENTEROS</td>
                     @php($total_enteros = 0)
+                    
                     @foreach($alimentos as $a)   
-                           
+                        @php($peso_alimentos = 0)   
+                                                    
                         @php($d = 0)
                         
                             @for($i =0; $i < count($detalles); $i++)                                              
-                                @if($det->escuela_id  == $detalles[$d]["escuela_id"] && $det->idracion  == $detalles[$d]["idracion"]  )                                
-                                    @php($e = 0)                     @php($peso_alimentos = 0)                     
+                                
+                                                                 
+                                    @php($e = 0)                                        
                                     @for($j =0; $j< count($detalles[$d]["detalles_alimentos"]); $j++)
-                                        @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)                                             
+                                    
+                                        @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)   
+                                                                                       
                                             @foreach($a->pesos_alimento as $p)           
                                                                                        
-                                                @php($peso_alimentos = $peso_alimentos + ( ($detalles[$d]["detalles_alimentos"][$e]["no_unidades"] * $p->libras_x_unidad)/100 ) )   
-                                            @endforeach                                                                            
+                                                @php($peso_alimentos = $peso_alimentos + intval( ($detalles[$d]["detalles_alimentos"][$e]["no_unidades"] * $p->libras_x_unidad)/100 ) )   
+                                                
+                                            @endforeach   
+                                            
+                                            
                                         @endif                                             
                                         @php($e++)
-                                    @endfor                                                                     
-                                @endif                               
+                                    @endfor                               
                                 @php($d++)
                             @endfor  
-                        <td>{{$peso_alimentos }}</td>
+                            
+                            <td>{{ $peso_alimentos }}</td>
+                            @php($total_enteros = $total_enteros + $peso_alimentos)
                     @endforeach
 
-                    <td></td>
+                    <td>{{ $total_enteros}}</td>
                     
                 </tr>
                 <tr>
                 <td>PORCIONADOS</td>
-                    @foreach($alimentos as $a)                        
-                        <td></td>
+                    @php($total_porcionados = 0)
+                    
+                    @foreach($alimentos as $a)   
+                        @php($peso_alimentos = 0)   
+                                                    
+                        @php($d = 0)
+                        
+                            @for($i =0; $i < count($detalles); $i++)                                              
+                                
+                                                                 
+                                    @php($e = 0)                                        
+                                    @for($j =0; $j< count($detalles[$d]["detalles_alimentos"]); $j++)
+                                    
+                                        @if($detalles[$d]["detalles_alimentos"][$e]["id_insumo"] == $a->id)   
+                                                                                       
+                                            @foreach($a->pesos_alimento as $p)           
+                                                                                       
+                                                @php($peso_alimentos = $peso_alimentos + ( ($detalles[$d]["detalles_alimentos"][$e]["no_unidades"] * $p->libras_x_unidad)/100 ) - intval(($detalles[$d]["detalles_alimentos"][$e]["no_unidades"] * $p->libras_x_unidad)/100) )   
+                                                
+                                            @endforeach   
+                                            
+                                            
+                                        @endif                                             
+                                        @php($e++)
+                                    @endfor                               
+                                @php($d++)
+                            @endfor  
+                            
+                            <td>{{ number_format($peso_alimentos, 2, '.', ',' ) }}</td>
+                            @php($total_porcionados = $total_porcionados + $peso_alimentos)
                     @endforeach
-                    <td></td>
+
+                    <td>{{ number_format($total_porcionados, 2, '.', ',' )}}</td>
                     
                 </tr>
 
