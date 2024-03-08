@@ -12,13 +12,13 @@
     <div class="row">
 
         <div class="col-md-3">
-            <div class="card ">
+            <div class="card">
 
                 <div class="card-header">
                     <h2 class="title"><i class="fas fa-plus-circle"></i><strong> Listado de Reportes</strong></h2>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body" style="text-align:center;  overflow-y: scroll; line-height: 1em; height:400px;">
                     <ul>
                         <ol><small> 
                         <b>1.</b> Total de escuelas despachadas detallando cada tipo de alimento o producto tanto en unidades y su peso en libras/quintales, para cada modalidad escolar, voluntarios y lideres
@@ -88,11 +88,11 @@
                 <div class="card-body">
                     {!! Form::open(['url' => '/admin/reporte/panel/generar', 'files' => true]) !!}
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                             <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Socio: </strong></label>
                             <div class="input-group">           
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                                <select name="id_socio" id="id_socio" style="width: 80%" >
+                                <select name="id_socio" id="id_socio" style="width: 95%" >
                                     @foreach($socio as $s)
                                         <option value=""></option>
                                         <option value="{{ $s->id }}">{{ $s->nombre }}</option>
@@ -102,8 +102,12 @@
                             </div>
                         </div>
 
+                        
+                    </div>
+
+                    <div class="row mtop16">
                         <div class="col-6">
-                            <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Solicitudes de Despacho: </strong></label>
+                            <label for="name"> <strong> Solicitudes de Despacho: </strong></label>
                             <div class="input-group">           
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                                 <select name="id_solicitud" id="id_solicitud" style="width: 90%" >
@@ -112,11 +116,9 @@
                                 </select>             
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row mtop16">
                         <div class="col-6">
-                            <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> No. Reporte a visualizar: </strong></label>
+                            <label for="name"> <strong>No. Reporte a visualizar: </strong></label>
                             <div class="input-group">           
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
                                 <select name="num_reporte"  style="width: 90%" >
