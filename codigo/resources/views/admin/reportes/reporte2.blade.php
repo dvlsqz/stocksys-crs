@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="card-body">
-                    <b>Total de Escuelas Atendidas @if(isset($solicitud1) ) Pre Primaria a 3ro Primaria @endif : </b>
+                <b>Total de Escuelas Atendidas: </b>
                     @foreach($total_escuelas as $t)
                          {{$t->total}}
 
@@ -78,47 +78,6 @@
                         
                         <hr>
                     @endforeach
-
-                    @if(isset($solicitud1) )
-                        <b>Total de Escuelas Atendidas 4to Primaria a 6to Primaria: </b>
-                        @foreach($total_escuelas1 as $t1)
-                            {{$t1->total}}
-
-                        @endforeach
-
-                        <hr>
-                        <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
-                        @foreach($solicitud1 as $s1)
-                            <b>{{$loop->iteration.'. '.$s1->escuela_nombre}}</b> - @if(isset($s1->total_estudiantes) ) <b>Total de Estudiantes Atendidos: </b> {{$s1->total_estudiantes}} -  @endif  <b>Tipo Ración:</b> {{$s1->racion}}  <br>
-                            <table class="table table-striped table-hover mtop16">
-                                <thead>
-                                    <tr>
-                                        <td><strong>ALIMENTO</strong></td>
-                                        <td><strong>UNIDADES</strong></td>
-                                        <td><strong>SACO/CANECA</strong></td>
-                                        <td><strong>LIBRAS/QUINTALES</strong></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach($alimentos1 as $a1)
-                                @if($s1->escuela_id == $a1->escuela_id && $s1->racion == $a1->racion)
-                                    <tr>
-                                        <td>{{$a1->insumo}}</td>
-                                        <td></td>
-                                        <td>{{$a1->cantidad}}</td>
-                                        <td></td>
-                                    </tr>
-
-                                @endif
-                            @endforeach
-
-                                </tbody>
-                            </table>
-                            
-                            <hr>
-                        @endforeach
-                    @endif
 
                     
                     
