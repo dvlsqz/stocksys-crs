@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="card-body">
-                    <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+                    <a href="{{ url('/admin/reporte/exportar/pdf/'.$idSolicitud.'/'.$idSocio.'/'.$numReporte) }}" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
                     <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-outline-success col-12 mtop16"><i class="fa-solid fa-file-excel"></i> Excel</a>
                     
                 </div>
@@ -37,7 +37,7 @@
                             <a href="{{ url('/admin/reporte/panel') }}" ><i class="fa-solid fa-circle-arrow-left"></i> Regresar</a>
                         </li>
                     </ul>
-                </div>
+                </div> 
 
                 <div class="card-body">
                     <b>Total de Escuelas Atendidas @if(isset($solicitud1) ) Pre Primaria a 3ro Primaria @endif : </b>
@@ -45,8 +45,6 @@
                          {{$t->total}}
 
                     @endforeach
-
-                    <hr>
                     <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
                     @foreach($solicitud as $s)
                         <b>{{$loop->iteration.'. '.$s->escuela_nombre}}</b> - @if(isset($s->total_estudiantes) ) <b>Total de Estudiantes Atendidos: </b> {{$s->total_estudiantes}} -  @endif  <b>Tipo Ración:</b> {{$s->racion}}  <br>
@@ -85,8 +83,6 @@
                             {{$t1->total}}
 
                         @endforeach
-
-                        <hr>
                         <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
                         @foreach($solicitud1 as $s1)
                             <b>{{$loop->iteration.'. '.$s1->escuela_nombre}}</b> - @if(isset($s1->total_estudiantes) ) <b>Total de Estudiantes Atendidos: </b> {{$s1->total_estudiantes}} -  @endif  <b>Tipo Ración:</b> {{$s1->racion}}  <br>
