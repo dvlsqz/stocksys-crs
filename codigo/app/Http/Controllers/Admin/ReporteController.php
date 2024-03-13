@@ -50,6 +50,7 @@ class ReporteController extends Controller
 
         switch($request->input('num_reporte')):
             case 1:
+                //return $request->input('id_solicitud').'-'.$request->input('id_socio');
                 //$this->reporte1($request->input('id_solicitud'), $request->input('id_socio'));
                 return view('admin.reportes.reporte1',$this->reporte1($request->input('id_solicitud'), $request->input('id_socio')));
             break;
@@ -226,6 +227,7 @@ class ReporteController extends Controller
             ->join('raciones as r', 'r.id', 'be.tipo_racion')
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $alimentos = DB::table('solicitudes as s')
@@ -244,6 +246,7 @@ class ReporteController extends Controller
             ->join('bodegas as a', 'a.id', 'be_det.id_insumo')  
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $total_escuelas = DB::table('solicitudes as s')
@@ -254,6 +257,7 @@ class ReporteController extends Controller
             ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $datos = [
@@ -287,6 +291,7 @@ class ReporteController extends Controller
             ->where('be_det.no_unidades', '>', 0)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $alimentos = DB::table('solicitudes as s')
@@ -307,6 +312,7 @@ class ReporteController extends Controller
             ->where('be_det.no_unidades', '>', 0)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $total_escuelas = DB::table('solicitudes as s')
@@ -323,6 +329,7 @@ class ReporteController extends Controller
             ->where('be_det.no_unidades', '>', 0)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $datos = [
@@ -356,6 +363,7 @@ class ReporteController extends Controller
             ->where('be_det.no_unidades', '>', 0)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $alimentos = DB::table('solicitudes as s')
@@ -376,6 +384,7 @@ class ReporteController extends Controller
             ->where('be_det.no_unidades', '>', 0)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $total_escuelas = DB::table('solicitudes as s')
@@ -392,6 +401,7 @@ class ReporteController extends Controller
             ->where('be_det.no_unidades', '>', 0)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $datos = [
@@ -425,6 +435,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$racion_estudiante->id)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->groupBy('e.id','e.nombre','r.nombre', 'be.id')
             ->get();
 
@@ -448,6 +459,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$racion_estudiante->id)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
             ->get();
 
@@ -463,6 +475,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$racion_estudiante->id)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         
@@ -509,6 +522,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$idRacion)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->groupBy('e.id','e.nombre','r.nombre', 'be.id')
             ->get();
 
@@ -528,6 +542,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$idRacion1)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->groupBy('e.id','e.nombre','r.nombre', 'be.id')
             ->get();
 
@@ -550,6 +565,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$idRacion)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
             ->get();
         
@@ -572,6 +588,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$idRacion1)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
             ->get();
 
@@ -587,6 +604,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$idRacion)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();
 
         $total_escuelas1 = DB::table('solicitudes as s')
@@ -601,6 +619,7 @@ class ReporteController extends Controller
             ->where('be.tipo_racion',$idRacion1)
             ->where('s.id', $idSolicitud)
             ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
             ->get();        
 
         $datos = [
