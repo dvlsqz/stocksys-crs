@@ -76,7 +76,8 @@ class ReporteController extends Controller
             break;
 
             case 6:
-                return $this->reporte6($request->input('id_solicitud'), $request->input('id_socio'));
+                //return $this->reporte6($request->input('id_solicitud'), $request->input('id_socio'));
+                return view('admin.reportes.reporte6',$this->reporte6($request->input('id_solicitud'), $request->input('id_socio')));
             break;
 
             case 7:
@@ -638,10 +639,78 @@ class ReporteController extends Controller
     }
 
     public function reporte6($idSolicitud = null, $idSocio = null){
-        $solicitud = Solicitud::with('detalles')->where('id', $idSolicitud)->where('id_socio',$idSocio)->first();
+        $solicitud = DB::table('solicitudes as s')
+            ->select(
+                DB::RAW('e.id as escuela_id'),
+                DB::RAW('e.nombre as escuela_nombre'),
+                DB::RAW('rs.id as idruta'),
+                DB::RAW('rs.nombre as ruta')
+            )            
+            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
+            ->join('escuelas as e', 'e.id', 'det.id_escuela')
+            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
+            ->join('rutas_solicitudes_despachos_detalles as rsdet', 'rsdet.id_escuela', 'e.id')
+            ->join('rutas_solicitudes_despachos as rs', 'rs.id', 'rsdet.id_ruta_despacho')
+            ->where('s.id', $idSolicitud)
+            ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
+            ->whereNull('rs.deleted_at')
+            ->whereNull('rsdet.deleted_at')
+            ->groupBy('rs.id')
+            ->get();
+
+        $alimentos = DB::table('solicitudes as s')
+            ->select(
+                DB::RAW('e.id as escuela_id'),
+                DB::RAW('r.nombre as racion'),
+                DB::RAW('a.id as idinsumo'),
+                DB::RAW('a.nombre as insumo'),
+                DB::RAW('be_det.no_unidades as cantidad'),
+                DB::RAW('rsdet.id_ruta_despacho as idruta')
+            )            
+            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
+            ->join('escuelas as e', 'e.id', 'det.id_escuela')
+            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
+            ->join('bodegas_egresos_detalles as be_det', 'be_det.id_egreso', 'be.id') 
+            ->join('raciones as r', 'r.id', 'be.tipo_racion')
+            ->join('bodegas as a', 'a.id', 'be_det.id_insumo')
+            ->join('rutas_solicitudes_despachos_detalles as rsdet', 'rsdet.id_escuela', 'e.id')
+            ->where('s.id', $idSolicitud)
+            ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
+            ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
+            ->get();
+        
+        //return $alimentos;
+
+        $alimentos_bodega = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->orderBy('id', 'Asc')->get();
+
+        //return $alimentos_bodega;
+        $total_rutas = DB::table('solicitudes as s')
+            ->select(
+                DB::RAW('COUNT(DISTINCT rs.id) as total')
+            )            
+            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
+            ->join('escuelas as e', 'e.id', 'det.id_escuela')
+            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
+            
+            ->join('rutas_solicitudes_despachos_detalles as rsdet', 'rsdet.id_escuela', 'e.id')
+            ->join('rutas_solicitudes_despachos as rs', 'rs.id', 'rsdet.id_ruta_despacho')
+            ->where('s.id', $idSolicitud)
+            ->where('s.id_socio', $idSocio)
+            ->where('be.id_solicitud_despacho', $idSolicitud)
+            ->whereNull('rs.deleted_at')
+            ->whereNull('rsdet.deleted_at')
+            ->get();
+        
+        
+
 
         $datos = [
-            'solicitud' => $solicitud
+            'solicitud' => $solicitud,
+            'alimentos' => $alimentos,
+            'alimentos_bodega' => $alimentos_bodega,
+            'total_rutas' => $total_rutas
         ];
 
         return $datos;
