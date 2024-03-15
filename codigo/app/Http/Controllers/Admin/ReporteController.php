@@ -103,7 +103,8 @@ class ReporteController extends Controller
             break;
 
             case 12:
-                return $this->reporte12($request->input('id_solicitud'), $request->input('id_socio'));
+                //return $this->reporte12($request->input('id_socio'));
+                return view('admin.reportes.reporte12',$this->reporte12($request->input('id_socio')));
             break;
 
             case 13:
@@ -187,7 +188,8 @@ class ReporteController extends Controller
             break;
 
             case 12:
-                return $this->reporte12($request->input('id_solicitud'), $request->input('id_socio'));
+                $pdf = Pdf::loadView('admin.reportes.pdf12', $this->reporte12($idSocio));     
+                return $pdf->stream();
             break;
 
             case 13:
@@ -804,11 +806,35 @@ class ReporteController extends Controller
         return $datos;
     }
 
-    public function reporte12($idSolicitud = null, $idSocio = null){
-        $solicitud = Solicitud::with('detalles')->where('id', $idSolicitud)->where('id_socio',$idSocio)->first();
+    public function reporte12($idSocio = null){
+        $alimentos = Bodega::where('tipo_bodega',1)->where('id_institucion', $idSocio)->get();
+
+        
+        $idAlimentos;
+        foreach($alimentos as $a):
+            $idAlimentos[] = $a->id;
+        endforeach;
+
+        $saldos = DB::table('bodegas as b')
+            ->select(
+                DB::RAW('det.id_insumo as idinsumo'),
+                DB::RAW('det.pl as pl'),
+                DB::RAW('det.bubd as bubd'),
+                DB::RAW('det.no_unidades  as ingresado'),
+                DB::RAW('det.no_unidades_usadas as usado'),
+                DB::RAW('(det.no_unidades - det.no_unidades_usadas) as existencia')
+            )            
+            ->join('bodegas_ingresos_detalles as det', 'det.id_insumo', 'b.id')
+            ->where('b.id_institucion', $idSocio)
+            ->where('det.no_unidades', '>', 'det.no_unidades_usadas')
+            ->get();
 
         $datos = [
-            'solicitud' => $solicitud
+            'alimentos' => $alimentos,
+            'saldos' => $saldos,
+            'idSolicitud' => 0,
+            'idSocio' => $idSocio,
+            'numReporte' => 12
         ];
 
         return $datos;
