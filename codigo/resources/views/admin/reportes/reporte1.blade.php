@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="card-body">
-                    <a href="{{ url('/admin/reporte/exportar/pdf/'.$idSolicitud.'/'.$idSocio.'/'.$numReporte) }}" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+                    <a href="{{ url('/admin/reporte/exportar/pdf/'.$idSolicitud.'/'.$idSocio.'/'.$numReporte) }}" target="_blank" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
                     <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-outline-success col-12 mtop16"><i class="fa-solid fa-file-excel"></i> Excel</a>
                     
                 </div>
@@ -58,13 +58,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                            @php($peso_escuela = 0)
                             @foreach($alimentos as $a)
                             @if($s->escuela_id == $a->escuela_id && $s->racion == $a->racion)
                                 <tr>
                                     <td>{{$a->insumo}}</td>
                                     <td></td>
-                                    <td>{{$a->cantidad}}</td>
+                                    <td>
+                                        {{$a->cantidad}}
+                                        @php($peso_escuela = $peso_escuela + $a->cantidad)
+                                    </td>
                                     <td></td>
                                 </tr>
 
@@ -73,6 +76,7 @@
 
                             </tbody>
                         </table>
+                        <b>Peso Total Despacho: </b> {{$peso_escuela}}
                         
                         <hr>
                     @endforeach
@@ -96,13 +100,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                @php($peso_escuela = 0)
                                 @foreach($alimentos1 as $a1)
                                 @if($s1->escuela_id == $a1->escuela_id && $s1->racion == $a1->racion)
                                     <tr>
                                         <td>{{$a1->insumo}}</td>
                                         <td></td>
-                                        <td>{{$a1->cantidad}}</td>
+                                        <td>
+                                            {{$a1->cantidad}}
+                                            @php($peso_escuela = $peso_escuela + $a->cantidad)
+                                        </td>
                                         <td></td>
                                     </tr>
 
@@ -111,7 +118,8 @@
 
                                 </tbody>
                             </table>
-                            
+                            <br>
+                            <b>Peso Total Despacho: </b> {{$peso_escuela}}
                             <hr>
                         @endforeach
                     @endif

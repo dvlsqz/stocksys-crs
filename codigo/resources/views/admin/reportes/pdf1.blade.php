@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte No.1 </title>
+    <title>Reporte No.{{$numReporte}} - StocksSys  </title>
     <style>
         table, th, td {
         border: 1px solid black;
@@ -28,10 +28,10 @@
     
     <div style="text-align: center;">
         <h5>
-            Reporte No. {{$numReporte}} - StocksSys 
+            Reporte No.{{$numReporte}} - StocksSys 
             
         </h5>    
-        <b>Descripción: </b>Total de escuelas despachadas detallando cada tipo de alimento o producto tanto en unidades y su peso en libras/quintales, para cada modalidad escolar, voluntarios y lideres
+        <b>Descripción: </b> {{ obtenerDescripcionReporte(null, $numReporte) }}
     </div>
     <br>
 
@@ -42,8 +42,8 @@
         @endforeach
     </div>
 
-    <div>
-        <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
+    <div style="font-size: 14px;">
+        <p style="text-aling:center; color:red;"><b>Desglose del Reporte</b></p>
         @foreach($solicitud as $s)
             <b>{{$loop->iteration.'. '.$s->escuela_nombre}}</b> - @if(isset($s->total_estudiantes) ) <b>Total de Estudiantes Atendidos: </b> {{$s->total_estudiantes}} -  @endif  <b>Tipo Ración:</b> {{$s->racion}}  <br>
             <table class="table table-striped table-hover mtop16">
@@ -56,13 +56,15 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @php($peso_escuela = 0)
                     @foreach($alimentos as $a)
                         @if($s->escuela_id == $a->escuela_id && $s->racion == $a->racion)
                             <tr>
                                 <td>{{$a->insumo}}</td>
                                 <td></td>
-                                <td>{{$a->cantidad}}</td>
+                                <td>{{$a->cantidad}}
+                                    @php($peso_escuela = $peso_escuela + $a->cantidad)
+                                </td>
                                 <td></td>
                             </tr>
 
@@ -71,7 +73,7 @@
 
                 </tbody>
             </table>
-                        
+            <b>Peso Total Despacho: </b> {{$peso_escuela}}       
             <hr>
         @endforeach
 
@@ -94,13 +96,15 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @php($peso_escuela = 0)
                         @foreach($alimentos1 as $a1)
                             @if($s1->escuela_id == $a1->escuela_id && $s1->racion == $a1->racion)
                                 <tr>
                                     <td>{{$a1->insumo}}</td>
                                     <td></td>
-                                    <td>{{$a1->cantidad}}</td>
+                                    <td>{{$a1->cantidad}}
+                                    @php($peso_escuela = $peso_escuela + $a->cantidad)
+                                    </td>
                                     <td></td>
                                 </tr>
 
@@ -109,7 +113,8 @@
 
                     </tbody>
                 </table>
-                
+                <br>
+                <b>Peso Total Despacho: </b> {{$peso_escuela}}
                 <hr>
             @endforeach
         @endif

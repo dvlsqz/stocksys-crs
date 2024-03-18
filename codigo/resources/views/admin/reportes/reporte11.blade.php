@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="card-body">
-                    <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+                    <a href="{{ url('/admin/bodega_socio/insumos') }}" target="_blank" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
                     <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-outline-success col-12 mtop16"><i class="fa-solid fa-file-excel"></i> Excel</a>
                     
                 </div>
@@ -42,7 +42,7 @@
                 <div class="card-body">
                 <b>Total de Solicitudes Atendidas: </b>
                          {{ count($solicitud) }}
-                    <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
+                    <p style="text-aling:center; color:red;"><b>Desglose del Reporte</b></p>
                     @foreach($solicitud as $s)
                         <b>{{$loop->iteration.'.'}}</b> 
                         <b>Solicitud (ID)</b>  {{ $s->id}} - 

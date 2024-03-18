@@ -36,7 +36,7 @@
     <br>
 
     <div>
-        <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
+        <p style="text-aling:center; color:red;"><b>Desglose del Reporte</b></p>
         @foreach($alimentos as $a)
             <b>{{$a->nombre}} - Existencia Actual: </b> {{ $a->saldo}}  <br>
             <table class="table table-striped table-hover mtop16">

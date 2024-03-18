@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared('
+        /*DB::unprepared('
             create trigger tr_aumentarSaldo on bodegas_ingresos_detalles
             for insert
             as
@@ -26,7 +26,7 @@ return new class extends Migration
             update bodegas set saldo = saldo+@cantidad where id = @idinsumo;
             end
         ');
-        /*DB::unprepared('
+        DB::unprepared('
             CREATE TRIGGER tr_aumentarSaldo AFTER INSERT ON bodegas_ingresos_detalles
             FOR EACH ROW BEGIN 
                 UPDATE bodegas SET saldo = saldo + NEW.no_unidades WHERE bodegas.id = NEW.id_insumo;
