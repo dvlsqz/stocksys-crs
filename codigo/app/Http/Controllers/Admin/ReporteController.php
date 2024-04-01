@@ -76,13 +76,11 @@ class ReporteController extends Controller
             break;
 
             case 6:
-                //return $this->reporte6($request->input('id_solicitud'), $request->input('id_socio'));
-                return view('admin.reportes.reporte6',$this->reporte6($request->input('id_solicitud'), $request->input('id_socio')));                
+                return $this->reporte6($request->input('id_solicitud'), $request->input('id_socio'));
             break;
 
             case 7:
-                //return $this->reporte7($request->input('id_solicitud'), $request->input('id_socio'));
-                return view('admin.reportes.reporte1',$this->reporte7($request->input('id_solicitud'), $request->input('id_socio')));
+                return $this->reporte7($request->input('id_solicitud'), $request->input('id_socio'));
             break;
 
             case 8:
@@ -104,8 +102,7 @@ class ReporteController extends Controller
             break;
 
             case 12:
-                //return $this->reporte12($request->input('id_socio'));
-                return view('admin.reportes.reporte12',$this->reporte12($request->input('id_socio')));
+                return $this->reporte12($request->input('id_solicitud'), $request->input('id_socio'));
             break;
 
             case 13:
@@ -189,8 +186,7 @@ class ReporteController extends Controller
             break;
 
             case 12:
-                $pdf = Pdf::loadView('admin.reportes.pdf12', $this->reporte12($idSocio));     
-                return $pdf->stream();
+                return $this->reporte12($request->input('id_solicitud'), $request->input('id_socio'));
             break;
 
             case 13:
@@ -642,221 +638,20 @@ class ReporteController extends Controller
     }
 
     public function reporte6($idSolicitud = null, $idSocio = null){
-        $solicitud = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('e.id as escuela_id'),
-                DB::RAW('e.nombre as escuela_nombre'),
-                DB::RAW('rs.id as idruta'),
-                DB::RAW('rs.nombre as ruta')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('rutas_solicitudes_despachos_detalles as rsdet', 'rsdet.id_escuela', 'e.id')
-            ->join('rutas_solicitudes_despachos as rs', 'rs.id', 'rsdet.id_ruta_despacho')
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->whereNull('rs.deleted_at')
-            ->whereNull('rsdet.deleted_at')
-            ->groupBy('rs.id')
-            ->get();
-
-        $alimentos = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('e.id as escuela_id'),
-                DB::RAW('r.nombre as racion'),
-                DB::RAW('a.id as idinsumo'),
-                DB::RAW('a.nombre as insumo'),
-                DB::RAW('be_det.no_unidades as cantidad'),
-                DB::RAW('rsdet.id_ruta_despacho as idruta')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('bodegas_egresos_detalles as be_det', 'be_det.id_egreso', 'be.id') 
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->join('bodegas as a', 'a.id', 'be_det.id_insumo')
-            ->join('rutas_solicitudes_despachos_detalles as rsdet', 'rsdet.id_escuela', 'e.id')
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
-            ->get();
-        
-        //return $alimentos;
-
-        $alimentos_bodega = Bodega::where('categoria' , 0)->where('tipo_bodega',1)->where('id_institucion', Auth::user()->id_institucion)->orderBy('id', 'Asc')->get();
-
-        //return $alimentos_bodega;
-        $total_rutas = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('COUNT(DISTINCT rs.id) as total')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            
-            ->join('rutas_solicitudes_despachos_detalles as rsdet', 'rsdet.id_escuela', 'e.id')
-            ->join('rutas_solicitudes_despachos as rs', 'rs.id', 'rsdet.id_ruta_despacho')
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->whereNull('rs.deleted_at')
-            ->whereNull('rsdet.deleted_at')
-            ->get();
-        
-        
-
+        $solicitud = Solicitud::with('detalles')->where('id', $idSolicitud)->where('id_socio',$idSocio)->first();
 
         $datos = [
-            'solicitud' => $solicitud,
-            'alimentos' => $alimentos,
-            'alimentos_bodega' => $alimentos_bodega,
-            'total_rutas' => $total_rutas
+            'solicitud' => $solicitud
         ];
 
         return $datos;
     }
 
     public function reporte7($idSolicitud = null, $idSocio = null){
-        $racion_estudiante = Racion::where('tipo_alimentos', 'solicitud_comida_escolar')->where('id_institucion', Auth::user()->id_institucion)->get();      
-        
-        foreach($racion_estudiante as $r):
-            if($r->nombre == "Escolar"):
-                $idRacion = $r->id;
-            else:
-                $idRacion1 = $r->id;
-            endif;
-        endforeach;
-
-            
-        $solicitud = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('e.id as escuela_id'),
-                DB::RAW('e.nombre as escuela_nombre'),
-                DB::RAW('r.nombre as racion'),
-                DB::RAW('be.id as egreso'),
-                DB::RAW('SUM(det.total_pre_primaria_a_tercero_primaria) as total_estudiantes')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->where('det.tipo_de_actividad_alimentos',$idRacion)
-            ->where('be.tipo_racion',$idRacion)
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->groupBy('e.id','e.nombre','r.nombre', 'be.id')
-            ->get();
-
-        $solicitud1 = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('e.id as escuela_id'),
-                DB::RAW('e.nombre as escuela_nombre'),
-                DB::RAW('r.nombre as racion'),
-                DB::RAW('be.id as egreso'),
-                DB::RAW('SUM(det.total_cuarto_a_sexto) as total_estudiantes')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->where('det.tipo_de_actividad_alimentos',$idRacion1)
-            ->where('be.tipo_racion',$idRacion1)
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->groupBy('e.id','e.nombre','r.nombre', 'be.id')
-            ->get();
-
-        $alimentos = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('e.id as escuela_id'),
-                DB::RAW('e.nombre as escuela_nombre'),
-                DB::RAW('r.nombre as racion'),
-                DB::RAW('a.nombre as insumo'),
-                DB::RAW('be_det.no_unidades as cantidad'),
-                DB::RAW('SUM(det.total_pre_primaria_a_tercero_primaria) as total_estudiantes')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('bodegas_egresos_detalles as be_det', 'be_det.id_egreso', 'be.id') 
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->join('bodegas as a', 'a.id', 'be_det.id_insumo')
-            ->where('det.tipo_de_actividad_alimentos',$idRacion)
-            ->where('be.tipo_racion',$idRacion)
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
-            ->get();
-        
-        $alimentos1 = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('e.id as escuela_id'),
-                DB::RAW('e.nombre as escuela_nombre'),
-                DB::RAW('r.nombre as racion'),
-                DB::RAW('a.nombre as insumo'),
-                DB::RAW('be_det.no_unidades as cantidad'),
-                DB::RAW('SUM(det.total_cuarto_a_sexto) as total_estudiantes')
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('bodegas_egresos_detalles as be_det', 'be_det.id_egreso', 'be.id') 
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->join('bodegas as a', 'a.id', 'be_det.id_insumo')
-            ->where('det.tipo_de_actividad_alimentos',$idRacion1)
-            ->where('be.tipo_racion',$idRacion1)
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->groupBy('e.id','e.nombre','r.nombre', 'a.nombre','be_det.no_unidades')
-            ->get();
-
-        $total_escuelas = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('COUNT(DISTINCT det.id_escuela) as total'),
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->where('det.tipo_de_actividad_alimentos',$idRacion)
-            ->where('be.tipo_racion',$idRacion)
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->get();
-
-        $total_escuelas1 = DB::table('solicitudes as s')
-            ->select(
-                DB::RAW('COUNT(DISTINCT det.id_escuela) as total'),
-            )            
-            ->join('solicitud_detalles as det', 'det.id_solicitud', 's.id')
-            ->join('escuelas as e', 'e.id', 'det.id_escuela')
-            ->join('bodegas_egresos as be', 'be.id_escuela_despacho', 'det.id_escuela')
-            ->join('raciones as r', 'r.id', 'be.tipo_racion')
-            ->where('det.tipo_de_actividad_alimentos',$idRacion1)
-            ->where('be.tipo_racion',$idRacion1)
-            ->where('s.id', $idSolicitud)
-            ->where('s.id_socio', $idSocio)
-            ->where('be.id_solicitud_despacho', $idSolicitud)
-            ->get();        
+        $solicitud = Solicitud::with('detalles')->where('id', $idSolicitud)->where('id_socio',$idSocio)->first();
 
         $datos = [
-            'solicitud' => $solicitud,
-            'solicitud1' => $solicitud1,
-            'alimentos' => $alimentos,
-            'alimentos1' => $alimentos1,
-            'total_escuelas' => $total_escuelas,
-            'total_escuelas1' => $total_escuelas1,
-            'idSolicitud' => $idSolicitud,
-            'idSocio' => $idSocio,
-            'numReporte' => 5
+            'solicitud' => $solicitud
         ];
 
         return $datos;
@@ -940,35 +735,11 @@ class ReporteController extends Controller
         return $datos;
     }
 
-    public function reporte12($idSocio = null){
-        $alimentos = Bodega::where('tipo_bodega',1)->where('id_institucion', $idSocio)->get();
-
-        
-        $idAlimentos;
-        foreach($alimentos as $a):
-            $idAlimentos[] = $a->id;
-        endforeach;
-
-        $saldos = DB::table('bodegas as b')
-            ->select(
-                DB::RAW('det.id_insumo as idinsumo'),
-                DB::RAW('det.pl as pl'),
-                DB::RAW('det.bubd as bubd'),
-                DB::RAW('det.no_unidades  as ingresado'),
-                DB::RAW('det.no_unidades_usadas as usado'),
-                DB::RAW('(det.no_unidades - det.no_unidades_usadas) as existencia')
-            )            
-            ->join('bodegas_ingresos_detalles as det', 'det.id_insumo', 'b.id')
-            ->where('b.id_institucion', $idSocio)
-            ->where('det.no_unidades', '>', 'det.no_unidades_usadas')
-            ->get();
+    public function reporte12($idSolicitud = null, $idSocio = null){
+        $solicitud = Solicitud::with('detalles')->where('id', $idSolicitud)->where('id_socio',$idSocio)->first();
 
         $datos = [
-            'alimentos' => $alimentos,
-            'saldos' => $saldos,
-            'idSolicitud' => 0,
-            'idSocio' => $idSocio,
-            'numReporte' => 12
+            'solicitud' => $solicitud
         ];
 
         return $datos;

@@ -18,6 +18,4 @@ class Ubicacion extends Model
     public function ubicacion_superior(){
         return $this->hasOne(Ubicacion::class,'id','id_principal');
     }
-
-    
 }
