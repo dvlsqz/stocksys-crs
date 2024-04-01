@@ -49,35 +49,41 @@
                     </div>
 
                     <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
-                    @foreach($alimentos as $a)
-                        <b>{{$a->nombre}} - Existencia Actual: </b> {{ $a->saldo}}  <br>
-                        <table class="table table-striped table-hover mtop16">
-                            <thead>
+                    <table class="table table-striped table-hover mtop16">
+                        <thead>
+                            <tr>
+                                <td>FECHA DE INGRESO</td>
+                                <td>PROCEDENCIA</td>
+                                <td>TIPO DOCUMENTO / NO. DOCUMENTO</td>                                    
+                                <td>ALIMENTO</td>
+                                <td>PL</td>
+                                <td>CANT. INGRESADA</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($saldos as $s)
                                 <tr>
-                                    <td>PL</td>
-                                    <td>BUBD</td>
-                                    <td>CANT. INGRESADA</td>
-                                    <td>CANT. USADA</td>
-                                    <td>CANT. EXISTENCIA</td>
+                                    <td>{{ $s->fecha_ingreso }}</td>
+                                    <td>
+                                        @if(!is_null($s->procedente)):
+                                            {{ $s->procedente }}
+                                        @else
+                                            @foreach($bodegas as $b)
+                                                @if($b->id == $s->bodega_primaria)
+                                                    {{ $b->nombre }}
+                                                @endif
+                                            @endforeach
+                                            
+                                        @endif
+                                    </td>
+                                    <td>{{ obtenerDocumentosIngreso(null, $s->tipo_documento).' - No. '.$s->no_documento }}</td>                                        
+                                    <td>{{ $s->alimento }}</td>
+                                    <td>{{ $s->pl }}</td>                                            
+                                    <td>{{ $s->ingresado }}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($saldos as $s)
-                                    @if($a->id == $s->idinsumo)
-                                        <tr>
-                                            <td>{{ $s->pl }}</td>
-                                            <td>{{ $s->bubd }}</td>
-                                            <td>{{ $s->ingresado }}</td>
-                                            <td>{{ $s->usado }}</td>
-                                            <td>{{ $s->existencia }}</td>
-                                        </tr>
-                                    
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-                        
-                    @endforeach
+                            @endforeach
+                        </tbody>
+                    </table>
 
                     
                     

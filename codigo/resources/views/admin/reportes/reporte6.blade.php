@@ -18,8 +18,8 @@
                 </div>
 
                 <div class="card-body">
-                    <a href="{{ url('/admin/bodega_socio/insumos') }}" target="_blank" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-                    <a href="{{ url('/admin/bodega_socio/insumos') }}" class="btn btn-outline-success col-12 mtop16"><i class="fa-solid fa-file-excel"></i> Excel</a>
+                    <a href="{{ url('/admin/reporte/exportar/pdf/formato1/'.$idSolicitud.'/'.$idSocio.'/'.$numReporte) }}" target="_blank" class="btn btn-outline-danger col-12"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+                    <a href="{{ url('/admin/reporte/exportar/excel/'.$idSolicitud.'/'.$idSocio.'/'.$numReporte) }}" class="btn btn-outline-success col-12 mtop16"><i class="fa-solid fa-file-excel"></i> Excel</a>
                     
                 </div>
 
@@ -40,14 +40,22 @@
                 </div>
 
                 <div class="card-body">
-                <b>Total de Rutas Despachadas: </b>
+                    <div style="text-align: center;">
+                        <h2>
+                            Reporte No. {{$numReporte}} - StocksSys 
+                            
+                        </h2>    
+                        <b>Descripción: </b> {{ obtenerDescripcionReportes(null, $numReporte) }}
+                    </div>
+
+                    <b>Total de Rutas Despachadas: </b>
                     @foreach($total_rutas as $t)
                          {{$t->total}}
 
                     @endforeach
 
                     <hr>
-                    <p style="text-aling:center; color:red;"><b>Desglose del Reporte</b></p>
+                    <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
                     @foreach($solicitud as $s)
                         <b>{{$loop->iteration.'. '.$s->ruta}}</b>    <br>
                         <table class="table table-striped table-hover mtop16">

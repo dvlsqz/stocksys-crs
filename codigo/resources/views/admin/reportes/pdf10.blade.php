@@ -36,37 +36,30 @@
     <br>
 
     <div>
+
+        <b>Total de Boletas de Despacho: </b>
+                         {{ count($solicitud) }}
         <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
-        @foreach($alimentos as $a)
-            <b>{{$a->nombre}} - Existencia Actual: </b> {{ $a->saldo}}  <br>
-            <table class="table table-striped table-hover mtop16">
+        <table class="table table-striped table-hover mtop16">
                 <thead>
                     <tr>
-                        <td>PL</td>
-                        <td>BUBD</td>
-                        <td>CANT. INGRESADA</td>
-                        <td>CANT. USADA</td>
-                        <td>CANT. EXISTENCIA</td>
+                        <td><strong>ESCUELA</strong></td>
+                        <td><strong>NO. BOLETA</strong></td>
+                        <td><strong>MUNICIPIO</strong></td>
+                        <td><strong>TIPO RACIÓN</strong></td>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($saldos as $s)
-                        @if($a->id == $s->idinsumo)
-                            <tr>
-                                <td>{{ $s->pl }}</td>
-                                <td>{{ $s->bubd }}</td>
-                                <td>{{ $s->ingresado }}</td>
-                                <td>{{ $s->usado }}</td>
-                                <td>{{ $s->existencia }}</td>
-                            </tr>
-                        
-                        @endif
+                    @foreach($solicitud as $s)
+                        <tr>
+                            <td>{{$s->escuela}}</td>
+                            <td>{{$s->no_documento}}</td>
+                            <td>{{$s->municipio}}</td>
+                            <td>{{$s->racion}}</td>
+                        </tr>
                     @endforeach
-                </tbody>
-            </table>
-            <br>
-            
-        @endforeach
+            </tbody>
+        </table>
     </div>
 
 

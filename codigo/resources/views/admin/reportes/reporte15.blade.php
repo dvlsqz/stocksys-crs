@@ -49,35 +49,26 @@
                     </div>
 
                     <p style="text-aling:center; color:red;"><b>Detalle del Reporte</b></p>
-                    @foreach($alimentos as $a)
-                        <b>{{$a->nombre}} - Existencia Actual: </b> {{ $a->saldo}}  <br>
                         <table class="table table-striped table-hover mtop16">
                             <thead>
                                 <tr>
+                                    <td>NO. DOCUMENTO</td>
+                                    <td>ALIMENTO</td>
                                     <td>PL</td>
-                                    <td>BUBD</td>
-                                    <td>CANT. INGRESADA</td>
-                                    <td>CANT. USADA</td>
-                                    <td>CANT. EXISTENCIA</td>
+                                    <td>CANT. DESCARTADA</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($saldos as $s)
-                                    @if($a->id == $s->idinsumo)
-                                        <tr>
-                                            <td>{{ $s->pl }}</td>
-                                            <td>{{ $s->bubd }}</td>
-                                            <td>{{ $s->ingresado }}</td>
-                                            <td>{{ $s->usado }}</td>
-                                            <td>{{ $s->existencia }}</td>
-                                        </tr>
-                                    
-                                    @endif
+                                    <tr>
+                                        <td>{{ $s->no_documento }}</td>
+                                        <td>{{ $s->alimento }}</td>
+                                        <td>{{ $s->pl }}</td>                                            
+                                        <td>{{ $s->descartado }}</td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        
-                    @endforeach
 
                     
                     
