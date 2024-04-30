@@ -60,6 +60,7 @@
                                     @endif
                                 @endforeach 
                             </div>
+                            
                             <div class="col-md-3">
                                 @foreach($det_escuelas_l_enc as $det_l_enc)
                                     @if($det_l_enc->escuela_id == $e->escuela_id)    
@@ -99,6 +100,50 @@
                                         <b>Unidades Racion: </b>{{ number_format( ((($det_v_d->dias*$det_v_d->total_beneficiarios*$det_v_d->alimento_peso)/110)), 2, '.', ',' )}} <br>
                                     @endif
                                 @endforeach
+                            </div>
+                        </div>
+                        <div class="row mtop16">
+                            <div class="col-md-6">
+                                {!! Form::open(['url' => '/admin/solicitud_despacho/despachar/escolar', 'files' => true]) !!}
+                                    <div class="col-md-12 mtop16">
+                                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Número de Boleta: </strong></label>
+                                        <div class="input-group">           
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                            {!! Form::hidden('idEscuela', $e->escuela_id, ['class'=>'form-control']) !!}   
+                                            {!! Form::hidden('idSolicitud', $solicitud, ['class'=>'form-control']) !!}  
+                                            {!! Form::text('no_boleta',0, ['class'=>'form-control']) !!}            
+                                        </div>
+                                    </div>   
+                                    {!! Form::submit('Despachar', ['class'=>'btn btn-success mtop16']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="col-md-3">
+                                {!! Form::open(['url' => '/admin/solicitud_despacho/despachar/lideres', 'files' => true]) !!}
+                                    <div class="col-md-12 mtop16">
+                                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Número de Boleta: </strong></label>
+                                        <div class="input-group">           
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                            {!! Form::hidden('idEscuela', $e->escuela_id, ['class'=>'form-control']) !!}   
+                                            {!! Form::hidden('idSolicitud', $solicitud, ['class'=>'form-control']) !!}  
+                                            {!! Form::text('no_boleta',0, ['class'=>'form-control']) !!}            
+                                        </div>
+                                    </div>   
+                                    {!! Form::submit('Despachar', ['class'=>'btn btn-success mtop16']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="col-md-3">
+                                {!! Form::open(['url' => '/admin/solicitud_despacho/despachar/voluntarios', 'files' => true]) !!}
+                                    <div class="col-md-12 mtop16">
+                                        <label for="name"> <strong><sup ><i class="fa-solid fa-triangle-exclamation"></i></sup> Número de Boleta: </strong></label>
+                                        <div class="input-group">           
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                            {!! Form::hidden('idEscuela', $e->escuela_id, ['class'=>'form-control']) !!}   
+                                            {!! Form::hidden('idSolicitud', $solicitud, ['class'=>'form-control']) !!}  
+                                            {!! Form::text('no_boleta',0, ['class'=>'form-control']) !!}            
+                                        </div>
+                                    </div>   
+                                    {!! Form::submit('Despachar', ['class'=>'btn btn-success mtop16']) !!}
+                                {!! Form::close() !!}
                             </div>
                         </div>
                         <br><hr>

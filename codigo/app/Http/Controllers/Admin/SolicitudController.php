@@ -646,8 +646,8 @@ class SolicitudController extends Controller
             $det_escuelas_preprimaria =  DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('escuelas.id as escuela_id'),
-                    DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
                     DB::raw('SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) as total_ninos'),
+                    DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
                     DB::raw('solicitud_detalles.tipo_de_actividad_alimentos as racion'),
                     DB::raw('alimentos_racion.peso as peso_racion')
                 )
@@ -661,8 +661,8 @@ class SolicitudController extends Controller
                 ->where('solicitud_detalles.deleted_at', null)
                 ->groupBy('escuelas.id', 'solicitud_detalles.tipo_de_actividad_alimentos', 'alimentos_racion.peso')
                 ->get();
-
-            //return $det_escuelas_preprimaria;
+            
+                return $det_escuelas_preprimaria;
 
             if(isset($id_escolar2_racion) ):
                 //return $id_escolar2_racion;
@@ -1189,7 +1189,7 @@ class SolicitudController extends Controller
         $det_escuelas_preprimaria_enc =  DB::table('solicitud_detalles')
             ->select(
                 DB::raw('solicitud_detalles.id_escuela as escuela_id'),
-                DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('SUM( solicitud_detalles.dias_de_solicitud) as dias'),
                 DB::raw('SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) as total_beneficiarios'),
                 DB::raw('raciones.nombre as racion'),
             )
@@ -1202,7 +1202,7 @@ class SolicitudController extends Controller
         $det_escuelas_preprimaria =  DB::table('solicitud_detalles')
             ->select(
                 DB::raw('solicitud_detalles.id_escuela as escuela_id'),
-                DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('SUM( solicitud_detalles.dias_de_solicitud) as dias'),
                 DB::raw('SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) as total_beneficiarios'),
                 DB::raw('bodegas.id as alimento_id'),
                 DB::raw('bodegas.nombre as alimento'),
@@ -1222,7 +1222,7 @@ class SolicitudController extends Controller
             $det_escuelas_primaria_enc =  DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('solicitud_detalles.id_escuela as escuela_id'),
-                    DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                    DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
                     DB::raw('SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) as total_beneficiarios'),
                     DB::raw('raciones.nombre as racion'),
                 )
@@ -1235,7 +1235,7 @@ class SolicitudController extends Controller
             $det_escuelas_primaria = DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('solicitud_detalles.id_escuela as escuela_id'),
-                    DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                    DB::raw('SUM( solicitud_detalles.dias_de_solicitud) as dias'),
                     DB::raw('SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) as total_beneficiarios'),
                     DB::raw('bodegas.id as alimento_id'),
                     DB::raw('bodegas.nombre as alimento'),
@@ -1255,7 +1255,7 @@ class SolicitudController extends Controller
             $det_escuelas_primaria_enc =  DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('solicitud_detalles.id_escuela as escuela_id'),
-                    DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                    DB::raw('SUM( solicitud_detalles.dias_de_solicitud) as dias'),
                     DB::raw('SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) as total_beneficiarios'),
                     DB::raw('raciones.nombre as racion'),
                 )
@@ -1268,7 +1268,7 @@ class SolicitudController extends Controller
             $det_escuelas_primaria = DB::table('solicitud_detalles')
                 ->select(
                     DB::raw('solicitud_detalles.id_escuela as escuela_id'),
-                    DB::raw('SUM(Distinct solicitud_detalles.dias_de_solicitud) as dias'),
+                    DB::raw('SUM(solicitud_detalles.dias_de_solicitud) as dias'),
                     DB::raw('SUM(Distinct solicitud_detalles.total_cuarto_a_sexto) as total_beneficiarios'),
                     DB::raw('bodegas.id as alimento_id'),
                     DB::raw('bodegas.nombre as alimento'),
@@ -1298,7 +1298,7 @@ class SolicitudController extends Controller
             ->where('solicitud_detalles.tipo_de_actividad_alimentos', $id_lideres_racion)                
             ->where('solicitud_detalles.deleted_at', null)
             ->groupBy('solicitud_detalles.id_escuela', 'raciones.nombre')
-            ->get();
+            ->get(); 
         $det_escuelas_l = DB::table('solicitud_detalles')
             ->select(
                 DB::raw('solicitud_detalles.id_escuela as escuela_id'),
@@ -1460,7 +1460,71 @@ class SolicitudController extends Controller
         endif;
     }
 
+    public function postDespacharEscolares(Request $request){
+        $saldos = DB::table('bodegas')
+        ->select(
+            '*'
+        )
+        ->join('bodegas_ingresos_detalles', 'bodegas_ingresos_detalles.id_insumo', 'bodegas.id')
+        ->where('bodegas.id_institucion', Auth::user()->id_institucion)  
+        ->where('bodegas.tipo_bodega', 1)  
+        ->get();
 
+        $racion = Racion::with('alimentos')->where('nombre', 'like', '%escolar')->where('id_institucion', Auth::user()->id_institucion)->get();
+        foreach($racion  as $r):
+            $actividad = $r->id;
+            $alimentos = $r->alimentos;
+        endforeach;
+        return $saldos;
+        //return $request->all();
+
+        $descarga =  DB::table('solicitud_detalles')
+            ->select(
+                DB::raw('solicitud_detalles.id_escuela as escuela_id'),
+                DB::raw('SUM( solicitud_detalles.dias_de_solicitud) as dias'),
+                DB::raw('SUM(Distinct solicitud_detalles.total_pre_primaria_a_tercero_primaria) as total_beneficiarios'),
+                DB::raw('raciones.nombre as racion'),
+            )
+            ->join('raciones', 'raciones.id', 'solicitud_detalles.tipo_de_actividad_alimentos')
+            ->where('solicitud_detalles.id_solicitud', $request->input('idSolicitud'))  
+            ->where('solicitud_detalles.id_escuela', $request->input('idEscuela'))   
+            ->where('solicitud_detalles.tipo_de_actividad_alimentos', $actividad)            
+            ->where('solicitud_detalles.deleted_at', null)
+            ->groupBy('solicitud_detalles.id_escuela', 'raciones.nombre')
+            ->get();
+            //return $descarga;
+        
+        foreach($descarga as $d):
+            $dias = $d->dias;
+            $beneficiarios = $d->total_beneficiarios;
+        endforeach;
+
+        //return Carbon::now()->format('Y-m-d');
+
+        $be = new BodegaEgreso;
+        $be->fecha = Carbon::now()->format('Y-m-d');
+        $be->tipo_documento = 1;
+        $be->no_documento = $request->input('no_boleta');
+        $be->id_solicitud_despacho = $request->input('idSolicitud');
+        $be->id_escuela_despacho = $request->input('idEscuela');
+        $be->tipo_racion = $actividad;
+        $be->participantes = $beneficiarios;
+        $be->tipo_bodega = 1;
+        $be->id_institucion = Auth::user()->id_institucion;
+        $be->save();
+
+        $cont=0;
+
+        while ($cont<count($alimentos)) {
+            $detalle=new BodegaEgresoDetalle();
+            $detalle->id_egreso = $be->id;
+            $detalle->id_insumo = $alimentos[$cont]->id_alimento;            
+            $detalle->no_unidades =  number_format( ((($dias*$beneficiarios*$alimentos[$cont]->cantidad)/1000)/50), 2, '.', ',' ) ;
+            $detalle->save();
+            $cont=$cont+1;
+        }
+                 
+    }
 
 
 }
